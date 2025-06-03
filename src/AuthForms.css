@@ -1,0 +1,136 @@
+
+button{
+    outline: none;
+    border: none;
+    height: 3rem;
+    min-width: 10rem;
+    padding: 0 0.6rem;
+    box-shadow: 0 0 0.2rem #8F5932;
+    border-radius: 1rem 1rem 0 1rem;
+    cursor: pointer;
+    background-color: #6D3710;
+    color: #FBEC6C;
+    font-size: 1rem;
+    align-items: center;
+    margin: 1rem 0;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+@layer base {
+  fieldset {
+    border: 1px solid #8F5932; 
+    padding: 0.5rem; 
+  }
+  legend {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+.form-header-items hr{
+    width: 16rem;
+    border: none;
+    border-top: 1px solid #8F5932;
+}
+.form-title{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+.login-with-google{
+    margin-bottom: 1.5rem;
+}
+.login-with-google a button{
+    width: 100%;
+    cursor: pointer;
+    background-color: #F1EDEA;
+    color: #000000;
+}
+.form-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 80vh;
+    margin: 2rem 0;
+    background-color: #FBEC6C;
+    width: 50%;
+    border-radius: 1.5rem 1.5rem 0 1.5rem;
+    box-shadow: 0 0.3rem 0.5rem #000000;
+    padding: 1rem;
+}
+fieldset{
+    border: 1px solid #8F5932;
+    /* box-shadow: 0 0 0.2rem #8F5932; */
+    margin: 1rem 0;
+    border-radius: 1rem 1rem 0 1rem;
+}
+fieldset input{
+    width: 100%;
+    height: 2rem;
+    background-color: #FBEC6C;
+    border: none;
+    outline: none;
+    padding: 0 1rem;
+}
+.heading-item{
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #6D3710;
+}
+.heading-item span{
+    color: #8F5932;
+}
+.underlined-item{
+    text-decoration: underline;
+    color: #6D3710;
+}
+.forgotten-pass-container {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem 0;
+}
+
+
+.password-input-wrapper {
+  position: relative;
+}
+.password-input-wrapper input {
+  width: 100%;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #6D3710;
+}
+.terms-div{
+    display: flex;
+    font-size: 0.9rem;
+}
+input:checked {
+  accent-color: #6D3710; 
+}
+
+@media screen and (max-width: 768px) {
+    .form-header-items hr{
+        width: 5rem;
+}
+    .form-div{
+        padding: 1rem;
+        width: 85%;
+    }
+    .heading-item{
+        font-size: 1.5rem;
+}
+    button{
+        width: 100%;
+    }
+}

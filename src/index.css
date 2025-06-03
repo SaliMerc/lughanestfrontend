@@ -1,0 +1,51 @@
+@import "tailwindcss";
+*{
+  font-family: 'Lora','sans-serif';
+}
+
+body{
+  background-color: #8F5932;
+  padding: 0 1.5rem;
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-family: 'Poppins','sans-serif';
+}
+
+@media screen and (max-width: 768px) {
+  .nav-items {
+    display: none;
+    position: absolute;
+    top: 5rem;
+    flex-direction: column;
+    background:#FBEC6C;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0.5rem rgba(0,0,0,0.1);
+    z-index: 10;
+    width: 80%;
+    height: 80vh;
+  }
+  .nav-items.open {
+    display: block;
+  }
+  .nav-items ul {
+    flex-direction: column;
+    gap: 2rem;
+    font-weight: 600;
+  }
+  .nav-items button {
+    margin-top: 6rem;
+    width: 100%;
+    height: 3.5rem;
+    background-color: #6D3710;
+    box-shadow: 0 1rem 1rem #aea661;
+    border-radius: 1rem 1rem 0 1rem;
+    border: none;
+  }
+  .nav-items a button{
+    color: #E3E0C0;
+    font-size: 1.3rem;
+    cursor: pointer;
+  }
+} 
