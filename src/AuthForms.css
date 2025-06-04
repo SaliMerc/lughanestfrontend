@@ -128,7 +128,7 @@ input:checked {
 }
     .form-div{
         padding: 1rem;
-        width: 85%;
+        width:100%;
     }
     .heading-item{
         font-size: 1.5rem;
