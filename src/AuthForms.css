@@ -18,6 +18,9 @@ form{
     display: flex;
     flex-direction: column;
 }
+ form button{
+    width: 100%;
+ }
 
 @layer base {
   fieldset {

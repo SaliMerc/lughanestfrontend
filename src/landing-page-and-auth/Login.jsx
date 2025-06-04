@@ -14,10 +14,10 @@ function Login() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 to-purple-200">
+      <div className="flex items-center justify-center h-3/4 bg-gradient-to-br from-[#8F5932] to-[#8F5932]">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-indigo-700 text-lg font-semibold animate-pulse">Signing you in...</p>
+          <div className="w-16 h-16 border-4 border-[#E3E0C0] border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-[#FBEC6C] text-lg font-semibold animate-pulse">Signing you in...</p>
         </div>
       </div>
     );
