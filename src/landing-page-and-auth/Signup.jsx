@@ -40,6 +40,11 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!formData.password || !formData.confirmPassword|| !formData.email|| !formData.fullName|| !formData.displayName) {
+      setFormError('All fields are required')
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setFormError('Passwords do not match')
       return;
@@ -68,8 +73,7 @@ function Login() {
       },
       () => {
         setLoading(false);
-        setFormSuccess("An email has been sent to you input the code to proceed");
-        // ToDo Add dashboard redirect
+        sessionStorage.setItem('otp-email', formData.email);
         navigate('/signup-otp-verification');
       },
       (err) => {
@@ -84,7 +88,7 @@ function Login() {
           }
 
         } else {
-          
+
           setFormError("Signup failed. Please check your input and try again.");
         }
       }
@@ -98,7 +102,7 @@ function Login() {
       <div className="flex items-center justify-center h-3/4 bg-gradient-to-br from-[#8F5932] to-[#8F5932] mt-28">
         <div className="flex flex-col items-center gap-4">
           <div className="w-16 h-16 border-4 border-[#E3E0C0] border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-[#FBEC6C] text-lg font-semibold animate-pulse">Ctrating your account...</p>
+          <p className="text-[#FBEC6C] text-lg font-semibold animate-pulse">Creating your account...</p>
         </div>
       </div>
     );
@@ -134,7 +138,6 @@ function Login() {
                     },
                     () => {
                       setLoading(false);
-                      alert('Google login failed');
                     }
                   );
                 }}
