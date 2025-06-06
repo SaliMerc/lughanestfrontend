@@ -9,13 +9,6 @@ export async function handleGoogleLogin(credential, onSuccess, onError) {
       token: credential,
     });
 
-    const { access, refresh, user } = response.data;
-
-    // Save tokens and user info
-    // localStorage.setItem('access', access);
-    // localStorage.setItem('refresh', refresh);
-    // localStorage.setItem('user', JSON.stringify(user));
-
     if (onSuccess) onSuccess(response);
   } catch (error) {
     console.error('Google login failed:', error);
@@ -25,14 +18,13 @@ export async function handleGoogleLogin(credential, onSuccess, onError) {
 
 export async function handleEmailSignup(userData, onSuccess, onError) {
   try {
-    const response = await axios.post(`${API_URL}/api/v1/users/`, userData);
-
-
-    const { access, refresh, user } = response.data;
-
-    // localStorage.setItem('access', access);
-    // localStorage.setItem('refresh', refresh);
-    // localStorage.setItem('user', JSON.stringify(user));
+    const response = await axios.post(`${API_URL}/api/v1/users/`, userData,
+       {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (onSuccess) onSuccess(response);
   } catch (error) {
@@ -41,10 +33,28 @@ export async function handleEmailSignup(userData, onSuccess, onError) {
   }
 }
 
-export async function handleEmailSignupVerification(userData, onSuccess, onError) {
+export async function handlePasswordReset(userData, onSuccess, onError) {
   try {
     const response = await axios.post(
-      `${API_URL}/api/v1/users/otp-verification/`,
+      `${API_URL}/api/v1/users/password-reset-not-logged-in/`,
+      userData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(`The response is: ${response}`)
+    if (onSuccess) onSuccess(response);
+  } catch (error) {
+    if (onError) onError(error);
+  }
+}
+
+export async function handleEmailLogin(userData, onSuccess, onError) {
+  try {
+    const response = await axios.post(
+      `${API_URL}/api/v1/users/login/`,
       userData,
       {
         headers: {

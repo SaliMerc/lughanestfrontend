@@ -40,7 +40,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.password || !formData.confirmPassword|| !formData.email|| !formData.fullName|| !formData.displayName) {
+    if (!formData.password || !formData.confirmPassword || !formData.email || !formData.fullName || !formData.displayName) {
       setFormError('All fields are required')
       return;
     }
@@ -125,9 +125,13 @@ function Login() {
           <div className='form-title'>
             <div className='heading-item'>Create <span> Your </span>Acount</div>
           </div>
-          <div className='login-with-google'>
+          <div className='login-with-google flex justify-center items-center'>
             <GoogleOAuthProvider clientId={Google_Client_Id}>
               <GoogleLogin
+                size='large'
+                width='335'
+                shape="pill"
+                text="continue_with"
                 onSuccess={(credentialResponse) => {
                   setLoading(true)
                   handleGoogleLogin(

@@ -5,14 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import '../AuthForms.css';
 import auth_background from '../assets/login-signup-image.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import {  faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-import { handleEmailSignupVerification } from '../utils/authUtils';
+import { handlePasswordReset } from '../utils/authUtils';
 
 
-function SignUpOTPVerification() {
+function PasswordReset() {
   const [formData, setFormData] = useState({
-    otp: ''
+    email: ''
   });
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState('');
@@ -31,12 +31,11 @@ function SignUpOTPVerification() {
     }));
   };
 
-  // Email verification logic ends here
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.otp || formData.otp.length !== 6) {
-      setFormError('Please enter a valid 6-digit OTP');
+    if (!formData.email) {
+      setFormError('Please enter your email to receive a reset link');
       return;
     };
 
@@ -44,22 +43,19 @@ function SignUpOTPVerification() {
 
     setLoading(true);
 
-    await handleEmailSignupVerification({
-      otp: formData.otp,
-      email: email
+    await handlePasswordReset({
+      otp: formData.email
     },
       (response) => {
         setLoading(false);
-        if (response.data.message != "Your account has already been verified") {
-          navigate('/login')
-          setFormError(response.data.message)
-        }
-        else if(response.data.message != "Your account was verified successfully"){
-          navigate('/login')
-          setFormError(response.data.message)
+        if (response.data.message.includes("Your account has already been verified") ||
+          response.data.message.includes("Your account was verified successfully")) {
+          setFormSuccess(response.data.message)
+          navigate('/login');
+          sessionStorage.removeItem('otp-email')
         }
         else {
-          setFormSuccess(response.data.message)
+          setFormError(response.data.message)
         }
       },
       (error) => {
@@ -138,4 +134,4 @@ function SignUpOTPVerification() {
     </>
   );
 }
-export default SignUpOTPVerification;
+export default PasswordReset;
