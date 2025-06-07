@@ -65,17 +65,6 @@ function ForgottenPassword() {
     );
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-3/4 bg-gradient-to-br from-[#8F5932] to-[#8F5932] mt-28">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 border-4 border-[#E3E0C0] border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-[#FBEC6C] text-lg font-semibold animate-pulse">Sending a reset link...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
       <section className='form-element' style={{
@@ -110,7 +99,7 @@ function ForgottenPassword() {
             <div className="form-header-items flex justify-between items-center my-0 mx-2 text-green-700">
               <h5>{formSuccess}</h5>
             </div>
-            <button type='submit'>Reset Password <FontAwesomeIcon icon={faArrowRight} /></button>
+            <button type='submit'>{loading ? "Sending Reset Link..." : "Reset Password"} <FontAwesomeIcon icon={faArrowRight} /></button>
           </form>
         </div>
       </section>

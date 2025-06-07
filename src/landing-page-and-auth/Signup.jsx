@@ -71,18 +71,20 @@ function Login() {
         accepted_terms_and_conditions: formData.agree,
         password: formData.password,
       },
-      () => {
+      (response) => {
+        if (response.data.message.includes("Activation link has been sent to your email address")) {
+          setFormSuccess(response.data.message)
+        }
+        else {
+          setFormError(response.data.message||response.data.email||response.data.username||response.data.display_name)
+        }
         setLoading(false);
-        sessionStorage.setItem('otp-email', formData.email);
-        navigate('/signup-otp-verification');
       },
-      (err) => {
+      (error) => {
         setLoading(false);
 
-        const errorData = err?.response?.data;
-
-        if (errorData) {
-          const errorMessages = Object.values(errorData).flat().join(' ');
+        if (error) {
+          const errorMessages = Object.values(error).flat().join(' ');
           if (errorMessages) {
             setFormError("A user with this email or display name already exists");
           }
@@ -96,17 +98,6 @@ function Login() {
   };
 
   // signup functionality ends here
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-3/4 bg-gradient-to-br from-[#8F5932] to-[#8F5932] mt-28">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 border-4 border-[#E3E0C0] border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-[#FBEC6C] text-lg font-semibold animate-pulse">Creating your account...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>
@@ -129,7 +120,7 @@ function Login() {
             <GoogleOAuthProvider clientId={Google_Client_Id}>
               <GoogleLogin
                 size='large'
-                width='335'
+                width={335}
                 shape="pill"
                 text="continue_with"
                 onSuccess={(credentialResponse) => {
@@ -232,7 +223,10 @@ function Login() {
             <div className="form-header-items flex justify-between items-center my-3 mx-2 text-red-700">
               <h5>{formError}</h5>
             </div>
-            <button type='submit'>Signup <FontAwesomeIcon icon={faArrowRight} /></button>
+            <div className="form-header-items flex justify-between items-center my-0 mx-2 text-green-700">
+              <h5>{formSuccess}</h5>
+            </div>
+            <button type='submit'>{loading ? "Signing up..." : "Signup"} <FontAwesomeIcon icon={faArrowRight} /></button>
             <p>Already have an account? <span><a href="/login" className='underlined-item'> Login</a></span></p>
           </form>
         </div>

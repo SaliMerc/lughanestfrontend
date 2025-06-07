@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState,useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import { handleGoogleLogin, handleEmailLogin } from '../utils/authUtils';
+import { handleGoogleLogin, handleEmailLogin} from '../utils/authUtils';
 import auth_background from '../assets/login-signup-image.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -18,6 +18,8 @@ function Login() {
   });
 
   const [formError, setFormError] = useState('');
+  
+
   // Login logic starts here
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,19 +71,6 @@ function Login() {
     );
   };
   // login logic ends
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-3/4 bg-gradient-to-br from-[#8F5932] to-[#8F5932] mt-40">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 border-4 border-[#E3E0C0] border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-[#FBEC6C] text-lg font-semibold animate-pulse">Signing you in...</p>
-        </div>
-      </div>
-    );
-  }
-
-
 
   return (
     <section
@@ -167,26 +156,27 @@ function Login() {
           </fieldset>
           <div className="form-header-items flex justify-between items-center my-0 mx-2 text-red-700">
             <h5>{formError}</h5>
-        </div>
-        <div className='forgotten-pass-container'>
-          <a href='/password-reset' className='underlined-item forgotten-pass'>
-            Forgotten Password?
-          </a>
-        </div>
-
-        <button type='submit'>
-          Login <FontAwesomeIcon icon={faArrowRight} />
-        </button>
-        <p>
-          Don't have an account?{' '}
-          <span>
-            <a href='/signup' className='underlined-item'>
-              SignUp
+          </div>
+          <div className='forgotten-pass-container'>
+            <a href='/password-reset' className='underlined-item forgotten-pass'>
+              Forgotten Password?
             </a>
-          </span>
-        </p>
-      </form>
-    </div>
+          </div>
+
+          <button type='submit'>
+            {loading ? "Logging in..." : "Login"}  <FontAwesomeIcon icon={faArrowRight} />
+          </button>
+          <p>
+            Don't have an account?{' '}
+            <span>
+              <a href='/signup' className='underlined-item'>
+                SignUp
+              </a>
+            </span>
+          </p>
+        </form>
+      </div>
+
     </section >
   );
 }

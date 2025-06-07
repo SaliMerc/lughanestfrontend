@@ -10,7 +10,10 @@ button{
     cursor: pointer;
     background-color: #6D3710;
     color: #FBEC6C;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
     align-items: center;
     margin: 1rem 0;
 }
