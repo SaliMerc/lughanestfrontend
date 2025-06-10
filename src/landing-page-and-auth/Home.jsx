@@ -84,7 +84,7 @@ function Home() {
   return (
     <>
       <Header />
-      <div className='text-white'>
+      <div className='text-white md:pt-30'>
 
         {/* hero section starts here */}
         <section style={backgroundImage} className="flex flex-col md:flex-row  justify-between p-5 md:p-10">
@@ -145,7 +145,7 @@ function Home() {
           </div>
 
           <div className='flex flex-col md:flex-row justify-center gap-8 md:gap-12 items-center bg-[#0E0D0C] min-h-[40rem] py-5'>
-            <Fade direction='up'>
+            <Fade direction='right'>
               <div className='h-[400px] md:h-[550px] w-[18rem] md:w-[20rem] bg-[#000000] flex flex-col justify-center items-center text-center gap-18 rounded-[20px]'>
                 <div className='flex flex-col items-center gap-2'>
                   <p>FREE</p>
@@ -165,7 +165,7 @@ function Home() {
               </div>
             </Fade>
 
-            <Fade direction='up'>
+            <Fade direction='right'>
               <div className='h-[400px] md:h-[550px] w-[18rem] md:w-[20rem] bg-[#1B1C1D] flex flex-col justify-center items-center text-center gap-18 rounded-[20px]'>
                 <div className='flex flex-col items-center gap-2'>
                   <p>PREMIUM</p>
@@ -185,7 +185,7 @@ function Home() {
               </div>
             </Fade>
 
-            <Fade direction='up'>
+            <Fade direction='right'>
               <div className='h-[400px] md:h-[550px] w-[18rem] md:w-[20rem] bg-[#000000] flex flex-col justify-center items-center text-center gap-18 rounded-[20px]'>
                 <div className='flex flex-col items-center gap-2'>
                   <p>PREMIUM</p>
@@ -217,6 +217,7 @@ function Home() {
             <p className='mb-5 mt-5 text-center'>EXPLORE OUR COURSES—BEGIN LEARNING AT NO COST!</p>
           </div>
           <div className='flex flex-col md:flex-row justify-center gap-8 md:gap-12 items-center  py-5'>
+            <Fade direction='up'>
             {courses.map((course) => (
             <div key={course.id} className=' min-h-[250px] w-[15rem] md:w-[16rem]  bg-[#1B1C1D] flex flex-col justify-center items-center text-center gap-10 rounded-[20px]'>
               <div className='flex flex-col items-start text-left gap-2'>
@@ -231,6 +232,7 @@ function Home() {
               </div>
             </div>
             ))}
+            </Fade>
 
             <Link to="/courses" className='underline'><p className=''>See All Courses <FontAwesomeIcon icon={faArrowRight} /></p></Link>
           </div>
@@ -244,6 +246,7 @@ function Home() {
             <img src={overallHeadingIcon} alt="about-image" className='h-[30px] md:h-[40px]' />
             <p className='mb-5 mt-5 text-center'>GET IN TOUCH WITH US FOR ANY INQUIRIES </p>
           </div>
+          <Fade direction='left'>
           <div className="flex flex-col md:flex-row justify-center items-start gap-15 md:gap-52  bg-[#0E0D0C] min-h-[10rem] w-[100%] p-8">
             <div className='flex flex-col gap-8'>
               <a className="flex flex-row gap-3">
@@ -265,6 +268,7 @@ function Home() {
               </div>
             </div>
           </div>
+          </Fade>
         </section>
         {/* contact section ends */}
       </div >

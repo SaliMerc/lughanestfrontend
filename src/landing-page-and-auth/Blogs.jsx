@@ -8,11 +8,7 @@ import overallHeadingIcon from '../assets/overall-heading-image.svg';
 
 import blogImage from '../assets/blog-image-placeholder.jpg';
 
-
-function Blogs() {
-
-  // fake data for rendering the blogs
-  const blogs = [
+export const blogs = [
     {
       'blog_title': 'Jifunze Kiswahili: Maneno ya Kawaida na Matumizi Yake',
       'blog_content': 'Kiswahili ni lugha ya kuvutia na rahisi kujifunza. Katika makala hii, tutajifunza maneno ya kawaida kama "Habari yako?", "Asante", na "Karibu". Pia tutaangalia matumizi yake katika mazungumzo ya kila siku.',
@@ -99,10 +95,16 @@ function Blogs() {
     }
   ];
 
+  const generateSlug = (title) =>
+    title.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+function Blogs() {
+
+  // fake data for rendering the blogs
+
   return (
     <>
       <Header />
-      <div className='text-white min-h-screen'>
+      <div className='text-white min-h-screen md:pt-20'>
         {/* courses section starts */}
         <section className='mt-6 md:mt-8'>
           <div className='flex flex-col justify-center items-center mb-5'>
@@ -121,10 +123,10 @@ function Blogs() {
                   <p>{blog.blog_content.split(" ").length > 5
                     ? blog.blog_content.split(" ").slice(0, 20).join(" ") + "..."
                     : blog.blog_content}</p>
-                  <a href="/signup"><button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                  <Link to={`/blogs/${generateSlug(blog.blog_title)}`}><button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
                     Read More...
                   </button>
-                  </a>
+                  </Link>
                 </div>
               </div>
             ))}

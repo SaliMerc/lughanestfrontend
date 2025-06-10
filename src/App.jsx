@@ -31,7 +31,7 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
         <Route path="/blogs" element={<Blogs />} />
-        <Route path="/blogs/:id" element={<BlogContent />} />
+        <Route path="/blogs/:slug" element={<BlogContent />} />
 
         <Route path="/signup" element={<Signup />} />
         <Route path="/account-verification" element={<SignupVerification />} />

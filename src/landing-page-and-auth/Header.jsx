@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../assets/new-lughanest-logo.svg';
 import open from '../assets/open-menu-items.svg';
 import close from '../assets/close-menu-items.svg';
@@ -8,9 +8,21 @@ import { Link } from 'react-router-dom';
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className='text-[#E3E0C0] mt-5 md:mt-2 mb-12'>
+    <header className={`text-[#E3E0C0] mt-5 md:mt-0 mb-12 md:h-30 md:fixed md:top-0 md:left-5 md:right-5 md:z-50 transition-colors duration-300 ${
+    scrolled ? 'bg-[#000000]' : ''
+  }`}>
       <nav className="flex justify-between items-center">
         <div className='logo-and-toggle-items flex justify-between w-full'>
           <div className="logo">

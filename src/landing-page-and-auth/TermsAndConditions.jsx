@@ -6,12 +6,15 @@ function TermsAndConditions() {
 
   return (
     <>
-    <Header/>
-        <section className='min-h-screen'>
-            <h1 className='text-[#E3E0C0] text-4xl mb-4'>Terms and Conditions</h1>
-            <div>
-                <h5 className='text-[#FBEC6C] text-xl mb-2'>Last Updated  on 10/5/2025</h5>
-                <pre style={{ whiteSpace: 'pre-wrap' }} className='text-[#E3E0C0] text-[1.1rem] mb-2'>{`1. Acceptance of Terms
+      <Header />
+      <section className='min-h-screen flex flex-col md:w-[90%] md:pt-35'>
+        <div className=''>
+          <h1 className='text-[#E3E0C0] text-4xl mb-4 text-left font-bold'>Terms and Conditions</h1>
+        </div>
+        <div className=' bg-[#1B1C1D] rounded-2xl p-5'>
+          <div>
+            <h5 className='text-[#FBEC6C] text-[13px] mb-2'>Last Updated  on 10/5/2025</h5>
+            <pre style={{ whiteSpace: 'pre-wrap' }} className='text-[#E3E0C0] text-[1.1rem] mb-2'>{`1. Acceptance of Terms
 You must be at least 13 years old (or the legal age in your country) to use LughaNest.
 By registering, you confirm that all provided information (name, email, city, country, etc.) is accurate.
 
@@ -39,9 +42,10 @@ LughaNest is not liable for:
 Errors in language content.
 User disputes in chats.
 Third-party data breaches (though we use security measures).`}</pre>
-            </div>
-        </section>
-    <Footer/>
+          </div>
+        </div>
+      </section>
+      <Footer />
     </>
   );
 }

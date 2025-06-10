@@ -80,7 +80,7 @@ function Courses() {
   return (
     <>
       <Header />
-      <div className='text-white min-h-screen'>
+      <div className='text-white min-h-screen md:pt-20'>
         {/* courses section starts */}
         <section className='mt-6 md:mt-8'>
           <div className='flex flex-col justify-center items-center mb-5'>

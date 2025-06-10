@@ -7,11 +7,14 @@ function PrivacyPolicy() {
   return (
     <>
     <Header/>
-     <section className='min-h-screen'>
-            <h1 className='text-[#E3E0C0] text-4xl mb-4'>Privacy Policy</h1>
-            <div>
-                <h5 className='text-[#FBEC6C] text-xl mb-2'>Last Updated  on 10/5/2025</h5>
-                <pre style={{ whiteSpace: 'pre-wrap' }} className='text-[#E3E0C0] text-[1.1rem] mb-2'>{`1. Information We Collect
+    <section className='min-h-screen flex flex-col md:w-[90%] md:pt-35'>
+        <div className=''>
+          <h1 className='text-[#E3E0C0] text-4xl mb-4 text-left font-bold'>Privacy Policy</h1>
+        </div>
+        <div className=' bg-[#1B1C1D] rounded-2xl p-5'>
+          <div>
+            <h5 className='text-[#FBEC6C] text-[13px] mb-2'>Last Updated  on 10/5/2025</h5>
+            <pre style={{ whiteSpace: 'pre-wrap' }} className='text-[#E3E0C0] text-[1.1rem] mb-2'>{`1. Information We Collect
 Account Data: Name, email, city, country, language preferences.
 Usage Data: Courses taken, progress, chat interactions.
 Device Data: IP address, browser type (for security).
@@ -42,8 +45,9 @@ Under 13? Parental consent is required.
 
 7. Changes to This Policy
 Updates will be notified via email or in-app alerts.`}</pre>
-            </div>
-        </section>
+          </div>
+        </div>
+      </section>
     <Footer/>
     </>
   );
