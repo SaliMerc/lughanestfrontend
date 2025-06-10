@@ -9,7 +9,7 @@ import overallHeadingIcon from '../assets/overall-heading-image.svg';
 import blogImage from '../assets/blog-image-placeholder.jpg';
 
 
-function Blogs() {
+function BlogContent() {
 
   // fake data for rendering the blogs
   const blogs = [
@@ -117,7 +117,7 @@ function Blogs() {
                   <img src={blogImage} alt="Blog image" className='w-full h-auto mt-5 md:mt-0 rounded-2xl' />
                   <p className='text-[1.2rem] md:text-[1.5rem]'>{blog.blog_title}</p>
                   <p className='text-[#FBEC6C] text-[13px]'>By {blog.blog_author} on {new Date(blog.created_at).toLocaleDateString()}</p>
-                  <hr className='text-white w-[100%] my-5' />
+                  <hr className='text-white w-[100%]' />
                   <p>{blog.blog_content.split(" ").length > 5
                     ? blog.blog_content.split(" ").slice(0, 20).join(" ") + "..."
                     : blog.blog_content}</p>
@@ -137,4 +137,4 @@ function Blogs() {
     </>
   );
 }
-export default Blogs;
+export default BlogContent;

@@ -15,6 +15,22 @@ export async function handleGoogleLogin(credential, onSuccess, onError) {
   }
 }
 
+export async function handleGettingLocation(locData, onSuccess, onError) {
+  try {
+    const response = await axios.get("https://ipapi.co/json/", locData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (onSuccess) onSuccess(response);
+  } catch (error) {
+    if (onError) onError(error);
+  }
+}
+
 export async function handleEmailSignup(userData, onSuccess, onError) {
   try {
     const response = await axios.post(`${API_URL}/api/v1/users/`, userData,

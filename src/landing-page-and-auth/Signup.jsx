@@ -2,12 +2,12 @@ import { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import { handleGoogleLogin, handleEmailSignup } from '../utils/authUtils';
+import { handleGoogleLogin, handleEmailSignup, handleGettingLocation } from '../utils/authUtils';
 
 import '../AuthForms.css';
 import auth_background from '../assets/login-signup-image.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 
 function Login() {
@@ -28,6 +28,10 @@ function Login() {
     confirmPassword: '',
     agree: false,
   });
+
+  const [country, setCountryName] = useState('')
+  const [city, setCity] = useState('')
+  const [device_info, setDeviceIp] = useState('')
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -61,6 +65,21 @@ function Login() {
 
     const [firstName, ...rest] = formData.fullName.trim().split(' ');
     const lastName = rest.join(' ') || '';
+    await handleGettingLocation(
+      {},
+      (response) => {
+        const country = response.data.country_name;
+        const city = response.data.city;
+        const device_ip = response.data.ip;
+        console.log(device_info)
+        setCountryName(country)
+        setCity(city);
+        setDeviceIp(device_ip)
+      },
+      (error) => {
+        console.log(error.error)
+      }
+    )
     await handleEmailSignup(
       {
         first_name: firstName,
@@ -69,6 +88,9 @@ function Login() {
         username: formData.email,
         display_name: formData.displayName,
         accepted_terms_and_conditions: formData.agree,
+        country:country,
+        city:city,
+        device_info:device_info,
         password: formData.password,
       },
       (response) => {
@@ -76,7 +98,7 @@ function Login() {
           setFormSuccess(response.data.message)
         }
         else {
-          setFormError(response.data.message||response.data.email||response.data.username||response.data.display_name)
+          setFormError(response.data.message || response.data.email || response.data.username || response.data.display_name)
         }
         setLoading(false);
       },
