@@ -1,5 +1,4 @@
-
-button{
+button {
     outline: none;
     border: none;
     height: 3rem;
@@ -8,8 +7,10 @@ button{
     box-shadow: 0 0 0.2rem #8F5932;
     border-radius: 1rem 1rem 0 1rem;
     cursor: pointer;
-    background-color: #6D3710;
-    color: #FBEC6C;
+    background-color: #0E0D0C;
+    color: #E3E0C0;
+    border: 1px solid #FBEC6C !important;
+    transition: background-color 300ms, color 300ms !important;
     font-size: 1.2rem;
     display: flex;
     justify-content: center;
@@ -17,84 +18,97 @@ button{
     align-items: center;
     margin: 1rem 0;
 }
-form{
+
+form {
     display: flex;
     flex-direction: column;
 }
- form button{
+
+form button {
     width: 100%;
- }
+}
 
 @layer base {
-  fieldset {
-    border: 1px solid #8F5932; 
-    padding: 0.5rem; 
-  }
-  legend {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
+    fieldset {
+        border: 1px solid #8F5932;
+        padding: 0.5rem;
+    }
+
+    legend {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
 }
 
-.form-header-items hr{
+.form-header-items hr {
     width: 16rem;
     border: none;
-    border-top: 1px solid #8F5932;
+    border-top: 1px solid #E3E0C0;
 }
-.form-title{
+
+.form-title {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 1.5rem;
 }
-.login-with-google{
+
+.login-with-google {
     margin-bottom: 1.5rem;
 }
-.login-with-google a button{
+
+.login-with-google a button {
     width: 100%;
     cursor: pointer;
     background-color: #F1EDEA;
     color: #000000;
 }
-.form-div{
+
+.form-div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-height: 80vh;
     margin: 2rem 0;
-    background-color: #FBEC6C;
+    background-color: #0E0D0C;
     width: 50%;
     border-radius: 1.5rem 1.5rem 0 1.5rem;
     box-shadow: 0 0.3rem 0.5rem #000000;
     padding: 1rem;
+    color: #E3E0C0;
 }
-fieldset{
-    border: 1px solid #8F5932;
-    /* box-shadow: 0 0 0.2rem #8F5932; */
+
+fieldset {
+    border: 1px solid #E3E0C0;
     margin: 1rem 0;
     border-radius: 1rem 1rem 0 1rem;
 }
-fieldset input{
+
+fieldset input {
     width: 100%;
     height: 2rem;
-    background-color: #FBEC6C;
+    background-color: #0E0D0C;
     border: none;
     outline: none;
     padding: 0 1rem;
 }
-.heading-item{
+
+.heading-item {
     font-size: 2.5rem;
     font-weight: 600;
-    color: #6D3710;
+    color: #E3E0C0;
 }
-.heading-item span{
-    color: #8F5932;
+
+.heading-item span {
+    color: #FBEC6C;
 }
-.underlined-item{
+
+.underlined-item {
     text-decoration: underline;
-    color: #6D3710;
+    color: #FBEC6C;
 }
+
 .forgotten-pass-container {
     display: flex;
     justify-content: flex-end;
@@ -103,40 +117,46 @@ fieldset input{
 
 
 .password-input-wrapper {
-  position: relative;
+    position: relative;
 }
+
 .password-input-wrapper input {
-  width: 100%;
+    width: 100%;
 }
 
 .eye-icon {
-  position: absolute;
-  right: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #6D3710;
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #E3E0C0;
 }
-.terms-div{
+
+.terms-div {
     display: flex;
     font-size: 0.9rem;
 }
+
 input:checked {
-  accent-color: #6D3710; 
+    accent-color: #E3E0C0;
 }
 
 @media screen and (max-width: 768px) {
-    .form-header-items hr{
+    .form-header-items hr {
         width: 5rem;
-}
-    .form-div{
-        padding: 1rem;
-        width:100%;
     }
-    .heading-item{
+
+    .form-div {
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .heading-item {
         font-size: 1.5rem;
-}
-    button{
+    }
+
+    button {
         width: 100%;
     }
 }

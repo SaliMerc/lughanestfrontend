@@ -2,7 +2,7 @@ import { useState,useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { handleGoogleLogin, handleEmailLogin} from '../utils/authUtils';
-import auth_background from '../assets/login-signup-image.svg';
+import auth_background from '../assets/login-signup-image.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 

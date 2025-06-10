@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import '../AuthForms.css';
-import auth_background from '../assets/password-reset-image.svg';
+import auth_background from '../assets/password-reset-image.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { handleValidateResetToken, handleSubmitNewPassword } from '../utils/authUtils';
 import '../AuthForms.css';
-import auth_background from '../assets/password-reset-image.svg';
+import auth_background from '../assets/password-reset-image.png';
 
 function ChangePasswordReset() {
   const [showPassword, setShowPassword] = useState(false);
