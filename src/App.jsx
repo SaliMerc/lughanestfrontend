@@ -5,6 +5,7 @@ import Courses from './landing-page-and-auth/Courses';
 
 import Signup from './landing-page-and-auth/Signup';
 import SignupVerification from './landing-page-and-auth/SignupOtpVerification';
+import InvalidLinkResend from './landing-page-and-auth/InvalidLinkResendLink';
 
 import Login from './landing-page-and-auth/Login';
 
@@ -35,6 +36,7 @@ function App() {
 
         <Route path="/signup" element={<Signup />} />
         <Route path="/account-verification" element={<SignupVerification />} />
+        <Route path="/resend-activation-link" element={<InvalidLinkResend />} />
 
         <Route path="/login" element={<Login />} />
 

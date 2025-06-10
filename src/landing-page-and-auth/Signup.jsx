@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { Link } from 'react-router-dom';
+
 import { useNavigate } from 'react-router-dom';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { handleGoogleLogin, handleEmailSignup, handleGettingLocation } from '../utils/authUtils';
@@ -158,7 +160,7 @@ function Login() {
                     }
                   );
                 }}
-                onError={() => console.log('Login Failed')}
+                onError={() => setFormError('Login Failed')}
               />
             </GoogleOAuthProvider>
           </div>
@@ -240,7 +242,7 @@ function Login() {
                 onChange={handleChange}
                 required
                 className='me-2' />
-              <p>Agree to the <a href="/terms-and-conditions" className='underlined-item'>Terms</a> and <a href="/privacy-policy" className='underlined-item'>Privacy Policy</a></p>
+              <p>Agree to the <Link to="/terms-and-conditions" className='underlined-item'>Terms</Link> and <Link to="/privacy-policy" className='underlined-item'>Privacy Policy</Link></p>
             </div>
             <div className="form-header-items flex justify-between items-center my-3 mx-2 text-red-700">
               <h5>{formError}</h5>

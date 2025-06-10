@@ -7,7 +7,7 @@ button {
     box-shadow: 0 0 0.2rem #8F5932;
     border-radius: 1rem 1rem 0 1rem;
     cursor: pointer;
-    background-color: #0E0D0C;
+    background-color: #000000;
     color: #E3E0C0;
     border: 1px solid #FBEC6C !important;
     transition: background-color 300ms, color 300ms !important;
@@ -101,7 +101,7 @@ fieldset input {
 }
 
 .heading-item span {
-    color: #FBEC6C;
+    color: #E3E0C0;
 }
 
 .underlined-item {

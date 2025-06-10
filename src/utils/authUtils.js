@@ -63,6 +63,23 @@ export async function handleSignupTokenVerification(userData, onSuccess, onError
   }
 }
 
+export async function handleActivationLinkResend(userData, onSuccess, onError) {
+  try {
+    const response = await axios.post(
+      `${API_URL}/api/v1/users/resend-verification/`,
+      userData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (onSuccess) onSuccess(response);
+  } catch (error) {
+    if (onError) onError(error);
+  }
+}
+
 export async function handlePasswordReset(userData, onSuccess, onError) {
   try {
     const response = await axios.post(
@@ -79,6 +96,7 @@ export async function handlePasswordReset(userData, onSuccess, onError) {
     if (onError) onError(error);
   }
 }
+
 
 export async function handleValidateResetToken(token, onSuccess, onError) {
   try {

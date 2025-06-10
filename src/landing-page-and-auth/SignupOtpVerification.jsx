@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { handleSignupTokenVerification } from '../utils/authUtils';
-import auth_background from '../assets/login-signup-image.svg';
+import auth_background from '../assets/login-signup-image.png';
 
 
 function SignupVerification() {
