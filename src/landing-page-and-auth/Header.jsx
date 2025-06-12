@@ -24,11 +24,19 @@ function Header() {
     scrolled ? 'bg-[#000000]' : ''
   }`}>
       <nav className="flex justify-between items-center">
+
         <div className='logo-and-toggle-items flex justify-between w-full'>
-          <div className="logo">
+         
+          <div className="logo hidden md:block">
             <Link to='/'><img src={logo} alt="Logo" /></Link>
           </div>
-          <div className="logo-toggle-items block md:hidden">
+
+          <div className="logo-toggle-items flex w-full justify-between md:hidden fixed z-50 top-5 left-0 right-2">
+
+            <div className="logo">
+            <Link to='/'><img src={logo} alt="Logo" /></Link>
+          </div>
+
             <img
               src={menuOpen ? close : open}
               alt="toggle menu"
@@ -36,8 +44,8 @@ function Header() {
               className="menu-icon h-[35px]"
             />
           </div>
-        </div>
 
+        </div>
         <div className={`nav-items flex gap-[22rem] text-[#6D3710] md:text-[#E3E0C0] ${menuOpen ? 'open' : ''}`}>
           <ul className='flex gap-8 mt-7'>
             {/* <Link to='/signup'>yooh</Link> */}

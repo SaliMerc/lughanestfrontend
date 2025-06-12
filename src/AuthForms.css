@@ -139,7 +139,7 @@ fieldset input {
 }
 
 input:checked {
-    accent-color: #E3E0C0;
+    accent-color: #FBEC6C;
 }
 
 @media screen and (max-width: 768px) {

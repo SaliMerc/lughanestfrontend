@@ -33,6 +33,9 @@ import { faArrowRight, faCheck, faXmark } from '@fortawesome/free-solid-svg-icon
 
 import { useLocation } from 'react-router-dom';
 
+import { handleCourseItemsData } from '../utils/coursesUtils';
+import { handleSubscriptiontemsData } from '../utils/paymentUtils.js';
+
 function Home() {
   const backgroundImage = {
     backgroundImage: `url(${heroImage})`,
@@ -44,6 +47,7 @@ function Home() {
 
   const location = useLocation();
 
+  // For the sections
   useEffect(() => {
     if (location.hash) {
       const el = document.querySelector(location.hash);
@@ -53,33 +57,78 @@ function Home() {
     }
   }, [location]);
 
-  // fake data for rendering the courses
-  const courses = [
-  {
-    id: 1,
-    title: "Kiswahili",
-    level: "Beginner",
-    description: "Learn Kenya's national language and East Africa's lingua franca"
-  },
-  {
-    id: 2,
-    title: "Dholuo",
-    level: "Beginner",
-    description: "Master the Luo language spoken around Lake Victoria"
-  },
-  {
-    id: 3,
-    title: "Kikuyu",
-    level: "Intermediate",
-    description: "Learn Gĩkũyũ, the language of Kenya's largest ethnic group"
-  },
-  {
-    id: 4,
-    title: "Kamba",
-    level: "Beginner",
-    description: "Discover Kikamba language and Ukambani culture"
-  }
-];
+  // Data for rendering the available courses
+  const [courses, setCourseItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const [monthlySubscription, setMonthlySubscription] = useState('');
+  const [yearlySubscription, setYearlySubscription] = useState('');
+  const [currency, setCurrency] = useState('');
+
+
+  // fetching the available courses
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        setLoading(true);
+        await handleCourseItemsData(
+          {},
+          (response) => {
+            if (response.data) {
+              setCourseItems(response.data);
+            } else {
+              setCourseItems([]);
+            }
+          },
+          (error) => {
+            setError(error.message || 'Failed to fetch blogs');
+          }
+        );
+      } catch (err) {
+        setError(err.message || 'An unexpected error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  // fetching the subscription plans
+  useEffect(() => {
+    const fetchSubscriptions = async () => {
+      try {
+        setLoading(true);
+        await handleSubscriptiontemsData(
+          {},
+          (response) => {
+            if (response.data) {
+              console.log(response.data)
+              setMonthlySubscription(response.data.monthly_plan);
+              setYearlySubscription(response.data.yearly_plan);
+              setCurrency(response.data.currency);
+            } else {
+              setMonthlySubscription('700');
+              setYearlySubscription('8000');
+              setMonthlyCurrency('Ksh.');
+            }
+          },
+          (error) => {
+            setError(error.message || 'Failed to fetch blogs');
+          }
+        );
+      } catch (err) {
+        setError(err.message || 'An unexpected error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSubscriptions();
+  }, []);
+
+
 
   return (
     <>
@@ -170,7 +219,7 @@ function Home() {
                 <div className='flex flex-col items-center gap-2'>
                   <p>PREMIUM</p>
                   <img src={pricingPremiumMonth} alt="about-image" className='h-[30px] md:h-[40px]' />
-                  <p className='text-[1.2rem] md:text-[1.5rem]'>Ksh. 800/month</p>
+                  <p className='text-[1.2rem] md:text-[1.5rem]'>{currency} {monthlySubscription}/month</p>
                 </div>
                 <div className='flex flex-col items-start text-left gap-2'>
                   <p><FontAwesomeIcon icon={faCheck} />  All Courses</p>
@@ -190,7 +239,7 @@ function Home() {
                 <div className='flex flex-col items-center gap-2'>
                   <p>PREMIUM</p>
                   <img src={pricingPremiumYear} alt="about-image" className='h-[30px] md:h-[40px]' />
-                  <p className='text-[1.2rem] md:text-[1.5rem]'>Ksh. 7000/year</p>
+                  <p className='text-[1.2rem] md:text-[1.5rem]'>{currency} {yearlySubscription}/year</p>
                 </div>
                 <div className='flex flex-col items-start text-left gap-2'>
                   <p><FontAwesomeIcon icon={faCheck} />  All Courses</p>
@@ -218,20 +267,36 @@ function Home() {
           </div>
           <div className='flex flex-col md:flex-row justify-center gap-8 md:gap-12 items-center  py-5'>
             <Fade direction='up'>
-            {courses.map((course) => (
-            <div key={course.id} className=' min-h-[250px] w-[15rem] md:w-[16rem]  bg-[#1B1C1D] flex flex-col justify-center items-center text-center gap-10 rounded-[20px]'>
-              <div className='flex flex-col items-start text-left gap-2'>
-                <p className='text-[1.2rem] md:text-[1.5rem]'>{course.title}</p>
-                <hr className='text-white w-[100%]' />
-                <p className='text-[#FBEC6C]'>{course.level}</p>
-                <Link to="/signup"><button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
-                  Enroll
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </button>
-                </Link>
-              </div>
-            </div>
-            ))}
+
+              {loading ? (
+
+                <div className="w-full text-center py-10">
+                  <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FBEC6C] mx-auto"></div>
+                  <p className="mt-4">Loading courses...</p>
+                </div>
+
+              ) : courses.length === 0 ? (
+
+                <div className="w-full text-center py-10">
+                  <p>No courses available at the moment.</p>
+                </div>
+              ) : (
+
+                courses.slice(0, 4).map((language, index) => (
+                  <div key={index} className=' min-h-[250px] w-[15rem] md:w-[16rem]  bg-[#1B1C1D] flex flex-col justify-center items-center text-center gap-10 rounded-[20px]'>
+                    <div className='flex flex-col items-start text-left gap-2'>
+                      <p className='text-[1.2rem] md:text-[1.5rem] first-letter:uppercase'>{language.course_name}</p>
+                      <hr className='text-white w-[100%]' />
+                      <p className='text-[#FBEC6C] first-letter:uppercase'>{language.course_level}</p>
+                      <Link to="/signup"><button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                        Enroll
+                        <FontAwesomeIcon icon={faArrowRight} />
+                      </button>
+                      </Link>
+                    </div>
+                  </div>
+                ))
+              )}
             </Fade>
 
             <Link to="/courses" className='underline'><p className=''>See All Courses <FontAwesomeIcon icon={faArrowRight} /></p></Link>
@@ -246,29 +311,33 @@ function Home() {
             <img src={overallHeadingIcon} alt="about-image" className='h-[30px] md:h-[40px]' />
             <p className='mb-5 mt-5 text-center'>GET IN TOUCH WITH US FOR ANY INQUIRIES </p>
           </div>
-          <Fade direction='left'>
+
           <div className="flex flex-col md:flex-row justify-center items-start gap-15 md:gap-52  bg-[#0E0D0C] min-h-[10rem] w-[100%] p-8">
-            <div className='flex flex-col gap-8'>
-              <a className="flex flex-row gap-3">
-                <img src={contactEmail} alt="email" />
-                <div>contact@lughanest.com</div>
-              </a>
-              <a href='' className="flex flex-row gap-3">
-                <img src={contactPhone} alt="email" />
-                <div>+254 12345678</div>
-              </a>
-            </div>
+            <Fade direction='left'>
+              <div className='flex flex-col gap-8'>
+                <a className="flex flex-row gap-3">
+                  <img src={contactEmail} alt="email" />
+                  <div>contact@lughanest.com</div>
+                </a>
+                <a href='' className="flex flex-row gap-3">
+                  <img src={contactPhone} alt="email" />
+                  <div>+254 12345678</div>
+                </a>
+              </div>
+            </Fade>
             <div>
               <h2 className='text-1xl md:text-2xl leading-normal font-bold mb-5'>Social Media</h2>
-              <div className='flex flex-row gap-7'>
-                <a href=""><img src={contactFacebook} alt="facebook" /></a>
-                <a href=""><img src={contactTiktok} alt="facebook" /></a>
-                <a href=""><img src={contactInstagram} alt="facebook" /></a>
-                <a href=""><img src={contactTwitter} alt="facebook" /></a>
-              </div>
+              <Fade direction='left'>
+                <div className='flex flex-row gap-7'>
+                  <a href=""><img src={contactFacebook} alt="facebook" /></a>
+                  <a href=""><img src={contactTiktok} alt="facebook" /></a>
+                  <a href=""><img src={contactInstagram} alt="facebook" /></a>
+                  <a href=""><img src={contactTwitter} alt="facebook" /></a>
+                </div>
+              </Fade>
             </div>
           </div>
-          </Fade>
+
         </section>
         {/* contact section ends */}
       </div >

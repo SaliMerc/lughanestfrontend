@@ -90,14 +90,25 @@ function Login() {
         username: formData.email,
         display_name: formData.displayName,
         accepted_terms_and_conditions: formData.agree,
-        country:country,
-        city:city,
-        device_info:device_info,
+        country: country,
+        city: city,
+        device_info: device_info,
         password: formData.password,
       },
       (response) => {
         if (response.data.message.includes("Activation link has been sent to your email address")) {
           setFormSuccess(response.data.message)
+          setFormData({
+            fullName: '',
+            email: '',
+            displayName: '',
+            password: '',
+            confirmPassword: '',
+            agree: false,
+          });
+          setCountryName('');
+          setCity('');
+          setDeviceIp('');
         }
         else {
           setFormError(response.data.message || response.data.email || response.data.username || response.data.display_name)

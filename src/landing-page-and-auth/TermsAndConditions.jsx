@@ -1,48 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Header.jsx'
 import Footer from './Footer.jsx'
 
+import { handleLegaItemsData } from '../utils/legalUtils';
+
 function TermsAndConditions() {
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const [privacyPolicy, setPrivacyPolicy] = useState('');
+  const [updatedAt, setUpdatedAt] = useState('');
+
+  // fetching the terms and conditions
+  useEffect(() => {
+    const fetchLegalItem = async () => {
+      try {
+        setLoading(true);
+        await handleLegaItemsData(
+          {},
+          (response) => {
+            if (response.data) {
+              setPrivacyPolicy(response.data.terms_and_conditions);
+              setUpdatedAt(response.data.updated_at)
+            } else {
+              setPrivacyPolicy('Not yet updated')
+            }
+          },
+          (error) => {
+            setError(error.message || 'Failed to fetch blogs');
+          }
+        );
+      } catch (err) {
+        setError(err.message || 'An unexpected error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLegalItem();
+  }, []);
+
 
   return (
     <>
       <Header />
       <section className='min-h-screen flex flex-col md:w-[90%] md:pt-35'>
         <div className=''>
-          <h1 className='text-[#E3E0C0] text-4xl mb-4 text-left font-bold'>Terms and Conditions</h1>
+          <h1 className='text-[#E3E0C0] text-4xl mb-4 text-left font-bold'>Terms And Conditions</h1>
         </div>
         <div className=' bg-[#1B1C1D] rounded-2xl p-5'>
-          <div>
-            <h5 className='text-[#FBEC6C] text-[13px] mb-2'>Last Updated  on 10/5/2025</h5>
-            <pre style={{ whiteSpace: 'pre-wrap' }} className='text-[#E3E0C0] text-[1.1rem] mb-2'>{`1. Acceptance of Terms
-You must be at least 13 years old (or the legal age in your country) to use LughaNest.
-By registering, you confirm that all provided information (name, email, city, country, etc.) is accurate.
+          {loading ? (
 
-2. User Responsibilities
-You are responsible for your account security (password, login details).
-No harassment, hate speech, or illegal content is allowed in chats or posts. Violations may lead to account suspension.
-You agree to use LughaNest only for language learning and cultural exchange.
+            <div className="w-full text-center py-10">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FBEC6C] mx-auto"></div>
+              <p className="mt-4 text-white">Loading terms and conditions...</p>
+            </div>
 
-3. Data Usage & Marketing
-LughaNest collects location data (city/country), chat interactions, and learning progress to:
-Improve the platform.
-Personalize your experience.
-Send targeted promotions (e.g., course discounts, partner offers).
-You can opt out of marketing emails in Account Settings.
-
-4. Intellectual Property
-All course content, logos, and materials belong to LughaNest.
-You may not copy, resell, or misuse any content without permission.
-
-5. Termination
-LughaNest reserves the right to suspend or ban accounts for violations.
-
-6. Limitation of Liability
-LughaNest is not liable for:
-Errors in language content.
-User disputes in chats.
-Third-party data breaches (though we use security measures).`}</pre>
-          </div>
+          ) : (
+            <div>
+              <h5 className='text-[#FBEC6C] text-[13px] mb-2'>Last Updated  on {new Date(updatedAt).toLocaleDateString()}</h5>
+              <pre style={{ whiteSpace: 'pre-wrap' }} className='text-[#E3E0C0] text-[1.1rem] mb-2'>{privacyPolicy}</pre>
+            </div>)}
         </div>
       </section>
       <Footer />

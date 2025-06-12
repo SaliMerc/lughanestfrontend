@@ -42,13 +42,13 @@ function ChangePasswordReset() {
               setJwtToken(jwt);
               setValidToken(true);
             } else {
-              navigate('/invalid-link', {
+              navigate('/password-reset', {
                 state: { error: response.data.message || 'Invalid token' }
               });
             }
           },
           (error) => {
-            navigate('/invalid-link', {
+            navigate('/password-reset', {
               state: { error: error.message || 'Token validation failed' }
             });
           }
