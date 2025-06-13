@@ -104,7 +104,6 @@ function Home() {
           {},
           (response) => {
             if (response.data) {
-              console.log(response.data)
               setMonthlySubscription(response.data.monthly_plan);
               setYearlySubscription(response.data.yearly_plan);
               setCurrency(response.data.currency);

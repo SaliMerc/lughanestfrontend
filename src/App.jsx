@@ -20,10 +20,14 @@ import PrivacyPolicy from './landing-page-and-auth/PrivacyPolicy';
 import Blogs from './landing-page-and-auth/Blogs';
 import BlogContent from './landing-page-and-auth/BlogContent';
 
+import DashboardNavigation from './user-dashboard/DashboardHeader';
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/dashboard" element={<DashboardNavigation />} />
+
         <Route path="/" element={<Home />} />
 
         <Route path="/courses" element={<Courses />} />

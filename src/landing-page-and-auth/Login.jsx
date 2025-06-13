@@ -48,8 +48,7 @@ function Login() {
       (response) => {
         setLoading(false);
         if (response.data.message.includes("Logged in successfully")) {
-          navigate('/');
-          // sessionStorage.removeItem('otp-email')
+          navigate('/dashboard');
         }
         else {
           setFormError(response.data.message)

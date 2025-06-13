@@ -9,6 +9,19 @@ export async function handleGoogleLogin(credential, onSuccess, onError) {
       token: credential,
     });
 
+    const { data } = response;
+
+    if (data.access_token && data.refresh_token) {
+      localStorage.setItem('access_token', data.access_token);
+      localStorage.setItem('refresh_token', data.refresh);
+
+      if (data.user) {
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
+
+      axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`;
+    }
+
     if (onSuccess) onSuccess(response);
   } catch (error) {
     if (onError) onError(error);
@@ -144,6 +157,20 @@ export async function handleEmailLogin(userData, onSuccess, onError) {
         },
       }
     );
+
+    const { data } = response;
+
+    if (data.access && data.refresh) {
+      localStorage.setItem('access_token', data.access_token);
+      localStorage.setItem('refresh_token', data.refresh);
+
+      if (data.user) {
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
+
+      axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`;
+    }
+
     if (onSuccess) onSuccess(response);
   } catch (error) {
     if (onError) onError(error);
