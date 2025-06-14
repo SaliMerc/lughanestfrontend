@@ -48,7 +48,7 @@ function Login() {
       (response) => {
         setLoading(false);
         if (response.data.message.includes("Logged in successfully")) {
-          navigate('/dashboard');
+          navigate('/dashboard-home');
         }
         else {
           setFormError(response.data.message)
@@ -103,7 +103,7 @@ function Login() {
                   credentialResponse.credential,
                   () => {
                     setLoading(false);
-                    navigate('/');
+                    navigate('/dashboard-home');
                   },
                   () => {
                     setLoading(false);

@@ -19,3 +19,21 @@ export async function handleCourseItemsData(data, onSuccess, onError) {
     if (onError) onError(error);
   }
 }
+
+// For getting all the available courses in the dashboard
+export async function handleStructuredCourseItemsData(data, onSuccess, onError) {
+  try {
+    const response = await axios.get(
+      `${API_URL}/api/v1/courses/structured-available-courses/`,
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (onSuccess) onSuccess(response);
+  } catch (error) {
+    if (onError) onError(error);
+  }
+}

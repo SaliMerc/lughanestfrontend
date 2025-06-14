@@ -164,7 +164,7 @@ function Login() {
                     credentialResponse.credential,
                     () => {
                       setLoading(false);
-                      navigate('/');
+                      navigate('/dashboard-home');
                     },
                     () => {
                       setLoading(false);

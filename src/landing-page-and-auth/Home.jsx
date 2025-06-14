@@ -136,10 +136,10 @@ function Home() {
 
         {/* hero section starts here */}
         <section style={backgroundImage} className="flex flex-col md:flex-row  justify-between p-5 md:p-10">
-          <div className="flex flex-col items-start justify-center">
+          <div className="flex flex-col items-start justify-center pr-2">
             <Fade direction='left'>
-              <h1 className='text-5xl md:text-7xl leading-normal font-bold mb-5'>Learn Kenyan <br className="hidden md:block" /> Languages with LughaNest </h1></Fade>
-            <Link to="/signup"><button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+              <h1 className='text-5xl md:text-[3.5rem] leading-normal font-bold mb-5'>Learn Kenyan  Languages <br className="hidden md:block" />with LughaNest </h1></Fade>
+            <Link to="/signup"><button className='!min-w-50 min-h-14 px-3 !bg-[#FBEC6C] md:!bg-[#FBEC6C] shadow-xl !shadow-[#000000] text-xl !text-black font-bold !border-1 !border-[#FBEC6C] hover:!bg-[#0E0D0C] hover:!text-[#E3E0C0] transition-colors !duration-300 text-center '>
               Get Started
               <FontAwesomeIcon icon={faArrowRight} />
             </button>

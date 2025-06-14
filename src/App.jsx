@@ -20,13 +20,34 @@ import PrivacyPolicy from './landing-page-and-auth/PrivacyPolicy';
 import Blogs from './landing-page-and-auth/Blogs';
 import BlogContent from './landing-page-and-auth/BlogContent';
 
+import PrivateRoutes from './PrivateRoutes';
+
 import DashboardNavigation from './user-dashboard/DashboardHeader';
+import DashboardHome from './user-dashboard/DashboardHome';
+import DashboardLogout from './user-dashboard/DashboardLogout';
+
+import DashboardCourses from './user-dashboard/DashboardCourses';
+import DashboardCompletedCourses from './user-dashboard/DashboardCompletedCourses';
+import DashboardOngoingCourses from './user-dashboard/DashboardOngoingCourses';
+
+import EnrollCourses from './user-dashboard/EnrollCourse';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/dashboard" element={<DashboardNavigation />} />
+
+        <Route element={<PrivateRoutes />}>
+          <Route path="/dashboard" element={<DashboardNavigation />} />
+          <Route path="/dashboard-home" element={<DashboardHome />} />
+          <Route path="/logout" element={<DashboardLogout />} />
+
+          <Route path="/dashboard-courses" element={<DashboardCourses />} />
+          <Route path="/completed-courses" element={<DashboardCompletedCourses />} />
+          <Route path="/ongoing-courses" element={<DashboardOngoingCourses />} />
+
+          <Route path="/dashboard-courses/:slug" element={<EnrollCourses />} />
+        </Route>
 
         <Route path="/" element={<Home />} />
 

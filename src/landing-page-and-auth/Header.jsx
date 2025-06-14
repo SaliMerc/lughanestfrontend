@@ -20,13 +20,13 @@ function Header() {
   }, []);
 
   return (
-    <header className={`text-[#E3E0C0] mt-5 md:mt-0 mb-12 md:h-30 md:fixed md:top-0 md:left-5 md:right-5 md:z-50 transition-colors duration-300 ${scrolled ? 'bg-[#000000]' : ''
+    <header className={`text-[#E3E0C0] mt-5 md:mt-0 mb-12 md:h-23 md:fixed md:top-0 md:left-0 md:right-5 md:z-50 transition-colors duration-300 ${scrolled ? 'bg-[#000000] ' : ''
       }`}>
       <nav className="flex justify-between items-center">
 
         <div className='logo-and-toggle-items flex justify-between w-full'>
 
-          <div className="logo hidden md:block">
+          <div className="pl-4 logo hidden md:block">
             <Link to='/'><img src={logo} alt="Logo" /></Link>
           </div>
 
@@ -45,7 +45,7 @@ function Header() {
           </div>
 
         </div>
-        <div className={`nav-items flex gap-[22rem] text-[#6D3710] md:text-[#E3E0C0] ${menuOpen ? 'open' : ''}`}>
+        <div className={`nav-items flex font-semibold gap-[22rem] text-[#E3E0C0] ${menuOpen ? 'open' : ''}`}>
           <ul className='flex gap-8 mt-7'>
             <li className='hover:underline hover:text-[#FBEC6C]'><Link to='/'>Home</Link></li>
             <li className='hover:underline hover:text-[#FBEC6C]'><Link to='/#about'>About</Link></li>
@@ -54,7 +54,7 @@ function Header() {
             <li className='hover:underline hover:text-[#FBEC6C]'><Link to='/#contact'>Contact</Link></li>
             <li className='hover:underline hover:text-[#FBEC6C]'><Link to='/blogs'>Blog</Link></li>
           </ul>
-          <Link to="/login"><button className='w-36 h-14 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#8F5932] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-30'>Sign In</button></Link>
+          <Link to="/login"><button className='!min-w-40 min-h-14 px-3 !bg-[#FBEC6C] md:!bg-[#FBEC6C] shadow-xl !shadow-[#000000] text-xl !text-black font-bold !border-1 !border-[#FBEC6C] hover:!bg-[#0E0D0C] hover:!text-[#E3E0C0] transition-colors !duration-300 text-center'>Sign In</button></Link>
         </div>
       </nav>
     </header>

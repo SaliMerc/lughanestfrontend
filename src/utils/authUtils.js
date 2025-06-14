@@ -11,7 +11,7 @@ export async function handleGoogleLogin(credential, onSuccess, onError) {
 
     const { data } = response;
 
-    if (data.access_token && data.refresh_token) {
+    if (data.access_token && data.refresh) {
       localStorage.setItem('access_token', data.access_token);
       localStorage.setItem('refresh_token', data.refresh);
 
