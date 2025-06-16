@@ -32,6 +32,19 @@ import DashboardOngoingCourses from './user-dashboard/DashboardOngoingCourses';
 
 import EnrollCourses from './user-dashboard/EnrollCourse';
 
+import CourseModules from './user-dashboard/CourseModules';
+import CourseLessons from './user-dashboard/CourseLessons';
+
+import DashboardChats from './user-dashboard/DashboardChats';
+import ChatInterface from './user-dashboard/ChatMessageInterface';
+
+import DashboardSetting from './user-dashboard/DasboardSetting';
+import SettingsChangePassword from './user-dashboard/SettingsChangePassword';
+import SettingsDeleteAccount from './user-dashboard/SettingsDeleteAccount';
+
+import DashboardBlogs from './user-dashboard/DashboardBlogs';
+import DashboardBlogContent from './user-dashboard/DashboardBlogContent';
+
 function App() {
   return (
     <BrowserRouter>
@@ -45,8 +58,21 @@ function App() {
           <Route path="/dashboard-courses" element={<DashboardCourses />} />
           <Route path="/completed-courses" element={<DashboardCompletedCourses />} />
           <Route path="/ongoing-courses" element={<DashboardOngoingCourses />} />
-
           <Route path="/dashboard-courses/:slug" element={<EnrollCourses />} />
+
+          <Route path="/dashboard-home/:slug" element={<CourseModules />} />
+          <Route path="/dashboard-courses/course-lessons" element={<CourseLessons />} />
+
+          <Route path="/dashboard-chats" element={<DashboardChats />} />
+          <Route path="/dashboard-chats/chat-interface" element={<ChatInterface />} />
+
+
+          <Route path="/dashboard-settings" element={<DashboardSetting />} />
+          <Route path="/settings-change-password" element={<SettingsChangePassword />} />
+          <Route path="/settings-delete-account" element={<SettingsDeleteAccount />} />
+
+          <Route path="/dashboard-blog" element={<DashboardBlogs />} />
+          <Route path="/dashboard-blog/:slug" element={<DashboardBlogContent />} />
         </Route>
 
         <Route path="/" element={<Home />} />

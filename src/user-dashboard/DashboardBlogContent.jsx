@@ -3,11 +3,9 @@ import { useParams } from 'react-router-dom';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import Header from './Header.jsx';
-import Footer from './Footer.jsx';
+import DashboardNavigation from './DashboardHeader';
 
-
-function BlogContent() {
+function DashboardBlogContent() {
   
   const location = useLocation();
   const navigate = useNavigate();
@@ -15,7 +13,7 @@ function BlogContent() {
 
   return (
     <>
-      <Header />
+     <DashboardNavigation>
       <div className='text-white min-h-screen md:pt-20'>
         <section className='mt-6 md:mt-8'>
          
@@ -40,9 +38,9 @@ function BlogContent() {
             </div>
         </section>
       </div>
-      <Footer />
+        </DashboardNavigation>
     </>
   );
 }
 
-export default BlogContent;
+export default DashboardBlogContent;

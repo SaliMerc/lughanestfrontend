@@ -94,7 +94,7 @@ function Blogs() {
                         ? blog.blog_content.split(" ").slice(0, 20).join(" ") + "..."
                         : blog.blog_content}
                     </p>
-                    <Link to={`/blogs/${generateSlug(blog.blog_title)}`}>
+                    <Link to={`/blogs/${generateSlug(blog.blog_title)}`} state={{ blog }}>
                       <button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
                         Read More...
                       </button>

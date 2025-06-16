@@ -19,6 +19,8 @@ import dashboardLogout from '../assets/dashboard-images/dashboard-logout.svg';
 
 function DashboardNavigation({ children }) {
     const userDetails = JSON.parse(localStorage.getItem('user'));
+    console.log("Profile picture URL:", userDetails.profile_picture);
+
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const location = useLocation();
 
