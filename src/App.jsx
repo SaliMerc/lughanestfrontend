@@ -34,6 +34,7 @@ import EnrollCourses from './user-dashboard/EnrollCourse';
 
 import CourseModules from './user-dashboard/CourseModules';
 import CourseLessons from './user-dashboard/CourseLessons';
+import CourseLessonContent from './user-dashboard/CourseLessonContent';
 
 import DashboardChats from './user-dashboard/DashboardChats';
 import ChatInterface from './user-dashboard/ChatMessageInterface';
@@ -61,7 +62,8 @@ function App() {
           <Route path="/dashboard-courses/:slug" element={<EnrollCourses />} />
 
           <Route path="/dashboard-home/:slug" element={<CourseModules />} />
-          <Route path="/dashboard-courses/course-lessons" element={<CourseLessons />} />
+          <Route path="/dashboard-home/:slug/:slug" element={<CourseLessons />} />
+          <Route path="/dashboard-home/:slug/:slug/:slug" element={<CourseLessonContent />} />
 
           <Route path="/dashboard-chats" element={<DashboardChats />} />
           <Route path="/dashboard-chats/chat-interface" element={<ChatInterface />} />
