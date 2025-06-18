@@ -12,10 +12,14 @@ import { generateSlug } from '../utils/slugUtils';
 import dummyVideo from '../assets/dashboard-images/dashboard-test-items/test-video-file.mp4';
 import dummyAudio from '../assets/dashboard-images/dashboard-test-items/my_audio.mp3';
 
+import { handleCourseLessonCompletion } from '../utils/coursesUtils';
+
 function CourseLessonContent() {
     const location = useLocation();
     const navigate = useNavigate();
     const { lesson, course, module, currentLessonIndex, allLessons } = location.state || {};
+    const [completionStatus, setCompletionStatus] = useState(undefined)
+    const [isLoading, setIsLoading] = useState(false)
 
     // Navigation handlers
     const handlePrevious = () => {
@@ -47,6 +51,47 @@ function CourseLessonContent() {
             });
         }
     };
+
+    useEffect(() => {
+        if (lesson) {
+            setIsLoading(true); // Start loading
+            handleCourseLessonCompletion(
+                lesson.id,
+                'GET',
+                {},
+                (data) => {
+                    setCompletionStatus(data.completed === true);
+                    setIsLoading(false); // Stop loading on success
+                },
+                (err) => {
+                    console.error('Error checking completion:', err);
+                    setIsLoading(false); // Stop loading on error
+                }
+            );
+        }
+    }, [lesson]);
+
+    const handleMarkLessonComplete = () => {
+        if (lesson) {
+            setIsLoading(true); // Start loading
+            handleCourseLessonCompletion(
+                lesson.id,
+                'POST',
+                { lesson: lesson.id },
+                (data) => {
+                    setCompletionStatus(data.completed === true);
+                    setIsLoading(false); // Stop loading on success
+                },
+                (err) => {
+                    console.error('Error toggling completion:', err);
+                    setIsLoading(false); // Stop loading on error
+                }
+            );
+        }
+    };
+
+
+
 
     const handleComplete = () => {
         // Mark lesson as complete - you can implement your completion logic here
@@ -176,14 +221,30 @@ function CourseLessonContent() {
                                     }
 
                                 </div>
-                                
+
                                 <div>
                                     <button
-                                        onClick={handleComplete}
-                                        className=''
+                                        onClick={handleMarkLessonComplete}
+                                        className={`px-4 rounded-md transition-colors ${isLoading
+                                                ? 'bg-gray-300 cursor-not-allowed':''
+                                            }`}
+                                        disabled={isLoading}
                                     >
-                                        Complete
-                                        <FontAwesomeIcon icon={faCheck} />
+                                        {isLoading ? (
+                                            <span className="flex items-center gap-2">
+                                                <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="#FBEC6C" viewBox="0 0 24 24">
+                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="#FBEC6C" strokeWidth="4"></circle>
+                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                </svg>
+                                                ...
+                                            </span>
+                                        ) : completionStatus ? (
+                                            "Completed"
+                                        ) : (
+                                            <>
+                                                Complete <FontAwesomeIcon icon={faCheck} />
+                                            </>
+                                        )}
                                     </button>
                                 </div>
                                 <div>
@@ -202,7 +263,6 @@ function CourseLessonContent() {
                                 </div>
                             </div>
 
-                            {/* Lesson progress indicator */}
                             <div className="text-center text-[#FBEC6C] text-sm">
                                 Lesson {currentLessonIndex + 1} of {allLessons.length}
                             </div>

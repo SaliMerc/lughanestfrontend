@@ -198,7 +198,7 @@ function Home() {
                 <div className='flex flex-col items-center gap-2'>
                   <p>FREE</p>
                   <img src={pricingFree} alt="about-image" className='h-[30px] md:h-[40px]' />
-                  <p className='text-[1.2rem] md:text-[1.5rem]'>Ksh. 0/month</p>
+                  <p className='text-[1.2rem] md:text-[1.5rem]'>Kshs. 0.00/month</p>
                 </div>
                 <div className='flex flex-col items-start text-left gap-2'>
                   <p><FontAwesomeIcon icon={faCheck} />  1 Full Course</p>

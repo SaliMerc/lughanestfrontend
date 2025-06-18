@@ -103,3 +103,24 @@ export async function handleCourseModules(courseId, onSuccess, onError) {
     if (onError) onError(error);
   }
 }
+
+
+// To check if a user has completed a lesson or not 
+export async function handleCourseLessonCompletion(lessonId, method = 'POST', data = {}, onSuccess, onError) {
+  try {
+    const token = localStorage.getItem('access_token');
+    const response = await axios({
+      method,
+      url: `${API_URL}/api/v1/courses/course-lesson-completion/${lessonId}/`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      ...(method === 'POST' ? { data } : {}),
+    });
+
+    if (onSuccess) onSuccess(response.data);
+  } catch (error) {
+    if (onError) onError(error);
+  }
+}

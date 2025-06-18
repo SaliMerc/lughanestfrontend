@@ -1,8 +1,8 @@
 button {
     outline: none;
     border: none;
-    height: 3rem;
-    min-width: 10rem;
+    min-height: 3rem;
+    min-width: 8rem;
     padding: 0 0.6rem;
     box-shadow: 0 0 0.2rem #8F5932;
     border-radius: 1rem 1rem 0 1rem;
@@ -158,5 +158,6 @@ input:checked {
 
     button {
         width: 100%;
+        font-size: 1.1rem;
     }
 }
