@@ -131,7 +131,7 @@ function CourseLessonContent() {
                                                 controls
                                                 muted
                                             >
-                                                <source src={dummyVideo} type="video/mp4" />
+                                                <source src={lesson.lesson_file_url} type="video/mp4" />
                                                 Your browser does not support the video tag.
                                             </video>
                                         </div>
@@ -158,7 +158,7 @@ function CourseLessonContent() {
                                                 controls
                                                 muted={false}
                                             >
-                                                <source src={dummyAudio} type="audio/mpeg" />
+                                                <source src={lesson.lesson_file_url} type="audio/mpeg" />
                                                 Your browser does not support the audio element.
                                             </audio>
                                         </div>

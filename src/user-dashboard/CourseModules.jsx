@@ -12,7 +12,8 @@ function CourseModules() {
   const location = useLocation();
   const navigate = useNavigate();
   const { course } = location.state || {};
-  
+  console.log(course)
+
   const [modules, setModules] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,7 +22,7 @@ function CourseModules() {
     if (course) {
       setLoading(true);
       handleCourseModules(
-        course.course_name.id, 
+        course.course_name.id,
         (data) => {
           setModules(data);
           setLoading(false);
@@ -39,10 +40,10 @@ function CourseModules() {
       <div>
         <section>
           <h1 className='text-2xl md:text-4xl font-semibold text-[#FBEC6C]'>
-            {course.course_name.course_name} - 
+            {course.course_name.course_name} -
             <span className='text-[#E3E0C0]'> {capitalizeFirst(course.course_level)}</span>
           </h1>
-          
+
           <section className='flex flex-col gap-3 md:gap-6 py-7'>
             {loading ? (
               <div className="w-full text-center py-10">
@@ -63,10 +64,10 @@ function CourseModules() {
             ) : (
               modules.map((module, index) => (
                 <div key={module.id} className='min-h-[100px] w-full bg-[#0E0D0C] flex flex-col gap-3 rounded-[20px] p-6'>
-                  <Link 
-                    to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}/${generateSlug(module.module_title,module.module_description)}`} 
+                  <Link
+                    to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}/${generateSlug(module.module_title, module.module_description)}`}
                     state={{ module, course }}
-                    className='hover:text-[#FBEC6C] transition-colors'
+                    className='hover:text-[#FBEC6C] transition-colors flex flex-row justify-between items-center'
                   >
                     <div className='flex flex-col items-start text-left gap-2'>
                       <p className='text-[1.2rem] md:text-[1.5rem] font-semibold text-[#FBEC6C] mb-3'>
@@ -75,6 +76,27 @@ function CourseModules() {
                       <p className='text-[#E3E0C0]'>
                         {module.module_description}
                       </p>
+                    </div>
+
+                    <div>
+
+                      <div class="relative w-20 h-20">
+                        <svg class="w-full h-full" viewBox="0 0 100 100">
+                          <circle
+                            class="text-[#FBEC6C]"
+                            stroke-width="3"
+                            stroke="currentColor"
+                            fill="transparent"
+                            r="40"
+                            cx="50"
+                            cy="50"
+                          />
+                        </svg>
+                        <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                          <span class="text-[1rem] text-white">{module.module_progress}%</span>
+                        </div>
+                      </div>
+
                     </div>
                   </Link>
                 </div>

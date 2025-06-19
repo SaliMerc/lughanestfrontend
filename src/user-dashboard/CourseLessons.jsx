@@ -36,7 +36,7 @@ function CourseLessons() {
                                         </div>
                                         <div>
                                             <p className='text-[1rem] md:text-[1.5rem] first-letter:uppercase  mb-3 font-semibold'>{lesson.lesson_type}</p>
-                                            <p className='first-letter:uppercase text-[#FBEC6C]'>{lesson.lesson_duration} seconds</p>
+                                            <p className='first-letter:uppercase text-[#FBEC6C]'>{lesson.lesson_duration} minutes</p>
                                         </div>
                                         <div>
                                             <Link to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}/${generateSlug(module.module_title,module.module_description)}/${generateSlug(lesson.lesson_description)}`} 

@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 // Import assets
 import logo from '../assets/new-lughanest-logo.svg';
 import open from '../assets/open-menu-items.svg';
-import profileImage from '../assets/profile-image.png';
+import profileImage from '../assets/dashboard-images/profile-pic-placeholder.png';
 
 // Import sidebar icons
 import dashboardHome from '../assets/dashboard-images/dashboard-home.svg';
@@ -74,7 +74,7 @@ function DashboardNavigation({ children }) {
                     {isSidebarOpen ? (
                         <h1 className="text-xl font-bold text-white">LughaNest</h1>
                     ) : (
-                        <Link to='/'>
+                        <Link to='/dashboard-home'>
                             <img src={logo} alt="Logo" className="h-[35px] w-[35px]" />
                         </Link>
                     )}
@@ -138,7 +138,7 @@ function DashboardNavigation({ children }) {
                         <div className="w-10 h-10 md:w-15 md:h-15 mr-4">
                             <Link to="/profile">
                                 <img
-                                    src={profileImage}
+                                    src={userDetails.profile_picture_url || profileImage}
                                     alt="Profile"
                                     className="rounded-full object-cover w-full h-full"
                                 />
