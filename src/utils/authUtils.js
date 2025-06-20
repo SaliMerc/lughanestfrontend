@@ -176,3 +176,72 @@ export async function handleEmailLogin(userData, onSuccess, onError) {
     if (onError) onError(error);
   }
 }
+
+// For setting the password once the user is logged in
+export async function handlePasswordChangeLoggedIn(userData, onSuccess, onError) {
+  try {
+    const token = localStorage.getItem('access_token');
+    const response = await axios.post(
+      `${API_URL}/api/v1/users/change-password/`,
+      userData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const { data } = response;
+
+    if (data.access && data.refresh) {
+      localStorage.setItem('access_token', data.access);
+      localStorage.setItem('refresh_token', data.refresh);
+
+      if (data.user) {
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
+
+    }
+
+    if (onSuccess) onSuccess(response);
+  } catch (error) {
+    if (onError) onError(error);
+  }
+}
+
+// To schedule for account deletion
+export async function scheduleAccountDeletion() {
+  try {
+    const token = localStorage.getItem('access_token');
+    const response = await axios.delete(
+      `${API_URL}/api/v1/users/delete-account/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+// To check if account deletion have been scheduled
+export async function checkDeletionStatus() {
+  try {
+    const token = localStorage.getItem('access_token');
+    const response = await axios.get(
+      `${API_URL}/api/v1/users/delete-account/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
