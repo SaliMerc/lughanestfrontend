@@ -43,6 +43,10 @@ import DashboardSetting from './user-dashboard/DasboardSetting';
 import SettingsChangePassword from './user-dashboard/SettingsChangePassword';
 import SettingsDeleteAccount from './user-dashboard/SettingsDeleteAccount';
 
+import DashboardProfile from './user-dashboard/DashboardProfile';
+import ProfileChangeEmail from './user-dashboard/ProfileChangeEmail';
+import ProfileChangeEmailVerification from './user-dashboard/ProfileChangeEmailVerification';
+
 import DashboardBlogs from './user-dashboard/DashboardBlogs';
 import DashboardBlogContent from './user-dashboard/DashboardBlogContent';
 
@@ -72,6 +76,11 @@ function App() {
           <Route path="/dashboard-settings" element={<DashboardSetting />} />
           <Route path="/settings-change-password" element={<SettingsChangePassword />} />
           <Route path="/settings-delete-account" element={<SettingsDeleteAccount />} />
+
+          <Route path="/dashboard-profile" element={<DashboardProfile />} />
+          <Route path="/profile-change-email" element={<ProfileChangeEmail />} />
+          <Route path="/profile-change-email-verification" element={<ProfileChangeEmailVerification />} />
+
 
           <Route path="/dashboard-blog" element={<DashboardBlogs />} />
           <Route path="/dashboard-blog/:slug" element={<DashboardBlogContent />} />

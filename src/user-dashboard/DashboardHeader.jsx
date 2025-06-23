@@ -136,7 +136,7 @@ function DashboardNavigation({ children }) {
                             className="h-[35px] cursor-pointer ml-4"
                         />
                         <div className="w-10 h-10 md:w-15 md:h-15 mr-4">
-                            <Link to="/profile">
+                            <Link to="/dashboard-profile">
                                 <img
                                     src={userDetails.profile_picture_url || profileImage}
                                     alt="Profile"

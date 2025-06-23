@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import DashboardNavigation from './DashboardHeader';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faCheck, faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 import auth_background from '../assets/login-signup-image.png';
 

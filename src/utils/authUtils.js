@@ -263,3 +263,23 @@ export async function handleUndoAccountDeletion() {
     throw error;
   }
 }
+
+// To allow the users to update their details
+export async function handleProfileUpdate(userData) {
+  try {
+    const token = localStorage.getItem('access_token');
+    const response = await axios.patch(
+      `${API_URL}/api/v1/users/update-profile-details/`,
+      userData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log(response.data)
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
