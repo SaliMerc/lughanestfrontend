@@ -211,7 +211,7 @@ export async function handlePasswordChangeLoggedIn(userData, onSuccess, onError)
 }
 
 // To schedule for account deletion
-export async function scheduleAccountDeletion() {
+export async function handleScheduleAccountDeletion() {
   try {
     const token = localStorage.getItem('access_token');
     const response = await axios.delete(
@@ -229,11 +229,29 @@ export async function scheduleAccountDeletion() {
 }
 
 // To check if account deletion have been scheduled
-export async function checkDeletionStatus() {
+export async function handleCheckDeletionStatus() {
   try {
     const token = localStorage.getItem('access_token');
     const response = await axios.get(
       `${API_URL}/api/v1/users/delete-account/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+// To cancel account deletion
+export async function handleUndoAccountDeletion() {
+  try {
+    const token = localStorage.getItem('access_token');
+    const response = await axios.post(
+      `${API_URL}/api/v1/users/undo-account-deletion/`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

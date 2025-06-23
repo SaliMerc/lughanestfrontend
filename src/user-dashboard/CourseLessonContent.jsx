@@ -9,9 +9,6 @@ import { faArrowRight, faCheck, faArrowLeft } from '@fortawesome/free-solid-svg-
 
 import { generateSlug } from '../utils/slugUtils';
 
-import dummyVideo from '../assets/dashboard-images/dashboard-test-items/test-video-file.mp4';
-import dummyAudio from '../assets/dashboard-images/dashboard-test-items/my_audio.mp3';
-
 import { handleCourseLessonCompletion } from '../utils/coursesUtils';
 
 function CourseLessonContent() {
@@ -54,18 +51,18 @@ function CourseLessonContent() {
 
     useEffect(() => {
         if (lesson) {
-            setIsLoading(true); // Start loading
+            setIsLoading(true); 
             handleCourseLessonCompletion(
                 lesson.id,
                 'GET',
                 {},
                 (data) => {
                     setCompletionStatus(data.completed === true);
-                    setIsLoading(false); // Stop loading on success
+                    setIsLoading(false); 
                 },
                 (err) => {
                     console.error('Error checking completion:', err);
-                    setIsLoading(false); // Stop loading on error
+                    setIsLoading(false); 
                 }
             );
         }
@@ -73,18 +70,18 @@ function CourseLessonContent() {
 
     const handleMarkLessonComplete = () => {
         if (lesson) {
-            setIsLoading(true); // Start loading
+            setIsLoading(true); 
             handleCourseLessonCompletion(
                 lesson.id,
                 'POST',
                 { lesson: lesson.id },
                 (data) => {
                     setCompletionStatus(data.completed === true);
-                    setIsLoading(false); // Stop loading on success
+                    setIsLoading(false); 
                 },
                 (err) => {
                     console.error('Error toggling completion:', err);
-                    setIsLoading(false); // Stop loading on error
+                    setIsLoading(false); 
                 }
             );
         }
@@ -94,10 +91,6 @@ function CourseLessonContent() {
 
 
     const handleComplete = () => {
-        // Mark lesson as complete - you can implement your completion logic here
-        console.log('Lesson completed:', lesson.lesson_number);
-
-        // Optionally navigate to next lesson after completion
         if (currentLessonIndex < allLessons.length - 1) {
             handleNext();
         } else {
