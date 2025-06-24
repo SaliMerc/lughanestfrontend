@@ -33,7 +33,7 @@ function Login() {
     e.preventDefault();
 
     if (!formData.username || !formData.password) {
-      setFormError('Please enter both your email and passoword to login.');
+      setFormError('Please enter both your email and password to login.');
       return;
     };
 

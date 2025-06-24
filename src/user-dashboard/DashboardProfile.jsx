@@ -7,6 +7,8 @@ import DashboardNavigation from './DashboardHeader';
 
 import { capitalizeFirst } from '../utils/slugUtils';
 
+import profileImage from '../assets/dashboard-images/profile-pic-placeholder.png';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,7 +16,6 @@ import auth_background from '../assets/login-signup-image.png';
 
 function DashboardProfile() {
     const userDetails = JSON.parse(localStorage.getItem('user'));
-    console.log(userDetails)
 
     return (
         <DashboardNavigation>
@@ -36,7 +37,7 @@ function DashboardProfile() {
                     <h1 className='mb-10 text-3xl font-bold text-[#FBEC6C]'>My Profile</h1>
                     <div className='flex flex-row gap-8 md:gap-5 mb-10'>
                         <div className='w-10 h-10 md:w-15 md:h-15 mr-4'>
-                            <img src={userDetails.profile_picture_url} alt="Profile Picture" className='rounded-full object-cover w-full h-full' />
+                            <img src={userDetails.profile_picture_url || profileImage} alt="Profile Picture" className='rounded-full object-cover w-full h-full' />
                         </div>
                         <Link>
                             <p><FontAwesomeIcon icon={faPenToSquare} /> Edit Photo</p>

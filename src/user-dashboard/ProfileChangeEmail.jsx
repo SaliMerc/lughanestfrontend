@@ -39,6 +39,7 @@ function ProfileChangeEmail() {
             const response = await handleProfileUpdate({
                 email: formData.email
             });
+            localStorage.setItem('newEmail', formData.email);
 
             if (response?.message?.includes("Email verification sent.")) {
                 navigate('/profile-change-email-verification');

@@ -7,21 +7,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import auth_background from '../assets/login-signup-image.png';
 
-import { handleProfileUpdate } from '../utils/authUtils';
+import { handleNewEmailUpdateVerification } from '../utils/authUtils';
 
 
 function ProfileChangeEmailVerification() {
     const userDetails = JSON.parse(localStorage.getItem('user'));
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
+    const new_email=localStorage.getItem('newEmail');
 
     const [formData, setFormData] = useState({
-        email: ''
+        otp: ''
     });
 
     const [formError, setFormError] = useState('');
 
-    // change email logic starts here
+    // verify email logic starts here
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -36,18 +37,25 @@ function ProfileChangeEmailVerification() {
         setLoading(true);
 
         try {
-            const response = await handleProfileUpdate({
-                email: formData.email
+            const response = await handleNewEmailUpdateVerification({
+                email:userDetails.email,
+                new_email: new_email,
+                otp: formData.otp
             });
 
-            if (response?.message?.includes("Email verification sent.")) {
-                navigate('/dashboard-home');
+            const updatedUser = {...userDetails, email: new_email};
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+            localStorage.removeItem('newEmail');
+
+            if (response?.message?.includes("Your email was updated successfully")) {
+                navigate('/dashboard-profile');
             } else {
-                setFormError(response?.data?.message || "Email update completed but no verification was sent.");
+                setFormError(response?.message || "Your new email could not be verified.");
+                console.log(response.message)
             }
         } catch (error) {
             console.error('Update error:', error);
-            const errorMessage = error?.response?.data?.message ||
+            const errorMessage = error?.response?.message ||
                 error?.message ||
                 "Email update failed. Please try again.";
             setFormError(errorMessage);
@@ -55,7 +63,7 @@ function ProfileChangeEmailVerification() {
             setLoading(false);
         }
     };
-    // change email logic ends here
+    // verify email logic ends here
 
 
     return (
@@ -76,49 +84,31 @@ function ProfileChangeEmailVerification() {
             >
                 <div className='form-div'>
                     <div className='form-title'>
-                        <div className='heading-item'><h1> <FontAwesomeIcon icon={faPenToSquare} /> Edit Email Address</h1></div>
+                        <div className='heading-item'><h1> OTP Verification</h1></div>
                     </div>
                     <form onSubmit={handleSubmit}>
-                        <fieldset>
-                            <legend className='font-semibold'>Current Email</legend>
+                        <div className="form-header-items flex justify-between items-center my-0 mx-2 text-emerald-500">
+                            <h5>Enter the OTP sent to {new_email}</h5>
+                        </div>
+                             <fieldset>
+                            <legend className='font-semibold'>OTP</legend>
 
                             <input
-                                type='email'
+                                type='number'
+                                placeholder='Enter the OTP'
                                 required
-                                name='old_email'
-                                value={userDetails.email}
-                                readOnly
-                            />
-                        </fieldset>
-
-                        <fieldset>
-                            <legend className='font-semibold'>New Email</legend>
-
-                            <input
-                                type='email'
-                                placeholder='Enter your new password'
-                                required
-                                name='email'
-                                value={formData.email}
+                                name='otp'
+                                value={formData.otp}
                                 onChange={handleChange}
                             />
-
-
                         </fieldset>
-
-
                         <div className="form-header-items flex justify-between items-center my-0 mx-2 text-red-700">
                             <h5>{formError}</h5>
                         </div>
                         <div className='flex md:flex-row md:justify-between mt-5'>
-                            <button type='submit' className='md:!w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
-                                {loading ? "Updating..." : "Update"}
+                            <button type='submit' className='md:!min-w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                {loading ? "Verifying..." : "Verify Email"}
                             </button>
-                            <Link to='/dashboard-profile'>
-                                <button type='button' className='md:!w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#E11212] hover:!bg-[#E11212] hover:!text-[#E3E0C0] transition-colors !duration-300'>
-                                    Cancel
-                                </button>
-                            </Link>
                         </div>
 
                     </form>

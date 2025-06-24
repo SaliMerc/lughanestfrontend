@@ -159,6 +159,7 @@ export async function handleEmailLogin(userData, onSuccess, onError) {
     );
 
     const { data } = response;
+    console.log(data)
 
     if (data.access && data.refresh) {
       localStorage.setItem('access_token', data.access_token);
@@ -278,6 +279,26 @@ export async function handleProfileUpdate(userData) {
       }
     );
     console.log(response.data)
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+// To allow the users to verify their new email after updating it
+export async function handleNewEmailUpdateVerification(userData) {
+  try {
+    const token = localStorage.getItem('access_token');
+    const response = await axios.post(
+      `${API_URL}/api/v1/users/new-email-otp-verification/`,
+      userData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     throw error;
