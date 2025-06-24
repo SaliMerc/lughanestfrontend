@@ -44,6 +44,8 @@ import SettingsChangePassword from './user-dashboard/SettingsChangePassword';
 import SettingsDeleteAccount from './user-dashboard/SettingsDeleteAccount';
 
 import DashboardProfile from './user-dashboard/DashboardProfile';
+import ProfileUpdateDetails from './user-dashboard/ProfileUpdateDetails';
+import ProfilePictureUpdate from './user-dashboard/ProfilePictureUpdate';
 import ProfileChangeEmail from './user-dashboard/ProfileChangeEmail';
 import ProfileChangeEmailVerification from './user-dashboard/ProfileChangeEmailVerification';
 
@@ -78,6 +80,9 @@ function App() {
           <Route path="/settings-delete-account" element={<SettingsDeleteAccount />} />
 
           <Route path="/dashboard-profile" element={<DashboardProfile />} />
+          <Route path="/profile-update-details" element={<ProfileUpdateDetails />} />
+          <Route path="/profile-picture-update" element={<ProfilePictureUpdate />} />
+
           <Route path="/profile-change-email" element={<ProfileChangeEmail />} />
           <Route path="/profile-change-email-verification" element={<ProfileChangeEmailVerification />} />
 
