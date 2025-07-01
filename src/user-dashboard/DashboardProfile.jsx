@@ -16,6 +16,30 @@ import auth_background from '../assets/login-signup-image.png';
 
 function DashboardProfile() {
     const userDetails = JSON.parse(localStorage.getItem('user'));
+    const cleanProfilePictureUrl = (url) => {
+        if (!url) return null;
+
+        if (url.includes('googleusercontent.com') && url.includes('media/https%3A')) {
+            try {
+                const encodedPart = url.split('/media/')[1];
+                const decodedUrl = decodeURIComponent(encodedPart);
+                const finalUrl = decodeURIComponent(decodedUrl);
+
+                return finalUrl;
+            } catch (error) {
+                console.error('Error cleaning profile picture URL:', error);
+                return url; 
+            }
+        }
+
+        if (url.startsWith('http://127.0.0.1:8000/media/')) {
+            return url; 
+        }
+
+        return url; 
+    };
+
+    const profilePicUrl = cleanProfilePictureUrl(userDetails.profile_picture_url);
 
     return (
         <DashboardNavigation>
@@ -37,7 +61,7 @@ function DashboardProfile() {
                     <h1 className='mb-10 text-3xl font-bold text-[#FBEC6C]'>My Profile</h1>
                     <div className='flex flex-row gap-8 md:gap-5 mb-10'>
                         <div className='w-10 h-10 md:w-15 md:h-15 mr-4'>
-                            <img src={userDetails.profile_picture_url || profileImage} alt="Profile Picture" className='rounded-full object-cover w-full h-full' />
+                            <img src={profilePicUrl || profileImage} alt="Profile Picture" className='rounded-full object-cover w-full h-full' />
                         </div>
                         <Link to='/profile-picture-update'>
                             <p><FontAwesomeIcon icon={faPenToSquare} /> Edit Photo</p>
@@ -50,21 +74,19 @@ function DashboardProfile() {
                         <div className='flex flex-row items-center gap-3'>
                             <p className='mb-2'>Languages I Speak:</p>
                             <div className='flex flex-row flex-wrap gap-2'>
-                                {Object.entries(userDetails.languages_spoken).map(([language, proficiency]) => (
+                                {userDetails.languages_spoken.map((item, index) => (
                                     <button
-                                        key={language}
-                                        className={`!bg-[#FBEC6C] !text-black px-3 py-1 rounded-md ${proficiency === 'fluent' ? '!border-2' : ''
-                                            }`}
-                                        title={`${capitalizeFirst(language)} (${proficiency})`}
+                                        key={index}
+                                        className='!bg-[#FBEC6C] !text-black px-3 py-1 rounded-md'
                                     >
-                                        {capitalizeFirst(language)}
+                                        {capitalizeFirst(item.language)}
                                     </button>
                                 ))}
                             </div>
-                            
+
                         </div>
                         <div className='mt-6'>
-                            <div className='flex md:flex-row md:justify-between'>
+                            <div className='flex flex-col md:flex-row md:justify-between'>
                                 <Link to='/profile-update-details'>
                                     <button type='submit' className='md:!min-w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
                                         Update Profile Details

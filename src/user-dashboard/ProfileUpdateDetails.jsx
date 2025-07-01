@@ -16,14 +16,14 @@ function ProfileUpdateDetails() {
 
     const [formData, setFormData] = useState({
         display_name: userDetails?.display_name || '',
-        languages: [
-            { language: '', level: 'Beginner' }
-        ]
+        languages: userDetails?.languages_spoken?.length > 0
+            ? userDetails.languages_spoken
+            : [{ language: '', level: '' }]
     });
 
     const [formError, setFormError] = useState('');
 
-    const languageLevels = ['Beginner', 'Intermediate', 'Advanced'];
+    const languageLevels = ['Beginner', 'Intermediate', 'Fluent'];
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -36,7 +36,7 @@ function ProfileUpdateDetails() {
     const handleLanguageChange = (index, field, value) => {
         setFormData(prev => ({
             ...prev,
-            languages: prev.languages.map((lang, i) => 
+            languages: prev.languages.map((lang, i) =>
                 i === index ? { ...lang, [field]: value } : lang
             )
         }));
@@ -66,10 +66,17 @@ function ProfileUpdateDetails() {
         try {
             const response = await handleProfileUpdate({
                 display_name: formData.display_name,
-                languages: formData.languages.filter(lang => lang.language.trim() !== '')
+                languages_spoken: formData.languages.filter(lang => lang.language.trim() !== '')
             });
 
-            setFormError("Profile updated successfully!");
+            const updatedUser = { ...userDetails, display_name: formData.display_name, languages_spoken: formData.languages };
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+
+            if (response?.message?.includes("Profile updated successfully")) {
+                navigate('/dashboard-profile');
+            } else {
+                setFormError(response?.data?.message);
+            }
         } catch (error) {
             console.error('Update error:', error);
             const errorMessage = error?.response?.data?.message ||
@@ -120,7 +127,7 @@ function ProfileUpdateDetails() {
 
                         <fieldset>
                             <legend className='font-semibold flex items-center gap-2'>
-                                Languages I Speak 
+                                Languages I Speak
                                 <div
                                     type='button'
                                     onClick={addLanguage}
@@ -171,16 +178,16 @@ function ProfileUpdateDetails() {
                             <h5>{formError}</h5>
                         </div>
 
-                        <div className='flex md:flex-row md:justify-between mt-5'>
-                            <button 
-                                type='submit' 
+                        <div className='flex flex-col md:flex-row md:justify-between mt-5'>
+                            <button
+                                type='submit'
                                 className='md:!w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'
                             >
                                 {loading ? "Updating..." : "Update"}
                             </button>
                             <Link to='/dashboard-profile'>
-                                <button 
-                                    type='button' 
+                                <button
+                                    type='button'
                                     className='md:!w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#E11212] hover:!bg-[#E11212] hover:!text-[#E3E0C0] transition-colors !duration-300'
                                 >
                                     Cancel

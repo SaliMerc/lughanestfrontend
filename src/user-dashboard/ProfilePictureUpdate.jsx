@@ -66,10 +66,14 @@ function ProfilePictureUpdate() {
         setLoading(true);
 
         try {
-            const formData = new FormData();
             formData.append('profile_picture', selectedFile);
 
-            const response = await handleProfileUpdate(formData);
+            const response = await handleProfileUpdate(
+                {
+                profile_picture:formData.profile_picture
+                }
+
+            );
 
             // Update local storage with new profile picture URL if provided
             if (response?.profile_picture_url) {
@@ -123,7 +127,7 @@ function ProfilePictureUpdate() {
                         </div>
                     </div>
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} encType="multipart/form-data">
                         <div className='flex flex-col items-center mb-6'>
                             <div className='relative mb-4'>
                                 <div
@@ -163,6 +167,7 @@ function ProfilePictureUpdate() {
                             <input
                                 ref={fileInputRef}
                                 type="file"
+                                name='profile_picture'
                                 accept=".jpeg,.jpg,.png"
                                 onChange={handleFileSelect}
                                 className="hidden"
@@ -186,7 +191,7 @@ function ProfilePictureUpdate() {
                         </div>
 
                     
-                        <div className='flex md:flex-row md:justify-between'>
+                        <div className='flex flex-col md:flex-row md:justify-between'>
                             <button
                                 disabled={!selectedFile || loading}
                                 type='submit' className='md:!w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>

@@ -111,7 +111,7 @@ function ProfileChangeEmail() {
                         <div className="form-header-items flex justify-between items-center my-0 mx-2 text-red-700">
                             <h5>{formError}</h5>
                         </div>
-                        <div className='flex md:flex-row md:justify-between mt-5'>
+                        <div className='flex flex-col md:flex-row md:justify-between mt-5'>
                             <button type='submit' className='md:!w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
                                 {loading ? "Updating..." : "Update"}
                             </button>
