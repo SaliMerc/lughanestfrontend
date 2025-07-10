@@ -11,6 +11,9 @@ import beginnerLanguage from '../assets/dashboard-images/beginner-level.jpg';
 import intermediateLanguage from '../assets/dashboard-images/intermediate-level.jpg';
 import advancedLanguage from '../assets/dashboard-images/advanced-level.jpg';
 
+import WeeklyLineChart from '../components/LineChart';
+import MonthlyBarChart from '../components/BarChart';
+
 
 import { generateSlug } from '../utils/slugUtils';
 
@@ -19,6 +22,15 @@ function DashboardHome() {
   const [completedCourses, setCompletedCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const weekly_lessons_data = [12, 15, 9, 18, 22, 16, 11]; 
+  const weekly_labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+  const lessons_by_month_data = [120, 135, 150, 140, 160, 170, 155, 165, 175, 180, 190, 200]; // Lessons per month
+  const monthly_common_labels = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -107,10 +119,16 @@ function DashboardHome() {
         <h1 className='text-2xl md:text-4xl font-semibold mb-12'>My Learning Charts</h1>
         <section className='flex flex-col md:flex-row gap-12 md:gap-24'>
           <div className='bg-[#0E0D0C] w-full h-[300px] md:w-[600px] md:h-[450px] text-center text-white p-5'>
-            <h1>Line chart goes here</h1>
+             <WeeklyLineChart 
+              weeklyData={weekly_lessons_data} 
+              weeklyLabels={weekly_labels} 
+            />
           </div>
           <div className='bg-[#0E0D0C] w-full h-[300px] md:w-[600px] md:h-[450px] text-center text-white p-5'>
-            <h1>Bar chart goes here</h1>
+            <MonthlyBarChart 
+              yearlyData={lessons_by_month_data} 
+              yearlyLabels={monthly_common_labels} 
+            />
           </div>
         </section>
         {/* charts section ends */}
