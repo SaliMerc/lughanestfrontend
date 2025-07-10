@@ -15,8 +15,8 @@ import advancedLanguage from '../assets/dashboard-images/advanced-level.jpg';
 import { generateSlug } from '../utils/slugUtils';
 
 function DashboardHome() {
-  const [ongoingCourses, setOngoingCourses] = useState({});
-  const [completedCourses, setCompletedCourses] = useState({});
+  const [ongoingCourses, setOngoingCourses] = useState([]);
+  const [completedCourses, setCompletedCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -72,7 +72,7 @@ function DashboardHome() {
               </div>
             ) : (
 
-              ongoingCourses.slice(0, 4).map((course, index) => (
+              ongoingCourses.map((course, index) => (
                 <div key={index} className=' min-h-[250px] w-[10rem] md:w-[18rem]  bg-[#0E0D0C]  flex flex-col gap-10 rounded-[20px]'>
                   <div className='flex flex-col items-start text-left gap-2 p-3'>
                     <img src={

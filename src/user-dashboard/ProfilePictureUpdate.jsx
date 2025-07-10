@@ -2,11 +2,9 @@ import React from 'react';
 import { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import DashboardNavigation from './DashboardHeader';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faUser, faCamera } from '@fortawesome/free-solid-svg-icons';
 import auth_background from '../assets/login-signup-image.png';
-
 import { handleProfileUpdate } from '../utils/authUtils';
 
 function ProfilePictureUpdate() {
@@ -18,19 +16,16 @@ function ProfilePictureUpdate() {
     const fileInputRef = useRef(null);
     const navigate = useNavigate();
 
-    // Handle file selection
     const handleFileSelect = (e) => {
         const file = e.target.files[0];
         if (file) {
-            // Validate file type
             const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
             if (!allowedTypes.includes(file.type)) {
                 setFormError('Please select a valid image file (JPEG, JPG, or PNG).');
                 return;
             }
 
-            // Validate file size (max 5MB)
-            const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+            const maxSize = 5 * 1024 * 1024;
             if (file.size > maxSize) {
                 setFormError('File size must be less than 5MB.');
                 return;
@@ -39,7 +34,6 @@ function ProfilePictureUpdate() {
             setFormError('');
             setSelectedFile(file);
 
-            // Create preview URL
             const reader = new FileReader();
             reader.onload = (e) => {
                 setPreviewUrl(e.target.result);
@@ -48,12 +42,10 @@ function ProfilePictureUpdate() {
         }
     };
 
-    // Trigger file input
     const triggerFileInput = () => {
         fileInputRef.current?.click();
     };
 
-    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -66,19 +58,18 @@ function ProfilePictureUpdate() {
         setLoading(true);
 
         try {
-            formData.append('profile_picture', selectedFile);
+            // Create FormData and append the file
+            const uploadData = new FormData();
+            uploadData.append('profile_picture', selectedFile);
 
-            const response = await handleProfileUpdate(
-                {
-                profile_picture:formData.profile_picture
-                }
+            console.log('Files in FormData:', uploadData.get('profile_picture'));
 
-            );
+            const response = await handleProfileUpdate(uploadData);
 
-            // Update local storage with new profile picture URL if provided
             if (response?.profile_picture_url) {
-                const updatedUser = { ...userDetails, profile_picture_url: response.profile_picture_url };
+                const updatedUser = { ...userDetails, profile_picture: response.profile_picture_url };
                 localStorage.setItem('user', JSON.stringify(updatedUser));
+                setPreviewUrl(response.profile_picture_url);
             }
 
             navigate('/dashboard-profile');
@@ -93,7 +84,6 @@ function ProfilePictureUpdate() {
         }
     };
 
-    // Reset to original picture
     const resetPicture = () => {
         setSelectedFile(null);
         setPreviewUrl(userDetails?.profile_picture || null);
@@ -147,7 +137,7 @@ function ProfilePictureUpdate() {
                                         />
                                     )}
                                 </div>
-                            
+
                                 <div
                                     className='absolute bottom-0 right-0 w-8 h-8 bg-[#FBEC6C] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#E3E0C0] transition-colors duration-200'
                                     onClick={triggerFileInput}
@@ -190,7 +180,6 @@ function ProfilePictureUpdate() {
                             <h5>{formError}</h5>
                         </div>
 
-                    
                         <div className='flex flex-col md:flex-row md:justify-between'>
                             <button
                                 disabled={!selectedFile || loading}
@@ -198,8 +187,7 @@ function ProfilePictureUpdate() {
                                 {loading ? "Updating..." : "Update"}
                             </button>
 
-
-                             {selectedFile && (
+                            {selectedFile && (
                                 <button
                                     type='button'
                                     onClick={resetPicture}

@@ -12,7 +12,6 @@ function CourseModules() {
   const location = useLocation();
   const navigate = useNavigate();
   const { course } = location.state || {};
-  console.log(course)
 
   const [modules, setModules] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,6 +33,9 @@ function CourseModules() {
       );
     }
   }, [course]);
+
+  console.log(modules)
+
 
   return (
     <DashboardNavigation>
@@ -80,7 +82,7 @@ function CourseModules() {
 
                     <div>
 
-                      <div class="relative w-20 h-20">
+                      {/* <div class="relative w-20 h-20">
                         <svg class="w-full h-full" viewBox="0 0 100 100">
                           <circle
                             class="text-[#FBEC6C]"
@@ -93,9 +95,9 @@ function CourseModules() {
                           />
                         </svg>
                         <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                          <span class="text-[1rem] text-white">{module.module_progress}%</span>
+                          <span class="text-[1rem] text-white">{module.modules.module_progress}%</span>
                         </div>
-                      </div>
+                      </div> */}
 
                     </div>
                   </Link>
