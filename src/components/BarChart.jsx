@@ -4,7 +4,7 @@ import { Chart as ChartJS } from 'chart.js/auto';
 
 const MonthlyBarChart = ({ yearlyData, yearlyLabels }) => {
   const maxYearlyData = Math.max(...yearlyData.filter(value => value !== null)) + 5;
-  
+
   // Create gradient (needs to be done in the component)
   const getGradient = (ctx) => {
     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
@@ -41,7 +41,7 @@ const MonthlyBarChart = ({ yearlyData, yearlyLabels }) => {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { 
+      legend: {
         position: "top",
         labels: {
           usePointStyle: true,
@@ -66,16 +66,27 @@ const MonthlyBarChart = ({ yearlyData, yearlyLabels }) => {
         ticks: {
           color: '#E3E0C0'
         },
+        border: {
+          display: true,
+          color: '#E3E0C0',
+          width: 1.3
+        },
         grid: {
           display: false,
         },
       },
       y: {
+        display: true,
         beginAtZero: true,
         min: 0,
         max: maxYearlyData,
         ticks: {
           color: '#E3E0C0'
+        },
+        border: {
+          display: true,
+          color: '#E3E0C0',
+          width: 1.3
         },
         grid: {
           display: false,

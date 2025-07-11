@@ -4,7 +4,7 @@ import { Chart as ChartJS } from 'chart.js/auto';
 
 const WeeklyLineChart = ({ weeklyData, weeklyLabels }) => {
   const maxWeeklyData = Math.max(...weeklyData.filter(value => value !== null)) + 5;
-  
+
   const data = {
     labels: weeklyLabels,
     datasets: [
@@ -23,7 +23,7 @@ const WeeklyLineChart = ({ weeklyData, weeklyLabels }) => {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { 
+      legend: {
         position: "top",
         labels: {
           usePointStyle: true,
@@ -48,6 +48,11 @@ const WeeklyLineChart = ({ weeklyData, weeklyLabels }) => {
         ticks: {
           color: '#E3E0C0'
         },
+        border: {
+          display: true,
+          color: '#E3E0C0',
+          width: 1.3
+        },
         grid: {
           color: '#a38e8e'
         }
@@ -59,8 +64,13 @@ const WeeklyLineChart = ({ weeklyData, weeklyLabels }) => {
         ticks: {
           color: '#E3E0C0'
         },
+        border: {
+          display: true,
+          color: '#E3E0C0',
+          width: 1.3
+        },
         grid: {
-          display: false,
+          display: true,
         },
       }
     }

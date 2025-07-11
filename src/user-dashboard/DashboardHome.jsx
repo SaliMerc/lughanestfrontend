@@ -18,19 +18,26 @@ import MonthlyBarChart from '../components/BarChart';
 import { generateSlug } from '../utils/slugUtils';
 
 function DashboardHome() {
+  const defaultWeeklyLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const defaultWeeklyData = [0, 0, 0, 0, 0, 0, 0];
+
+  const defaultMonthlyLabels = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+  const defaultMonthlyData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+
   const [ongoingCourses, setOngoingCourses] = useState([]);
   const [completedCourses, setCompletedCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const weekly_lessons_data = [12, 15, 9, 18, 22, 16, 11]; 
-  const weekly_labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const [weekly_lessons_data, setWeeklyLessons] = useState(defaultWeeklyData);
+  const [weekly_labels, setWeeklyLabels] = useState(defaultWeeklyLabels);
+  const [lessons_by_month_data, setMonthlyLessons] = useState(defaultMonthlyData);
+  const [monthly_common_labels, setMonthlyLabels] = useState(defaultMonthlyLabels);
 
-  const lessons_by_month_data = [120, 135, 150, 140, 160, 170, 155, 165, 175, 180, 190, 200]; // Lessons per month
-  const monthly_common_labels = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-  ];
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -42,9 +49,21 @@ function DashboardHome() {
             if (response.data) {
               setOngoingCourses(response.data.ongoing_courses);
               setCompletedCourses(response.data.completed_courses);
+
+              setWeeklyLessons(response.data.weekly_lessons_data);
+              setWeeklyLabels(response.data.weekly_labels);
+
+              setMonthlyLessons(response.data.lessons_by_month_data);
+              setMonthlyLabels(response.data.monthly_common_labels);
             } else {
-              setOngoingCourses({});
-              setCompletedCourses({});
+              setOngoingCourses([]);
+              setCompletedCourses([]);
+
+              setWeeklyLessons([]);
+              setWeeklyLabels([]);
+
+              setMonthlyLessons([]);
+              setMonthlyLabels([]);
             }
           },
           (error) => {
@@ -119,15 +138,15 @@ function DashboardHome() {
         <h1 className='text-2xl md:text-4xl font-semibold mb-12'>My Learning Charts</h1>
         <section className='flex flex-col md:flex-row gap-12 md:gap-24'>
           <div className='bg-[#0E0D0C] w-full h-[300px] md:w-[600px] md:h-[450px] text-center text-white p-5'>
-             <WeeklyLineChart 
-              weeklyData={weekly_lessons_data} 
-              weeklyLabels={weekly_labels} 
+            <WeeklyLineChart
+              weeklyData={weekly_lessons_data}
+              weeklyLabels={weekly_labels}
             />
           </div>
           <div className='bg-[#0E0D0C] w-full h-[300px] md:w-[600px] md:h-[450px] text-center text-white p-5'>
-            <MonthlyBarChart 
-              yearlyData={lessons_by_month_data} 
-              yearlyLabels={monthly_common_labels} 
+            <MonthlyBarChart
+              yearlyData={lessons_by_month_data}
+              yearlyLabels={monthly_common_labels}
             />
           </div>
         </section>
