@@ -18,23 +18,29 @@ function CourseModules() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (course) {
-      setLoading(true);
-      handleCourseModules(
-        course.course_name.id,
-        (data) => {
-          setModules(data);
-          setLoading(false);
-        },
-        (err) => {
-          setError(err.message || 'Failed to load modules');
-          setLoading(false);
-        }
-      );
-    }
-  }, [course]);
+    if (!course) return;
 
-  console.log(modules)
+    const savedModules = sessionStorage.getItem('modules');
+    if (savedModules) {
+      setModules(JSON.parse(savedModules));
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+    handleCourseModules(
+      course.course_name.id,
+      (data) => {
+        setModules(data);
+        sessionStorage.setItem('modules', JSON.stringify(data));
+        setLoading(false);
+      },
+      (err) => {
+        setError(err.message || 'Failed to load modules');
+        setLoading(false);
+      }
+    );
+  }, [course]);
 
 
   return (

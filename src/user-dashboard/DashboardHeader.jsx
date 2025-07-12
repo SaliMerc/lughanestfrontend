@@ -67,7 +67,7 @@ function DashboardNavigation({ children }) {
     const navItems = [
         { name: 'Home', path: '/dashboard-home', icon: <img src={dashboardHome} alt="Home" className="w-7 h-7" /> },
         { name: 'Courses', path: '/dashboard-courses', icon: <img src={dashboardCourses} alt="Courses" className="w-7 h-7" /> },
-        { name: 'Find Partners', path: '/dashboard-partners', icon: <img src={dashboardFindPartners} alt="Find Partners" className="w-7 h-7" /> },
+        { name: 'Find Partners', path: '/dashboard-find-partners', icon: <img src={dashboardFindPartners} alt="Find Partners" className="w-7 h-7" /> },
         { name: 'Chats', path: '/dashboard-chats', icon: <img src={dashboardChats} alt="Chats" className="w-7 h-7" /> },
         { name: 'Blog', path: '/dashboard-blog', icon: <img src={dashboardBlog} alt="Blog" className="w-7 h-7" /> },
     ];

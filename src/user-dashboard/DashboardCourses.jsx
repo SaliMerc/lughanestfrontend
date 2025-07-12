@@ -15,32 +15,44 @@ function DashboardCourses() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchCourses = async () => {
-            try {
-                setLoading(true);
-                await handleStructuredCourseItemsData(
-                    {},
-                    (response) => {
-                        if (response.data) {
-                            setCoursesByLanguage(response.data);
-                        } else {
-                            setCoursesByLanguage({});
-                        }
-                    },
-                    (error) => {
-                        setError(error.message || 'Failed to fetch courses');
-                    }
-                );
-            } catch (err) {
-                setError(err.message || 'An unexpected error occurred');
-            } finally {
-                setLoading(false);
+useEffect(() => {
+    const fetchCourses = async () => {
+        try {
+            // Check if courses exist in sessionStorage
+            const cachedCourses = sessionStorage.getItem('coursesByLanguage');
+            
+            if (cachedCourses) {
+                // Use cached data if available
+                setCoursesByLanguage(JSON.parse(cachedCourses));
+                return;
             }
-        };
 
-        fetchCourses();
-    }, []);
+            setLoading(true);
+            await handleStructuredCourseItemsData(
+                {},
+                (response) => {
+                    if (response.data) {
+                        const coursesData = response.data;
+                        // Store in sessionStorage
+                        sessionStorage.setItem('coursesByLanguage', JSON.stringify(coursesData));
+                        setCoursesByLanguage(coursesData);
+                    } else {
+                        setCoursesByLanguage({});
+                    }
+                },
+                (error) => {
+                    setError(error.message || 'Failed to fetch courses');
+                }
+            );
+        } catch (err) {
+            setError(err.message || 'An unexpected error occurred');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    fetchCourses();
+}, []);
 
     return (
         <DashboardNavigation>

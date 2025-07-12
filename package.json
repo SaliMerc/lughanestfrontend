@@ -17,6 +17,7 @@
     "@tailwindcss/vite": "^4.1.8",
     "axios": "^1.9.0",
     "chart.js": "^4.5.0",
+    "emoji-picker-react": "^4.12.3",
     "jwt-decode": "^4.0.0",
     "react": "^19.1.0",
     "react-audio-player": "^0.17.0",
