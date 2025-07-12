@@ -8,7 +8,8 @@ import auth_background from '../assets/login-signup-image.png';
 import { handleProfileUpdate } from '../utils/authUtils';
 
 function ProfilePictureUpdate() {
-    const userDetails = JSON.parse(localStorage.getItem('user'));
+    const [userDetails, setUserDetails] = useState(JSON.parse(localStorage.getItem('user')));
+
     const [loading, setLoading] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(userDetails?.profile_picture || null);
@@ -58,21 +59,23 @@ function ProfilePictureUpdate() {
         setLoading(true);
 
         try {
-            // Create FormData and append the file
             const uploadData = new FormData();
             uploadData.append('profile_picture', selectedFile);
 
-            console.log('Files in FormData:', uploadData.get('profile_picture'));
 
             const response = await handleProfileUpdate(uploadData);
 
-            if (response?.profile_picture_url) {
-                const updatedUser = { ...userDetails, profile_picture: response.profile_picture_url };
-                localStorage.setItem('user', JSON.stringify(updatedUser));
-                setPreviewUrl(response.profile_picture_url);
-            }
+             const updatedUser = {
+            ...JSON.parse(localStorage.getItem('user')), 
+            profile_picture: previewUrl, 
+            profile_picture: response.user.profile_picture 
+        };
 
-            navigate('/dashboard-profile');
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+
+            if (response?.message?.includes("Profile updated successfully")) {
+                navigate('/dashboard-profile');
+            }
         } catch (error) {
             console.error('Profile picture update error:', error);
             const errorMessage = error?.response?.data?.message ||

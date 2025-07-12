@@ -43,7 +43,7 @@ function DashboardNavigation({ children }) {
         return url;
     };
 
-    const profilePicUrl = cleanProfilePictureUrl(userDetails.profile_picture_url);
+    const profilePicUrl = cleanProfilePictureUrl(userDetails.profile_picture);
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const location = useLocation();

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +16,13 @@ import auth_background from '../assets/login-signup-image.png';
 
 function DashboardProfile() {
     const userDetails = JSON.parse(localStorage.getItem('user'));
+
+     const [languages_spoken, setLanguagesSpoken] = useState(
+        userDetails?.languages_spoken?.length > 0 
+            ? userDetails.languages_spoken 
+            : [{ language: "Not Added Yet" }]
+    );
+
     const cleanProfilePictureUrl = (url) => {
         if (!url) return null;
 
@@ -28,18 +35,20 @@ function DashboardProfile() {
                 return finalUrl;
             } catch (error) {
                 console.error('Error cleaning profile picture URL:', error);
-                return url; 
+                return url;
             }
         }
 
         if (url.startsWith('http://127.0.0.1:8000/media/')) {
-            return url; 
+            return url;
         }
 
-        return url; 
+        return url;
     };
 
-    const profilePicUrl = cleanProfilePictureUrl(userDetails.profile_picture_url);
+    const profilePicUrl = cleanProfilePictureUrl(userDetails.profile_picture);
+
+
 
     return (
         <DashboardNavigation>
@@ -74,7 +83,7 @@ function DashboardProfile() {
                         <div className='flex flex-row items-center gap-3'>
                             <p className='mb-2'>Languages I Speak:</p>
                             <div className='flex flex-row flex-wrap gap-2'>
-                                {userDetails.languages_spoken.map((item, index) => (
+                                {languages_spoken.map((item, index) => (
                                     <button
                                         key={index}
                                         className='!bg-[#FBEC6C] !text-black px-3 py-1 rounded-md'
