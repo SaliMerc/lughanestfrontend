@@ -19,3 +19,22 @@ export async function handleFindPartners() {
     throw error;
   }
 }
+
+
+// To get the latest chats related to the user in the system
+export async function handleLatestChats() {
+  try {
+    const token = localStorage.getItem('access_token');
+    const response = await axios.get(
+      `${API_URL}/api/v1/chats/my-latest-messages/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
