@@ -10,6 +10,7 @@ import profileImage from '../assets/dashboard-images/profile-pic-placeholder.png
 
 function DashboardFindPartners() {
     const [partners, setPartners] = useState([]);
+    const [partnerCourses, setPartnerCourses]=useState([])
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -23,6 +24,7 @@ function DashboardFindPartners() {
 
                 if (response) {
                     setPartners(response.data);
+                    setPartnerCourses(response.data.courses)
                 } else {
                     setPartners([]);
                 }
@@ -74,9 +76,15 @@ function DashboardFindPartners() {
                                                 </div>
                                                 </div>
                                                 
-                                                <p className='text-[1.2rem] md:text-[1.5rem] first-letter:uppercase'>{partners.display_name}</p>
+                                                <p className='text-[1.2rem] md:text-[1.2rem] !text-[#FBEC6C] first-letter:uppercase mt-2'>Learning:</p>
                                                 <hr className='text-white w-[100%]' />
-                                                <p className='text-[#FBEC6C] first-letter:uppercase'>{partners.courses.course_name}</p>
+                                               
+                                                {                               partners.courses.map((course, courseIndex) => (
+                                                    <p key={courseIndex} className='text-[#FBEC6C] first-letter:uppercase'>
+                                                        {course.course_name} ({course.course_level})
+                                                    </p>
+                                                ))}
+
                                                 <Link to={`/dashboard-chats/chat-interface/${generateSlug(partners.display_name)}`}>
                                                     <button className='hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
                                                         Message

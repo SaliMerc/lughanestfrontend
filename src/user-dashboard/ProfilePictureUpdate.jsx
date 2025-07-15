@@ -67,7 +67,6 @@ function ProfilePictureUpdate() {
 
              const updatedUser = {
             ...JSON.parse(localStorage.getItem('user')), 
-            profile_picture: previewUrl, 
             profile_picture: response.user.profile_picture 
         };
 
@@ -152,7 +151,7 @@ function ProfilePictureUpdate() {
                             <div
                                 type='button'
                                 onClick={triggerFileInput}
-                                className='px-6 py-2 bg-[#FBEC6C] text-[#0E0D0C] rounded hover:bg-[#E3E0C0] transition-colors duration-200 font-semibold'
+                                className='px-6 py-2 bg-[#FBEC6C] !text-black rounded transition-colors duration-200 cursor-pointer font-semibold'
                             >
                                 Upload New Picture
                             </div>
