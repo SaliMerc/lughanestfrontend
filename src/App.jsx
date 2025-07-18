@@ -53,6 +53,9 @@ import ProfileChangeEmailVerification from './user-dashboard/ProfileChangeEmailV
 import DashboardBlogs from './user-dashboard/DashboardBlogs';
 import DashboardBlogContent from './user-dashboard/DashboardBlogContent';
 
+import DashboardPayment from './user-dashboard/DashboardPayments';
+import PaymentTable from './user-dashboard/PaymentHistory';
+
 function App() {
   return (
     <BrowserRouter>
@@ -91,6 +94,9 @@ function App() {
 
           <Route path="/dashboard-blog" element={<DashboardBlogs />} />
           <Route path="/dashboard-blog/:slug" element={<DashboardBlogContent />} />
+
+          <Route path="/dashboard-payment" element={<DashboardPayment />} />
+          <Route path="/payment-history" element={<PaymentTable />} />
         </Route>
 
         <Route path="/" element={<Home />} />

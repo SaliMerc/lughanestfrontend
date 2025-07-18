@@ -159,12 +159,9 @@ export async function handleEmailLogin(userData, onSuccess, onError) {
     );
 
     const { data } = response;
-    console.log(data)
 
     if (data.access && data.refresh) {
-      localStorage.setItem('access_token', data.access_token);
-      localStorage.setItem('refresh_token', data.refresh);
-
+  
       if (data.user) {
         localStorage.setItem('user', JSON.stringify(data.user));
       }

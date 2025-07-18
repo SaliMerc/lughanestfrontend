@@ -33,8 +33,7 @@ useEffect(() => {
                 (response) => {
                     if (response.data) {
                         const coursesData = response.data;
-                        // Store in sessionStorage
-                        sessionStorage.setItem('coursesByLanguage', JSON.stringify(coursesData));
+                 
                         setCoursesByLanguage(coursesData);
                     } else {
                         setCoursesByLanguage({});

@@ -69,7 +69,7 @@ function DashboardFindPartners() {
                                             <div className='flex flex-col items-start text-left gap-2 p-3'>
                                                 <div className='flex flex-row items-center gap-3'>
                                                     <div className='w-10 h-10 md:w-15 md:h-15 mr-4'>
-                                                    <img src={profileImage} alt="Profile Picture" className='rounded-full object-cover w-full h-full' />
+                                                    <img src={partners.profile_picture_url || profileImage} alt="Profile Picture" className='rounded-full object-cover w-full h-full' />
                                                 </div>
                                                 <div>
                                                     <p>{capitalizeFirst(partners.display_name)}</p>

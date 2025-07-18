@@ -74,7 +74,7 @@ function DashboardNavigation({ children }) {
 
     const bottomNavItems = [
         { name: 'Profile', path: '/dashboard-profile', icon: <img src={dashboardProfile} alt="Profile" className="w-7 h-7" /> },
-        { name: 'Payments', path: '/dashboard-payments', icon: <img src={dashboardPayment} alt="Payments" className="w-7 h-7" /> },
+        { name: 'Payments', path: '/dashboard-payment', icon: <img src={dashboardPayment} alt="Payments" className="w-7 h-7" /> },
         { name: 'Settings', path: '/dashboard-settings', icon: <img src={dashboardSetting} alt="Settings" className="w-7 h-7" /> },
         { name: 'Logout', path: '/logout', icon: <img src={dashboardLogout} alt="Logout" className="w-7 h-7" /> },
     ];

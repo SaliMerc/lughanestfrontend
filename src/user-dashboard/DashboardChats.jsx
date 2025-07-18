@@ -36,7 +36,8 @@ function DashboardChats() {
                         return {
                             ...chat,
                             otherUserId, 
-                            otherUserName: chat.sender === currentUserId ? chat.receiver_display_name : chat.sender_display_name
+                            otherUserName: chat.sender === currentUserId ? chat.receiver_display_name : chat.sender_display_name,
+                            otherUserProfilePic: chat.sender === currentUserId ? chat.receiver_profile_picture : chat.sender_profile_picture
                         };
                     });
 
@@ -85,7 +86,7 @@ function DashboardChats() {
                                             <div className='flex flex-row items-center gap-4'>
                                                 <div>
                                                     <img
-                                                        src={profileImage}
+                                                        src={chat.otherUserProfilePic || profileImage}
                                                         alt="Profile"
                                                         className="rounded-full object-cover w-full h-full"
                                                     />
