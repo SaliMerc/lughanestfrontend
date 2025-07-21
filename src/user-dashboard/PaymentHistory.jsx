@@ -1,50 +1,70 @@
 import React, { useState, useEffect } from "react";
 import DashboardNavigation from './DashboardHeader';
+import { handleViewTransactions } from '../utils/paymentUtils';
+
+import { capitalizeFirst } from '../utils/slugUtils';
+import { exportToCSV } from '../utils/exportUtils';
+
+import SearchBar from '../components/SearchBar';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 
 function PaymentTable() {
-    const payments = [
-        {
-            date: "get/expires",
-            subscriptionType: "Monthly",
-            paymentMethod: "MPESA",
-            amount: "Kali Rec",
-            receiptNumber: "TZK$gz978",
-            status: "Completed",
-        },
-        {
-            date: "get/expires",
-            subscriptionType: "Monthly",
-            paymentMethod: "MPESA",
-            amount: "Kali Rec",
-            receiptNumber: "TZK$gz978",
-            status: "Failed",
-        },
-        {
-            date: "get/expires",
-            subscriptionType: "Monthly",
-            paymentMethod: "MPESA",
-            amount: "Kali Rec",
-            receiptNumber: "TZK$gz978",
-            status: "Completed",
-        },
-        {
-            date: "get/expires",
-            subscriptionType: "Monthly",
-            paymentMethod: "MPESA",
-            amount: "Kali Rec",
-            receiptNumber: "TZK$gz978",
-            status: "Completed",
-        },
-    ];
+    const [payments, setTransactions] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchTransactions = async () => {
+            try {
+                setLoading(true);
+                await handleViewTransactions(
+                    {},
+                    (response) => {
+                        if (response.data) {
+                            setTransactions(response.data.data);
+                        } else {
+                            setTransactions([]);
+                        }
+                    },
+                    (error) => {
+                        setError(error.message || 'Failed to fetch transaction records');
+                    }
+                );
+            } catch (err) {
+                setError(err.message || 'An unexpected error occurred');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTransactions();
+    }, []);
+
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const filteredPayments = searchTerm.trim() === ''
+        ? payments
+        : payments.filter(item =>
+            item?.mpesa_code?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item?.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item?.subscription_type?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm]);
+
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 3;
+    const itemsPerPage = 8;
 
-    const totalPages = Math.ceil(payments.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const currentPayments = payments.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(filteredPayments.length / itemsPerPage);
+    const mypayments = filteredPayments.slice(startIndex, endIndex);
 
     const handlePrevious = () => {
         setCurrentPage(prev => Math.max(prev - 1, 1));
@@ -57,33 +77,68 @@ function PaymentTable() {
     return (
         <DashboardNavigation>
 
-            <div className="p-6 bg-black min-h-screen">
+            <div className="px-6 bg-black min-h-screen">
+
                 <div className="max-w-6xl mx-auto">
+                    <h1 className='text-2xl md:text-4xl font-semibold mb-7'>My Payment History </h1>
+                    <div className="flex flex-row justify-between mb-3">
+                        <div className="flex-grow">
+                            <SearchBar
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                placeholder="Search receipt number, status, or subscription type..."
+                            />
+                        </div>
+
+                        <div
+                            onClick={() => exportToCSV(payments, 'payments.csv')}
+                            className="cursor-pointer flex items-center gap-2 text-white  font-semibold underline "
+                        >
+                            <FontAwesomeIcon icon={faDownload} />
+                            <span>Export CSV</span>
+                        </div>
+                    </div>
+
                     <div className="bg-black border border-[#E3E0C0] rounded-lg shadow-sm overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="w-full">
                                 <thead className="bg-black border-b border-[#E3E0C0]">
                                     <tr>
-                                        <th className="px-6 py-4 text-left text-base font-bold text-white">Date</th>
-                                        <th className="px-6 py-4 text-left text-base font-semibold text-white">Subscription Type</th>
-                                        <th className="px-6 py-4 text-left text-base font-semibold text-white">Payment Method</th>
+                                        <th className="px-6 py-4 text-left border-r text-base font-bold text-white">No.</th>
+                                        <th className="px-6 py-4 text-left text-base font-semibold text-white border-r ">Subscription Type</th>
+                                        <th className="px-6 py-4 text-left text-base font-bold text-white">Start Date</th>
+                                        <th className="px-6 py-4 text-left text-base font-bold text-white border-r ">End Date</th>
+
+                                        <th className="px-6 py-4 text-left border-r text-base font-semibold text-white">Payment Method</th>
                                         <th className="px-6 py-4 text-left text-base font-semibold text-white">Amount</th>
                                         <th className="px-6 py-4 text-left text-base font-semibold text-white">Receipt Number</th>
                                         <th className="px-6 py-4 text-left text-base font-semibold text-white">Payment Status</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-[#E3E0C0]">
-                                    {currentPayments.map((payment, index) => (
-                                        <tr key={index} className={index === 2 ? "bg-black" : "bg-black hover:bg-black"}>
-                                            <td className="px-6 py-4 text-sm text-white">{payment.date}</td>
-                                            <td className="px-6 py-4 text-sm text-white">{payment.subscriptionType}</td>
-                                            <td className="px-6 py-4 text-sm text-white">{payment.paymentMethod}</td>
+                                <tbody className="">
+                                    {mypayments.map((payment, index) => (
+                                        <tr key={index} className="odd:bg-[#OE0D0E] even:bg-[#0E0D0C]">
+                                            <td className="px-6 py-4 border-r text-sm text-white">{index + 1}</td>
+                                            <td className="px-6 py-4 text-sm text-white border-r">{capitalizeFirst(payment.subscription_type) || 'None'}</td>
+                                            <td className="px-6 py-4 text-sm text-white">  {payment.subscription_start_date
+                                                ? new Date(payment.subscription_start_date).toLocaleDateString('en-GB')
+                                                : 'N/A'}
+
+                                            </td>
+                                            <td className="px-6 py-4 border-r text-sm text-white">
+                                                {payment.subscription_end_date
+                                                    ? new Date(payment.subscription_end_date).toLocaleDateString('en-GB')
+                                                    : 'N/A'}
+
+                                            </td>
+
+                                            <td className="px-6 py-4 border-r text-sm text-white">MPESA</td>
                                             <td className="px-6 py-4 text-sm text-white">{payment.amount}</td>
-                                            <td className="px-6 py-4 text-sm text-white">{payment.receiptNumber}</td>
+                                            <td className="px-6 py-4 text-sm text-white">{payment.mpesa_code || 'N/A'}</td>
                                             <td className="px-6 py-4 text-sm">
                                                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${payment.status.toLowerCase() === 'completed'
-                                                        ? ' !text-green-300'
-                                                        : ' !text-red-300'
+                                                    ? ' !text-green-300'
+                                                    : ' !text-red-300'
                                                     }`}>
                                                     {payment.status}
                                                 </span>
@@ -94,14 +149,14 @@ function PaymentTable() {
                             </table>
                         </div>
 
-                        <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-gray-50">
+                        <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-[#0E0D0C]">
                             <div className="flex items-center space-x-2">
                                 <div
                                     onClick={handlePrevious}
                                     disabled={currentPage === 1}
-                                    className={`px-3 py-1 text-sm font-medium rounded-md ${currentPage === 1
-                                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                            : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                                    className={`px-3 min-w-20 py-1 cursor-pointer items-center justify-center text-sm font-medium rounded-md ${currentPage === 1
+                                        ? 'bg-[#0E0D0C] text-white hidden'
+                                        : 'bg-[#0E0D0C] text-white border'
                                         }`}
                                 >
                                     Previous
@@ -109,9 +164,9 @@ function PaymentTable() {
                                 <div
                                     onClick={handleNext}
                                     disabled={currentPage === totalPages}
-                                    className={`px-3 py-1 text-sm font-medium rounded-md ${currentPage === totalPages
-                                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                            : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                                    className={`px-3 min-w-20 py-1 cursor-pointer text-sm font-medium rounded-md ${currentPage === totalPages
+                                        ? 'bg-[#0E0D0C] text-white hidden'
+                                        : 'bg-[#0E0D0C] text-white border'
                                         }`}
                                 >
                                     Next

@@ -55,6 +55,9 @@ import DashboardBlogContent from './user-dashboard/DashboardBlogContent';
 
 import DashboardPayment from './user-dashboard/DashboardPayments';
 import PaymentTable from './user-dashboard/PaymentHistory';
+import PaymentSubscription from './user-dashboard/PaymentSubscriptionPlans';
+import MPESAPayment from './user-dashboard/MPESAPaymentScreen';
+import MPESAPaymentRedirect from './user-dashboard/MPESAPaymentRedirect';
 
 function App() {
   return (
@@ -97,6 +100,9 @@ function App() {
 
           <Route path="/dashboard-payment" element={<DashboardPayment />} />
           <Route path="/payment-history" element={<PaymentTable />} />
+          <Route path="/dashboard/subscription-plans" element={<PaymentSubscription />} />
+          <Route path="/dashboard/subscription-plans/subscribe" element={<MPESAPayment/>} />
+          <Route path="/dashboard/mpesa-payment" element={<MPESAPaymentRedirect/>} />
         </Route>
 
         <Route path="/" element={<Home />} />

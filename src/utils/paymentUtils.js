@@ -19,3 +19,46 @@ export async function handleSubscriptiontemsData(data, onSuccess, onError) {
     if (onError) onError(error);
   }
 }
+
+
+export async function handleViewTransactions(data, onSuccess, onError) {
+  try {
+
+    const token = localStorage.getItem('access_token');
+
+    const response = await axios.get(
+      `${API_URL}/api/v1/payment/payment-data/`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (onSuccess) onSuccess(response);
+  } catch (error) {
+    if (onError) onError(error);
+  }
+}
+
+// For sending the MPESA Payment
+export async function handleMpesaPayment(data, onSuccess, onError) {
+  try {
+
+    const token = localStorage.getItem('access_token');
+
+    const response = await axios.post(
+      `${API_URL}/api/v1/payment/lipa-na-mpesa/`,
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (onSuccess) onSuccess(response);
+  } catch (error) {
+    if (onError) onError(error);
+  }
+}
