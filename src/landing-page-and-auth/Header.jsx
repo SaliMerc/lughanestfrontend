@@ -22,7 +22,7 @@ function Header() {
   }, []);
 
   return (
-    <header className={`text-[#E3E0C0] mt-5 md:mt-0 mb-12 md:h-23 md:fixed md:top-0 md:left-0 md:right-5 md:z-50 transition-colors duration-300 items-center ${scrolled ? 'bg-[#000000] ' : ''
+    <header className={`text-[#E3E0C0] mt-5 md:mt-0 mb-12 md:h-23 md:fixed md:top-0 md:left-0 md:right-5 md:z-50 transition-colors duration-300 items-center ${scrolled ? '!bg-[var(--nav-bg)] ' : ''
       }`}>
       <nav className="flex justify-between items-center">
 
@@ -51,16 +51,16 @@ function Header() {
         </div>
         <div className={`text-center itema nav-items flex font-semibold gap-[22rem] text-[#E3E0C0] ${menuOpen ? 'open' : ''}`}>
           <ul className='flex gap-8 mt-7'>
-            <li className='hover:underline hover:text-[#FBEC6C]'><Link to='/'>Home</Link></li>
-            <li className='hover:underline hover:text-[#FBEC6C]'><Link to='/#about'>About</Link></li>
-            <li className='hover:underline hover:text-[#FBEC6C]'><Link to='/courses'>Courses</Link></li>
-            <li className='hover:underline hover:text-[#FBEC6C]'><Link to='/#pricing'>Pricing</Link></li>
-            <li className='hover:underline hover:text-[#FBEC6C]'><Link to='/#contact'>Contact</Link></li>
-            <li className='hover:underline hover:text-[#FBEC6C]'><Link to='/blogs'>Blog</Link></li>
+            <li className='hover:underline hover:text-[var(--nav-hover)]'><Link to='/'>Home</Link></li>
+            <li className='hover:underline hover:!text-[var(--nav-hover)]'><Link to='/#about'>About</Link></li>
+            <li className='hover:underline hover:!text-[var(--nav-hover)]'><Link to='/courses'>Courses</Link></li>
+            <li className='hover:underline hover:!text-[var(--nav-hover)]'><Link to='/#pricing'>Pricing</Link></li>
+            <li className='hover:underline hover:!text-[var(--nav-hover)]'><Link to='/#contact'>Contact</Link></li>
+            <li className='hover:underline hover:!text-[var(--nav-hover)]'><Link to='/blogs'>Blog</Link></li>
           </ul>
 
           
-          <Link to="/login"><button className='!min-w-40 min-h-14 px-3 !bg-[#FBEC6C] md:!bg-[#FBEC6C] shadow-xl !shadow-[#000000] text-xl !text-black font-bold !border-1 !border-[#FBEC6C] hover:!bg-[#0E0D0C] hover:!text-[#E3E0C0] transition-colors !duration-300 text-center'>Sign In</button></Link>
+          <Link to="/login"><button className='!min-w-50 min-h-14 px-3 !bg-[var(--main-buttons-bg)] !text-[var(--main-buttons-text)] hover:!text-[var(--main-buttons-hover-text)] hover:!bg-[var(--main-buttons-hover-bg)] shadow-xl !shadow-[#000000] text-xl font-bold !border-1 !border-[#FBEC6C] transition-colors !duration-300 text-center '>Sign In</button></Link>
         </div>
       </nav>
     </header>

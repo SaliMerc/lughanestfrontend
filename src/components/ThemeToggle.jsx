@@ -9,7 +9,13 @@ export default function ThemeToggle() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.classList.toggle('light-theme', isLightMode);
+    if(isLightMode){
+      document.documentElement.classList.add('light-theme', isLightMode);
+    }
+    else{
+ document.documentElement.classList.remove('light-theme', isLightMode);
+    }
+   
     localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
   }, [isLightMode]);
 

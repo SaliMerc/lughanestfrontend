@@ -12,6 +12,7 @@ import { Link, useLocation } from 'react-router-dom';
 function MPESAPayment() {
     const location = useLocation();
     const { subscription_type, amount } = location.state || {}
+    console.log(subscription_type, amount)
 
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ function MPESAPayment() {
         amount: amount,
         subscription_type: subscription_type
     });
+
 
     const [formError, setFormError] = useState('');
 

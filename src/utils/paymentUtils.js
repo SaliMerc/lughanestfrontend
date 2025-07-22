@@ -62,3 +62,22 @@ export async function handleMpesaPayment(data, onSuccess, onError) {
     if (onError) onError(error);
   }
 }
+
+
+export async function handleLatestPaymentStatus(data, onSuccess, onError) {
+  try {
+    const token = localStorage.getItem('access_token');
+    const response = await axios.get(
+      `${API_URL}/api/v1/payment/payment-status/`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (onSuccess) onSuccess(response);
+  } catch (error) {
+    if (onError) onError(error);
+  }
+}

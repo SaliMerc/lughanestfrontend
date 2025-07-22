@@ -74,12 +74,12 @@ function Courses() {
             ) : (
 
               courses.map((language, index) => (
-                <div key={index} className=' min-h-[250px] w-full sm:w-[45%] md:w-[23%] bg-[#1B1C1D] flex flex-col justify-center items-center text-center gap-10 rounded-[20px]'>
+                <div key={index} className=' min-h-[250px] w-[15rem] md:w-[16rem]  bg-[var(--card-bg)] flex flex-col justify-center items-center text-center gap-10 rounded-[20px]'>
                   <div className='flex flex-col items-start text-left gap-2'>
                     <p className='text-[1.2rem] md:text-[1.5rem] first-letter:uppercase'>{language.course_name}</p>
                     <hr className='text-white w-[100%]' />
                     <p className='text-[#FBEC6C] first-letter:uppercase'>{language.course_level}</p>
-                    <a href="/signup"><button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                    <a href="/signup"><button className='min-w-36 min-h-14 px-3  shadow-xl text-xl !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[#0E0D0C] transition-colors !duration-300'>
                       Enroll
                       <FontAwesomeIcon icon={faArrowRight} />
                     </button>

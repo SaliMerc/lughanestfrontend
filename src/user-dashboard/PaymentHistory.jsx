@@ -59,7 +59,7 @@ function PaymentTable() {
 
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 8;
+    const itemsPerPage = 6;
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -116,9 +116,16 @@ function PaymentTable() {
                                     </tr>
                                 </thead>
                                 <tbody className="">
+                                    {mypayments.length === 0 && (
+                                        <tr>
+                                            <td colSpan="8" className="text-center py-4 text-white">
+                                                No payments found.
+                                            </td>
+                                        </tr>
+                                    )}
                                     {mypayments.map((payment, index) => (
                                         <tr key={index} className="odd:bg-[#OE0D0E] even:bg-[#0E0D0C]">
-                                            <td className="px-6 py-4 border-r text-sm text-white">{index + 1}</td>
+                                            <td className="px-6 py-4 border-r text-sm text-white">{startIndex + index + 1}</td>
                                             <td className="px-6 py-4 text-sm text-white border-r">{capitalizeFirst(payment.subscription_type) || 'None'}</td>
                                             <td className="px-6 py-4 text-sm text-white">  {payment.subscription_start_date
                                                 ? new Date(payment.subscription_start_date).toLocaleDateString('en-GB')

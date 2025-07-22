@@ -2,19 +2,53 @@
 
 :root {
   --bg: #000000;
+  --payment-main-bg: #0E0D0C;
   --text: #ffffff;
+  --text-buttons: #E3E0C0;
   --nav-bg: #0E0D0C;
   --nav-text: #E3E0C0;
-  --button-bg: #6D3710;
+  --nav-hover: #FBEC6C;
+  --button-bg: #0E0D0C;
+  --button-hover-bg: #FBEC6C;
+
+  --main-buttons-bg: #FBEC6C;
+  --main-buttons-text: #000000;
+  --main-buttons-hover-text: #E3E0C0;
+  --main-buttons-hover-bg: #0E0D0C;
+
+  --card-bg: #1B1C1D;
+  --payment: #000000;
+  --payment-bg: #1B1C1D;
+  --input-bg: #FAF3E0;
 }
 
-/* Light theme override */
+:root .hero-section{
+  background-image: url('assets/hero-back-color.png');
+}
 .light-theme {
-  --bg: #ffffff;
+  --bg: #FAF3E0;
+  --payment-main-bg: #FAF3E0;
   --text: #000000;
-  --nav-bg: #f8f9fa;
-  --nav-text: #333333;
-  --button-bg: #007bff;
+  --text-buttons: #000000;
+  --nav-bg: #E9D6B8;
+  --nav-text: #000000;
+  --nav-hover: #A78F74;
+
+  --button-bg: #A78F74;
+  --main-buttons-bg: #A78F74;
+  --main-buttons-hover-bg: #F5DEC4;
+  --button-hover-bg: #F5DEC4;
+  --main-buttons-text: #000000;
+  --main-buttons-hover-text: #000000;
+
+  --card-bg: #E9D6B8;
+  --payment: #E9D6B8;
+  --input-bg: #FAF3E0;
+  --payment-bg: #E9D6B8;
+}
+
+.light-theme .hero-section{
+  background-image: url('assets/hero-light-color.png');
 }
 
 .theme-toggle {
@@ -27,6 +61,10 @@
   transition: opacity 0.2s;
 }
 
+.light-theme img .theme-icon {
+  filter: invert(1);
+}
+
 .theme-toggle:hover {
   opacity: 1;
 }
@@ -35,6 +73,19 @@
   font-family: 'Lora', 'sans-serif';
   color: var(--text) !important;
 }
+
+.card-bg {
+  background-color: var(--card-bg) !important;
+}
+
+.button-bg {
+  background-color: var(--button-bg) !important;
+}
+
+.input-bg {
+  background-color: var(--input-bg) !important;
+}
+
 
 body {
   background-color: var(--bg) !important;
@@ -57,9 +108,9 @@ h6 {
     position: absolute;
     top: 5rem;
     flex-direction: column;
-    background: #0E0D0C;
     padding: 1rem;
     border-radius: 0.5rem;
+    background-color: var(--bg) !important;
     color: var(--text) !important;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
     z-index: 999;

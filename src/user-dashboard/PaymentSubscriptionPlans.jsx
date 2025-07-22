@@ -74,7 +74,7 @@ function PaymentSubscription() {
                 }}
             >
                 <div className='form-div'>
-                    <div className='flex flex-row justify-between'>
+                    <div className='flex flex-col gap-5 md:flex-row justify-between'>
                         <div className='h-[400px] md:h-[550px] w-[18rem] md:w-[20rem] bg-[#1B1C1D] flex flex-col justify-center items-center text-center gap-18 rounded-[20px]'>
                             <div className='flex flex-col items-center gap-2'>
                                 <p>PREMIUM</p>
@@ -109,7 +109,7 @@ function PaymentSubscription() {
                                 <p><FontAwesomeIcon icon={faCheck} />  Live chats</p>
                                 <Link to="/dashboard/subscription-plans/subscribe"
                                     state={{
-                                        type: 'yearly',
+                                        subscription_type: 'yearly',
                                         amount: yearlySubscription
                                     }}
                                 ><button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>

@@ -83,7 +83,7 @@ function Blogs() {
             ) : (
               
               blogItems.map((blog, index) => (
-                <div key={index} className='min-h-[250px] w-full sm:w-[45%] md:w-[30%] bg-[#1B1C1D] flex flex-col justify-center items-center text-center gap-10 rounded-[20px] p-4 md:p-6'>
+                <div key={index} className='min-h-[250px] w-full sm:w-[45%] md:w-[30%] bg-[var(--card-bg)] flex flex-col justify-center items-center text-center gap-10 rounded-[20px] p-4 md:p-6'>
                   <div className='flex flex-col items-start text-left gap-2'>
                     <img src={blog.blog_image_url|| require('../assets/blog-image-placeholder.jpg')} alt="Blog" className='w-full h-auto mt-5 md:mt-0 rounded-2xl object-cover' loading='lazy' />
                     <p className='text-[1.2rem] md:text-[1.5rem]'>{blog.blog_title}</p>
@@ -95,7 +95,7 @@ function Blogs() {
                         : blog.blog_content}
                     </p>
                     <Link to={`/blogs/${generateSlug(blog.blog_title)}`} state={{ blog }}>
-                      <button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                      <button className='!w-[100%] min-h-14 px-3  shadow-xl text-xl !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[#0E0D0C] transition-colors !duration-300'>
                         Read More...
                       </button>
                     </Link>

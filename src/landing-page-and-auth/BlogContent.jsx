@@ -22,7 +22,7 @@ function BlogContent() {
             <div className='flex flex-col justify-left items-left mb-5 md:px-5'>
               <h2 className='text-2xl md:text-4xl leading-normal font-bold mb-5'>{blog.blog_title}</h2>
               <div className='flex md:flex-wrap flex-col md:flex-row justify-center gap-8 items-center py-5'>
-                <div className='min-h-[250px] w-full bg-[#1B1C1D] flex flex-col justify-center items-center text-center gap-10 rounded-[20px] p-4 md:p-6'>
+                <div className='min-h-[250px] w-full !bg-[var(--card-bg)] flex flex-col justify-center items-center text-center gap-10 rounded-[20px] p-4 md:p-6'>
                   <img
                     src={blog.blog_image_url || require('../assets/blog-image-placeholder.jpg')}
                     alt="Blog"

@@ -1,23 +1,118 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-
-import { useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
 import DashboardNavigation from './DashboardHeader';
-
-import { handleSubscriptiontemsData } from '../utils/paymentUtils.js';
-
+import { handleLatestPaymentStatus } from '../utils/paymentUtils';
 import auth_background from '../assets/login-signup-image.png';
 
 function MPESAPaymentRedirect() {
- 
+    const [paymentStatus, setPaymentStatus] = useState('pending');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [countdown, setCountdown] = useState(5);
+    const navigate = useNavigate();
+
+    useEffect(function() {
+        const pollInterval = setInterval(function() {
+            handleLatestPaymentStatus(
+                {}, 
+                function(response) {
+                    if (response.data.status === 'completed') {
+                        setPaymentStatus('success');
+                        clearInterval(pollInterval);
+
+                        setTimeout(function() {
+                            navigate('/payment-success');
+                        }, 5000);
+                    } else if (response.data.status === 'failed') {
+                        setPaymentStatus('failed');
+                        setErrorMessage(response.data.message || 'Payment processing failed');
+                        clearInterval(pollInterval);
+                    }else if (response.data.status === 'pending') {
+                        setPaymentStatus('pending');
+                        setErrorMessage(response.data.message || 'Payment processing is still pending');
+                        clearInterval(pollInterval);
+                    }
+                },
+                function(error) {
+                    setPaymentStatus('failed');
+                    setErrorMessage(error.message || 'Error verifying payment status');
+                    clearInterval(pollInterval);
+                }
+            );
+        }, 3000); 
+
+        return function() {
+            clearInterval(pollInterval);
+        };
+    }, [navigate]);
+
+    
+    useEffect(function() {
+        if (paymentStatus === 'success') {
+            const timer = setInterval(function() {
+                setCountdown(function(prev) {
+                    return prev - 1;
+                });
+            }, 1000);
+            return function() {
+                clearInterval(timer);
+            };
+        }
+    }, [paymentStatus]);
+
+    function renderContent() {
+        switch (paymentStatus) {
+            case 'pending':
+                return (
+                    <div className="text-left">
+                        <p className="mb-5 text-xl font-semibold">Processing your payment...</p>
+                        <div className="flex justify-left mb-4">
+                            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FBEC6C]"></div>
+                        </div>
+                        <div className="">
+                            <p className='mb-2'>A payment prompt has been sent to your Safaricom phone number via M-Pesa.</p>
+                            <p>Enter your M-Pesa PIN to complete the transaction.</p>
+                        </div>
+                    </div>
+                );
+            case 'success':
+                return (
+                    <div className="text-left">
+                        <div className="text-green-500 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <p className="mb-3 text-xl font-semibold">Payment Successful!</p>
+                        <p className="mb-5">Thank you for your payment. Redirecting in {countdown} seconds...</p>
+                    </div>
+                );
+            case 'failed':
+                return (
+                    <div className="text-left">
+                        <div className="text-red-500 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </div>
+                        <p className="mb-3 text-xl font-semibold">Payment Failed</p>
+                        <p className="mb-4 text-red-600">Sorry, an error was encountered while making the payment.</p>
+                        <p className="mb-4 text-red-600">Try again later!</p>
+                        <div className="space-y-3">
+                            
+                        </div>
+                    </div>
+                );
+            default:
+                return null;
+        }
+    }
+
     return (
         <DashboardNavigation>
-
             <section
-                className='form-element'
+                className="form-element"
                 style={{
-                    backgroundImage: `url(${auth_background})`,
+                    backgroundImage: 'url(' + auth_background + ')',
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     minHeight: '100vh',
@@ -27,16 +122,11 @@ function MPESAPaymentRedirect() {
                     alignItems: 'center',
                 }}
             >
-                <div className='form-div'>
-                    <p className='mb-5 text-xl font-semibold'>Processing your payment...</p>
-                    <p className='mb-3'>A payment prompt has been sent to your Safaricom phone number via M-Pesa.</p>
-                    <p>Please check your phone and enter your M-Pesa PIN to complete the transaction.</p>
-
+                <div className="form-div max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+                    {renderContent()}
                 </div>
-
-            </section >
-
-        </DashboardNavigation >
+            </section>
+        </DashboardNavigation>
     );
 }
 

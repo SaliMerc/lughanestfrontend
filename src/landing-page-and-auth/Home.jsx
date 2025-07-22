@@ -7,8 +7,7 @@ import Footer from './Footer.jsx';
 
 import { Link } from 'react-router-dom';
 
-import heroImageItem from '../assets/hero-image-main.png';
-import heroImage from '../assets/hero-back-color.png';
+import heroImageItem from '../assets/hero-second-image-light.png';
 
 import overallHeadingIcon from '../assets/overall-heading-image.svg';
 
@@ -37,14 +36,6 @@ import { handleCourseItemsData } from '../utils/coursesUtils';
 import { handleSubscriptiontemsData } from '../utils/paymentUtils.js';
 
 function Home() {
-  const backgroundImage = {
-    backgroundImage: `url(${heroImage})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    minHeight: '100vh',
-    width: '100%',
-  };
-
   const location = useLocation();
 
   // For the sections
@@ -135,11 +126,11 @@ function Home() {
       <div className='text-white md:pt-30'>
 
         {/* hero section starts here */}
-        <section style={backgroundImage} className="flex flex-col md:flex-row  justify-between p-5 md:p-10">
+        <section className="hero-section flex flex-col md:flex-row  justify-between p-5 md:p-10">
           <div className="flex flex-col items-start justify-center pr-2">
             <Fade direction='left'>
               <h1 className='text-5xl md:text-[3.5rem] leading-normal font-bold mb-5'>Learn Kenyan  Languages <br className="hidden md:block" />with LughaNest </h1></Fade>
-            <Link to="/signup"><button className='!min-w-50 min-h-14 px-3 !bg-[#FBEC6C] md:!bg-[#FBEC6C] shadow-xl !shadow-[#000000] text-xl !text-black font-bold !border-1 !border-[#FBEC6C] hover:!bg-[#0E0D0C] hover:!text-[#E3E0C0] transition-colors !duration-300 text-center '>
+            <Link to="/signup"><button className='!min-w-50 min-h-14 px-3 !bg-[var(--main-buttons-bg)] !text-[var(--main-buttons-text)] hover:!bg-[var(--main-buttons-hover-bg)] hover:!text-[var(--main-buttons-hover-text)] shadow-xl !shadow-[#000000] text-xl font-bold !border-1 !border-[#FBEC6C] transition-colors !duration-300 text-center '>
               Get Started
               <FontAwesomeIcon icon={faArrowRight} />
             </button>
@@ -160,20 +151,20 @@ function Home() {
           </div>
           <Fade direction='up'>
             <div className='flex flex-col md:flex-row justify-center gap-8 items-center md:items-start md:justify-between'>
-              <div className='h-[10rem] md:h-[17rem] w-[20rem] bg-[#0E0D0C] flex flex-col justify-center items-center text-center gap-12 rounded-[20px]'>
+              <div className={`h-[10rem] md:h-[17rem] w-[20rem] flex flex-col justify-center items-center text-center gap-12 rounded-[20px] bg-[var(--card-bg)]`}>
                 <img src={aboutAccessIcon} alt="about-image" className='h-[30px] md:h-[40px]' />
                 <p className='text-[1.2rem] md:text-[1.5rem]'>Simple and <br />Accessible Interface</p>
               </div>
 
               <div>
                 <p className='mb-10 mt-4 md:mt-0 text-center'>LEARN THE LANGUAGES FROM THOSE <br /> WHO LIVE THE CULTURE</p>
-                <div className='h-[10rem] md:h-[17rem] w-[20rem] bg-[#0E0D0C] flex flex-col justify-center items-center text-center gap-12 rounded-[20px]'>
+                <div className='h-[10rem] md:h-[17rem] w-[20rem] bg-[var(--card-bg)] flex flex-col justify-center items-center text-center gap-12 rounded-[20px]'>
                   <img src={aboutCommunityIcon} alt="about-image" className='h-[30px] md:h-[40px]' />
                   <p className='text-[1.2rem] md:text-[1.5rem]'>Learn With a <br /> Community</p>
                 </div>
               </div>
 
-              <div className='h-[10rem] md:h-[17rem] w-[20rem] bg-[#0E0D0C] flex flex-col justify-center items-center text-center gap-12 rounded-[20px]'>
+              <div className='h-[10rem] md:h-[17rem] w-[20rem] bg-[var(--card-bg)] flex flex-col justify-center items-center text-center gap-12 rounded-[20px]'>
                 <img src={aboutProgressIcon} alt="about-image" className='h-[30px] md:h-[40px]' />
                 <p className='text-[1.2rem] md:text-[1.5rem]'>Track your Progress</p>
               </div>
@@ -192,9 +183,9 @@ function Home() {
             <p className='mb-5 mt-5 text-center'>START FREE WITH ONE COURSE—UNLOCK EVERYTHING LATER!</p>
           </div>
 
-          <div className='flex flex-col md:flex-row justify-center gap-8 md:gap-12 items-center bg-[#0E0D0C] min-h-[40rem] py-5'>
+          <div className='flex flex-col md:flex-row justify-center gap-8 md:gap-12 items-center bg-[var(--payment-main-bg)] min-h-[40rem] py-5'>
             <Fade direction='right'>
-              <div className='h-[400px] md:h-[550px] w-[18rem] md:w-[20rem] bg-[#000000] flex flex-col justify-center items-center text-center gap-18 rounded-[20px]'>
+              <div className='h-[400px] md:h-[550px] w-[18rem] md:w-[20rem] bg-[var(--payment)] flex flex-col justify-center items-center text-center gap-18 rounded-[20px]'>
                 <div className='flex flex-col items-center gap-2'>
                   <p>FREE</p>
                   <img src={pricingFree} alt="about-image" className='h-[30px] md:h-[40px]' />
@@ -204,7 +195,7 @@ function Home() {
                   <p><FontAwesomeIcon icon={faCheck} />  1 Full Course</p>
                   <p><FontAwesomeIcon icon={faCheck} />  Basic Dashboard</p>
                   <p><FontAwesomeIcon icon={faXmark} />  No chats</p>
-                  <Link to="/signup"><button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                  <Link to="/signup"><button className='min-w-36 min-h-14 px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
                     Start Free
                     <FontAwesomeIcon icon={faArrowRight} />
                   </button>
@@ -214,7 +205,7 @@ function Home() {
             </Fade>
 
             <Fade direction='right'>
-              <div className='h-[400px] md:h-[550px] w-[18rem] md:w-[20rem] bg-[#1B1C1D] flex flex-col justify-center items-center text-center gap-18 rounded-[20px]'>
+              <div className='h-[400px] md:h-[550px] w-[18rem] md:w-[20rem] bg-[var(--payment-bg)] flex flex-col justify-center items-center text-center gap-18 rounded-[20px]'>
                 <div className='flex flex-col items-center gap-2'>
                   <p>PREMIUM</p>
                   <img src={pricingPremiumMonth} alt="about-image" className='h-[30px] md:h-[40px]' />
@@ -224,7 +215,7 @@ function Home() {
                   <p><FontAwesomeIcon icon={faCheck} />  All Courses</p>
                   <p><FontAwesomeIcon icon={faCheck} />  Full Dashboard</p>
                   <p><FontAwesomeIcon icon={faCheck} />  Live chats</p>
-                  <Link to="/signup"><button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                  <Link to="/signup"><button className='min-w-36 min-h-14 px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
                     Popular
                     <FontAwesomeIcon icon={faArrowRight} />
                   </button>
@@ -234,7 +225,7 @@ function Home() {
             </Fade>
 
             <Fade direction='right'>
-              <div className='h-[400px] md:h-[550px] w-[18rem] md:w-[20rem] bg-[#000000] flex flex-col justify-center items-center text-center gap-18 rounded-[20px]'>
+              <div className='h-[400px] md:h-[550px] w-[18rem] md:w-[20rem] bg-[var(--payment)] flex flex-col justify-center items-center text-center gap-18 rounded-[20px]'>
                 <div className='flex flex-col items-center gap-2'>
                   <p>PREMIUM</p>
                   <img src={pricingPremiumYear} alt="about-image" className='h-[30px] md:h-[40px]' />
@@ -244,7 +235,7 @@ function Home() {
                   <p><FontAwesomeIcon icon={faCheck} />  All Courses</p>
                   <p><FontAwesomeIcon icon={faCheck} />  Full Dashboard</p>
                   <p><FontAwesomeIcon icon={faCheck} />  Live chats</p>
-                  <Link to="/signup"><button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                  <Link to="/signup"><button className='min-w-36 min-h-14 px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
                     Save 37.5%
                     <FontAwesomeIcon icon={faArrowRight} />
                   </button>
@@ -282,12 +273,12 @@ function Home() {
               ) : (
 
                 courses.slice(0, 4).map((language, index) => (
-                  <div key={index} className=' min-h-[250px] w-[15rem] md:w-[16rem]  bg-[#1B1C1D] flex flex-col justify-center items-center text-center gap-10 rounded-[20px]'>
+                  <div key={index} className=' min-h-[250px] w-[15rem] md:w-[16rem]  bg-[var(--card-bg)] flex flex-col justify-center items-center text-center gap-10 rounded-[20px]'>
                     <div className='flex flex-col items-start text-left gap-2'>
                       <p className='text-[1.2rem] md:text-[1.5rem] first-letter:uppercase'>{language.course_name}</p>
                       <hr className='text-white w-[100%]' />
                       <p className='text-[#FBEC6C] first-letter:uppercase'>{language.course_level}</p>
-                      <Link to="/signup"><button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                      <Link to="/signup"><button className='min-w-36 min-h-14 px-3  shadow-xl text-xl !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[#0E0D0C] transition-colors !duration-300'>
                         Enroll
                         <FontAwesomeIcon icon={faArrowRight} />
                       </button>
@@ -311,7 +302,7 @@ function Home() {
             <p className='mb-5 mt-5 text-center'>GET IN TOUCH WITH US FOR ANY INQUIRIES </p>
           </div>
 
-          <div className="flex flex-col md:flex-row justify-center items-start gap-15 md:gap-52  bg-[#0E0D0C] min-h-[10rem] w-[100%] p-8">
+          <div className="flex flex-col md:flex-row justify-center items-start gap-15 md:gap-52  bg-[var(--card-bg)] min-h-[10rem] w-[100%] p-8">
             <Fade direction='left'>
               <div className='flex flex-col gap-8'>
                 <a className="flex flex-row gap-3">

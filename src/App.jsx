@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import Home from './landing-page-and-auth/Home';
 
 import Courses from './landing-page-and-auth/Courses';
@@ -59,8 +60,10 @@ import PaymentSubscription from './user-dashboard/PaymentSubscriptionPlans';
 import MPESAPayment from './user-dashboard/MPESAPaymentScreen';
 import MPESAPaymentRedirect from './user-dashboard/MPESAPaymentRedirect';
 
-function App() {
+export default function App() {
+
   return (
+   
     <BrowserRouter>
       <Routes>
 
@@ -101,8 +104,8 @@ function App() {
           <Route path="/dashboard-payment" element={<DashboardPayment />} />
           <Route path="/payment-history" element={<PaymentTable />} />
           <Route path="/dashboard/subscription-plans" element={<PaymentSubscription />} />
-          <Route path="/dashboard/subscription-plans/subscribe" element={<MPESAPayment/>} />
-          <Route path="/dashboard/mpesa-payment" element={<MPESAPaymentRedirect/>} />
+          <Route path="/dashboard/subscription-plans/subscribe" element={<MPESAPayment />} />
+          <Route path="/dashboard/mpesa-payment" element={<MPESAPaymentRedirect />} />
         </Route>
 
         <Route path="/" element={<Home />} />
@@ -129,5 +132,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;
