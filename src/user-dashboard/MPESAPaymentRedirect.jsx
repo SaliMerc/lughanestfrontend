@@ -5,56 +5,69 @@ import { handleLatestPaymentStatus } from '../utils/paymentUtils';
 import auth_background from '../assets/login-signup-image.png';
 
 function MPESAPaymentRedirect() {
+    const userDetails = JSON.parse(localStorage.getItem('user'));
+
     const [paymentStatus, setPaymentStatus] = useState('pending');
     const [errorMessage, setErrorMessage] = useState('');
     const [countdown, setCountdown] = useState(5);
     const navigate = useNavigate();
 
-    useEffect(function() {
-        const pollInterval = setInterval(function() {
+    useEffect(function () {
+        const pollInterval = setInterval(function () {
             handleLatestPaymentStatus(
-                {}, 
-                function(response) {
+                {},
+                function (response) {
                     console.log(response.data)
                     if (response.data.status === 'completed') {
+                        console.log(response.data)
+                        const updatedUser = {
+                            ...userDetails,
+                            subscription_status: {
+                                has_active_subscription: response.data.has_active_subscription,
+                                active_plan: response.data.active_plan
+                            }
+                        };
+
+                        localStorage.setItem('user', JSON.stringify(updatedUser));
+
                         setPaymentStatus('success');
                         clearInterval(pollInterval);
 
-                        setTimeout(function() {
+                        setTimeout(function () {
                             console.log("YAAY")
                         }, 5000);
                     } else if (response.data.status === 'failed') {
                         setPaymentStatus('failed');
                         setErrorMessage(response.data.message || 'Payment processing failed');
                         clearInterval(pollInterval);
-                    }else if (response.data.status === 'pending') {
+                    } else if (response.data.status === 'pending') {
                         setPaymentStatus('pending');
                         setErrorMessage(response.data.message || 'Payment processing is still pending');
                         clearInterval(pollInterval);
                     }
                 },
-                function(error) {
+                function (error) {
                     setPaymentStatus('failed');
                     setErrorMessage(error.message || 'Error verifying payment status');
                     clearInterval(pollInterval);
                 }
             );
-        }, 3000); 
+        }, 3000);
 
-        return function() {
+        return function () {
             clearInterval(pollInterval);
         };
     }, [navigate]);
 
-    
-    useEffect(function() {
+
+    useEffect(function () {
         if (paymentStatus === 'success') {
-            const timer = setInterval(function() {
-                setCountdown(function(prev) {
+            const timer = setInterval(function () {
+                setCountdown(function (prev) {
                     return prev - 1;
                 });
             }, 1000);
-            return function() {
+            return function () {
                 clearInterval(timer);
             };
         }
@@ -93,7 +106,7 @@ function MPESAPaymentRedirect() {
                         <p className="mb-4 text-red-600">Sorry, an error was encountered while making the payment.</p>
                         <p className="mb-4 text-red-600">Try again later!</p>
                         <div className="space-y-3">
-                            
+
                         </div>
                     </div>
                 );

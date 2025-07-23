@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../assets/new-lughanest-logo.svg';
+import logo from '../assets/my-logo.svg';
 import open from '../assets/open-menu-items.svg';
 import close from '../assets/close-menu-items.svg';
 import '../index.css';
@@ -22,7 +22,7 @@ function Header() {
   }, []);
 
   return (
-    <header className={`text-[#E3E0C0] mt-5 md:mt-0 mb-12 md:h-23 md:fixed md:top-0 md:left-0 md:right-5 md:z-50 transition-colors duration-300 items-center ${scrolled ? '!bg-[var(--nav-bg)] ' : ''
+    <header className={`text-[#E3E0C0] w-full mt-5 md:mt-0  md:h-[7rem] md:fixed md:top-0 md:left-0 md:right-5 md:z-50 transition-colors duration-300 items-center ${scrolled ? '!bg-[var(--nav-bg)] ' : ''
       }`}>
       <nav className="flex justify-between items-center">
 
@@ -49,7 +49,7 @@ function Header() {
           </div>
 
         </div>
-        <div className={`text-center itema nav-items flex font-semibold gap-[22rem] text-[#E3E0C0] ${menuOpen ? 'open' : ''}`}>
+        <div className={`text-center itema pr-4 nav-items flex font-semibold gap-[22rem] text-[#E3E0C0] ${menuOpen ? 'open' : ''}`}>
           <ul className='flex gap-8 mt-7'>
             <li className='hover:underline hover:text-[var(--nav-hover)]'><Link to='/'>Home</Link></li>
             <li className='hover:underline hover:!text-[var(--nav-hover)]'><Link to='/#about'>About</Link></li>

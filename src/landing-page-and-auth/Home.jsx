@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 import heroImageItem from '../assets/hero-second-image-light.png';
 
-import overallHeadingIcon from '../assets/overall-heading-image-two.svg';
+import overallHeadingIcon from '../assets/overall-heading-image-item.svg';
 
 import aboutAccessIcon from '../assets/accessibility.svg';
 import aboutCommunityIcon from '../assets/community.svg';
@@ -19,13 +19,13 @@ import pricingFree from '../assets/pricing-free.svg';
 import pricingPremiumMonth from '../assets/pricing-premium-month.svg';
 import pricingPremiumYear from '../assets/pricing-premium-year.svg';
 
-import contactEmail from '../assets/contact-email.svg';
-import contactPhone from '../assets/contact-phone.svg';
+import contactEmail from '../assets/my-email.svg';
+import contactPhone from '../assets/my-phone.svg';
 
-import contactTwitter from '../assets/contact-twitter.svg';
-import contactTiktok from '../assets/contact-tiktok.svg';
-import contactFacebook from '../assets/contact-facebook.svg';
-import contactInstagram from '../assets/contact-instagram.svg';
+import contactTwitter from '../assets/my-twitter.svg';
+import contactTiktok from '../assets/my-tiktok.svg';
+import contactFacebook from '../assets/my-facebook.svg';
+import contactInstagram from '../assets/mi-instagram.svg';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';

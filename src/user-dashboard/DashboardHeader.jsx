@@ -17,6 +17,8 @@ import dashboardPayment from '../assets/dashboard-images/dashboard-payment.svg';
 import dashboardSetting from '../assets/dashboard-images/dashboard-setting.svg';
 import dashboardLogout from '../assets/dashboard-images/dashboard-logout.svg';
 
+import ThemeToggle from '../components/ThemeToggle';
+
 function DashboardNavigation({ children }) {
     const userDetails = JSON.parse(localStorage.getItem('user'));
 
@@ -154,13 +156,17 @@ function DashboardNavigation({ children }) {
   ${isSidebarOpen ? 'md:left-64 md:w-[calc(100%-16rem)]' : 'md:left-20 md:w-[calc(100%-5rem)]'}
 `}>
                     <div className="flex items-center justify-between p-4 bg-black bg-opacity-90">
+                        <div className='flex flex-row gap-5'>
                         <img
                             src={open}
                             onClick={toggleSidebar}
                             alt="Toggle menu"
                             className="h-[35px] cursor-pointer ml-4"
                         />
-                        <div className="w-10 h-10 md:w-15 md:h-15 mr-4">
+                        <div className='text-center'><ThemeToggle/></div>
+                        </div>
+                        <div className=" flex flex-row w-10 h-10 md:w-15 md:h-15 mr-4">
+                            
                             <Link to="/dashboard-profile">
                                 <img
                                     src={profilePicUrl || profileImage}

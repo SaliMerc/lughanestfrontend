@@ -8,7 +8,7 @@ import { handleCourseItemsData } from '../utils/coursesUtils';
 
 import heroImage from '../assets/hero-back-color.png';
 
-import overallHeadingIcon from '../assets/overall-heading-image-two.svg';
+import overallHeadingIcon from '../assets/overall-heading-image-item.svg';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';

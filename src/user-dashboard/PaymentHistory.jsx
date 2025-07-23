@@ -116,42 +116,47 @@ function PaymentTable() {
                                     </tr>
                                 </thead>
                                 <tbody className="">
-                                    {mypayments.length === 0 && (
-                                        <tr>
-                                            <td colSpan="8" className="text-center py-4 text-white">
-                                                No payments found.
-                                            </td>
-                                        </tr>
-                                    )}
-                                    {mypayments.map((payment, index) => (
-                                        <tr key={index} className="odd:bg-[#OE0D0E] even:bg-[#0E0D0C]">
-                                            <td className="px-6 py-4 border-r text-sm text-white">{startIndex + index + 1}</td>
-                                            <td className="px-6 py-4 text-sm text-white border-r">{capitalizeFirst(payment.subscription_type) || 'None'}</td>
-                                            <td className="px-6 py-4 text-sm text-white">  {payment.subscription_start_date
-                                                ? new Date(payment.subscription_start_date).toLocaleDateString('en-GB')
+                                     {loading ? (
+
+              <div className="w-full text-center py-10">
+                <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-[#FBEC6C] mx-auto"></div>
+              </div>
+
+            ) : mypayments.length === 0 ? (
+
+              <div className="w-full text-center py-10">
+                <p>You have not made any transaction.</p>
+              </div>
+            ) : ( mypayments.map((payment, index) => (
+                                    <tr key={index} className="odd:bg-[#OE0D0E] even:bg-[#0E0D0C]">
+                                        <td className="px-6 py-4 border-r text-sm text-white">{startIndex + index + 1}</td>
+                                        <td className="px-6 py-4 text-sm text-white border-r">{capitalizeFirst(payment.subscription_type) || 'None'}</td>
+                                        <td className="px-6 py-4 text-sm text-white">  {payment.subscription_start_date
+                                            ? new Date(payment.subscription_start_date).toLocaleDateString('en-GB')
+                                            : 'N/A'}
+
+                                        </td>
+                                        <td className="px-6 py-4 border-r text-sm text-white">
+                                            {payment.subscription_end_date
+                                                ? new Date(payment.subscription_end_date).toLocaleDateString('en-GB')
                                                 : 'N/A'}
 
-                                            </td>
-                                            <td className="px-6 py-4 border-r text-sm text-white">
-                                                {payment.subscription_end_date
-                                                    ? new Date(payment.subscription_end_date).toLocaleDateString('en-GB')
-                                                    : 'N/A'}
+                                        </td>
 
-                                            </td>
-
-                                            <td className="px-6 py-4 border-r text-sm text-white">MPESA</td>
-                                            <td className="px-6 py-4 text-sm text-white">{payment.amount}</td>
-                                            <td className="px-6 py-4 text-sm text-white">{payment.mpesa_code || 'N/A'}</td>
-                                            <td className="px-6 py-4 text-sm">
-                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${payment.status.toLowerCase() === 'completed'
-                                                    ? ' !text-green-300'
-                                                    : ' !text-red-300'
-                                                    }`}>
-                                                    {payment.status}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                        <td className="px-6 py-4 border-r text-sm text-white">MPESA</td>
+                                        <td className="px-6 py-4 text-sm text-white">{payment.amount}</td>
+                                        <td className="px-6 py-4 text-sm text-white">{payment.mpesa_code || 'N/A'}</td>
+                                        <td className="px-6 py-4 text-sm">
+                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${payment.status.toLowerCase() === 'completed'
+                                                ? ' !text-[#000000] font-bold  bg-[#16f037]'
+                                                : ' !text-[#000000] bg-red-500'
+                                                }`}>
+                                                {payment.status}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    ))
+                                    )}
                                 </tbody>
                             </table>
                         </div>
