@@ -45,11 +45,11 @@ function PrivacyPolicy() {
   return (
     <>
       <Header />
-      <section className='min-h-screen flex flex-col md:w-[90%] md:pt-35'>
+      <section className='min-h-screen flex flex-col md:w-[90%] md:pt-35 px-10'>
         <div className=''>
           <h1 className='text-[#E3E0C0] text-4xl mb-4 text-left font-bold'>Privacy Policy</h1>
         </div>
-        <div className=' bg-[#1B1C1D] rounded-2xl p-5'>
+        <div className=' bg-[var(--bg)] rounded-2xl '>
           {loading ? (
 
             <div className="w-full text-center py-10">

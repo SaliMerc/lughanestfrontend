@@ -7,7 +7,7 @@ import { handleBlogItemsData } from '../utils/blogUtils';
 
 import { Link } from 'react-router-dom';
 
-import overallHeadingIcon from '../assets/overall-heading-image.svg';
+import overallHeadingIcon from '../assets/overall-heading-image-two.svg';
 import blogImage from '../assets/blog-image-placeholder.jpg';
 
 import { generateSlug } from '../utils/slugUtils';

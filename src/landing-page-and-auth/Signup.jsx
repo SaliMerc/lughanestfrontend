@@ -11,8 +11,9 @@ import auth_background from '../assets/login-signup-image.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
+import Header from './Header.jsx';
 
-function Login() {
+function Signup() {
   const [showPassword, setShowPassword] = useState(false);
 
   const [loading, setLoading] = useState(false)
@@ -136,8 +137,8 @@ function Login() {
 
   return (
     <>
-      <section className='form-element' style={{
-        backgroundImage: `url(${auth_background})`,
+  <Header/>
+      <section className='form-element login-section' style={{
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         minHeight: '100vh',
@@ -269,4 +270,4 @@ function Login() {
     </>
   );
 }
-export default Login;
+export default Signup;

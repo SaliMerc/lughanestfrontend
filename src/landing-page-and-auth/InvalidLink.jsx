@@ -5,14 +5,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from 'react-router-dom';
+import Header from './Header';
 
 function InvalidLink() {
   const { state } = useLocation();
   const error = state?.error || 'This password reset link is invalid or expired';
 
   return (
-    <section className='form-element' style={{
-      backgroundImage: `url(${auth_background})`,
+    <>
+    <Header/>
+    
+    <section className='form-element login-section' style={{
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       minHeight: '100vh',
@@ -33,6 +36,7 @@ function InvalidLink() {
 
       </div>
     </section>
+    </>
   );
 }
 

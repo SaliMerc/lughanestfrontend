@@ -15,12 +15,13 @@ function MPESAPaymentRedirect() {
             handleLatestPaymentStatus(
                 {}, 
                 function(response) {
+                    console.log(response.data)
                     if (response.data.status === 'completed') {
                         setPaymentStatus('success');
                         clearInterval(pollInterval);
 
                         setTimeout(function() {
-                            navigate('/payment-success');
+                            console.log("YAAY")
                         }, 5000);
                     } else if (response.data.status === 'failed') {
                         setPaymentStatus('failed');
@@ -77,22 +78,16 @@ function MPESAPaymentRedirect() {
             case 'success':
                 return (
                     <div className="text-left">
-                        <div className="text-green-500 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
+                        <div className="mb-4">
                         </div>
                         <p className="mb-3 text-xl font-semibold">Payment Successful!</p>
-                        <p className="mb-5">Thank you for your payment. Redirecting in {countdown} seconds...</p>
+                        <p className="mb-5">Thank you for your payment</p>
                     </div>
                 );
             case 'failed':
                 return (
                     <div className="text-left">
                         <div className="text-red-500 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
                         </div>
                         <p className="mb-3 text-xl font-semibold">Payment Failed</p>
                         <p className="mb-4 text-red-600">Sorry, an error was encountered while making the payment.</p>

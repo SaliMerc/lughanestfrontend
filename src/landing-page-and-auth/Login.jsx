@@ -5,6 +5,7 @@ import { handleGoogleLogin, handleEmailLogin } from '../utils/authUtils';
 import auth_background from '../assets/login-signup-image.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import Header from './Header.jsx';
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -74,10 +75,11 @@ function Login() {
   // login logic ends
 
   return (
+    <>
+  <Header/>
     <section
-      className='form-element'
+      className='form-element login-section'
       style={{
-        backgroundImage: `url(${auth_background})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         minHeight: '100vh',
@@ -179,6 +181,7 @@ function Login() {
       </div>
 
     </section >
+    </>
   );
 }
 

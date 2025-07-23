@@ -9,11 +9,11 @@ import { Link } from 'react-router-dom';
 
 import heroImageItem from '../assets/hero-second-image-light.png';
 
-import overallHeadingIcon from '../assets/overall-heading-image.svg';
+import overallHeadingIcon from '../assets/overall-heading-image-two.svg';
 
-import aboutAccessIcon from '../assets/about-accessibility-icon.svg';
-import aboutCommunityIcon from '../assets/about-community-icon.svg';
-import aboutProgressIcon from '../assets/about-progress-icon.svg';
+import aboutAccessIcon from '../assets/accessibility.svg';
+import aboutCommunityIcon from '../assets/community.svg';
+import aboutProgressIcon from '../assets/progress.svg';
 
 import pricingFree from '../assets/pricing-free.svg';
 import pricingPremiumMonth from '../assets/pricing-premium-month.svg';

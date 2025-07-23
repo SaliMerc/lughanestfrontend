@@ -5,6 +5,8 @@ import auth_background from '../assets/password-reset-image.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
+import Header from './Header';
+
 import { handlePasswordReset } from '../utils/authUtils';
 import { useNavigate } from 'react-router-dom';
 
@@ -67,8 +69,8 @@ function ForgottenPassword() {
 
   return (
     <>
-      <section className='form-element' style={{
-        backgroundImage: `url(${auth_background})`,
+    <Header/>
+      <section className='form-element password-reset' style={{
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         minHeight: '100vh',

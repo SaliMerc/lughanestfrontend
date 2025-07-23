@@ -5,6 +5,7 @@ import { faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-ico
 import { handleValidateResetToken, handleSubmitNewPassword } from '../utils/authUtils';
 import '../AuthForms.css';
 import auth_background from '../assets/password-reset-image.png';
+import Header from './Header';
 
 function ChangePasswordReset() {
   const [showPassword, setShowPassword] = useState(false);
@@ -111,8 +112,9 @@ function ChangePasswordReset() {
 
   if (isLoading) {
     return (
-      <section className='form-element' style={{
-        backgroundImage: `url(${auth_background})`,
+      <>
+      <Header/>
+      <section className='form-element password-reset' style={{
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         minHeight: '100vh',
@@ -125,13 +127,15 @@ function ChangePasswordReset() {
           <div className="loading-spinner">Validating The Link...</div>
         </div>
       </section>
+       </>
     );
   }
 
   if (!validToken) {
     return (
-      <section className='form-element' style={{
-        backgroundImage: `url(${auth_background})`,
+      <>
+      <Header/>
+      <section className='form-element password-reset' style={{
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         minHeight: '100vh',
@@ -144,12 +148,14 @@ function ChangePasswordReset() {
           <div className="error-message">Invalid or expired reset link</div>
         </div>
       </section>
+       </>
     );
   }
 
   return (
-    <section className='form-element' style={{
-      backgroundImage: `url(${auth_background})`,
+    <>
+      <Header/>
+    <section className='form-element password-reset' style={{
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       minHeight: '100vh',
@@ -218,6 +224,7 @@ function ChangePasswordReset() {
         </form>
       </div>
     </section>
+     </>
   );
 }
 
