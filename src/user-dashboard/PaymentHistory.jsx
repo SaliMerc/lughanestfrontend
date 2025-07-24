@@ -48,8 +48,8 @@ function PaymentTable() {
     const filteredPayments = searchTerm.trim() === ''
         ? payments
         : payments.filter(item =>
-            item?.mpesa_code?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item?.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item?.transaction_code?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item?.trasaction_status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item?.subscription_type?.toLowerCase().includes(searchTerm.toLowerCase())
         );
 
@@ -79,7 +79,7 @@ function PaymentTable() {
 
             <div className="px-6 bg-black min-h-screen">
 
-                <div className="max-w-6xl mx-auto">
+                <div className="min-w-6xl mx-auto">
                     <h1 className='text-2xl md:text-4xl font-semibold mb-7'>My Payment History </h1>
                     <div className="flex flex-row justify-between mb-3">
                         <div className="flex-grow">
@@ -105,14 +105,16 @@ function PaymentTable() {
                                 <thead className="bg-black border-b border-[#E3E0C0]">
                                     <tr>
                                         <th className="px-6 py-4 text-left border-r text-base font-bold text-white">No.</th>
-                                        <th className="px-6 py-4 text-left text-base font-semibold text-white border-r ">Subscription Type</th>
+                                        <th className="px-6 py-4 text-left text-base font-semibold text-white">Subscription Type</th>
+                                        <th className="px-6 py-4 text-left text-base font-bold text-white border-r ">Subscription Date</th>
                                         <th className="px-6 py-4 text-left text-base font-bold text-white">Start Date</th>
-                                        <th className="px-6 py-4 text-left text-base font-bold text-white border-r ">End Date</th>
+                                        <th className="px-6 py-4 text-left text-base font-bold text-white">End Date</th>
+                                        <th className="px-6 py-4 text-left text-base font-bold text-white border-r ">Subscription Status</th>
 
-                                        <th className="px-6 py-4 text-left border-r text-base font-semibold text-white">Payment Method</th>
+                                        <th className="px-6 py-4 text-left border-r text-base font-semibold text-white">Transaction Method</th>
                                         <th className="px-6 py-4 text-left text-base font-semibold text-white">Amount</th>
-                                        <th className="px-6 py-4 text-left text-base font-semibold text-white">Receipt Number</th>
-                                        <th className="px-6 py-4 text-left text-base font-semibold text-white">Payment Status</th>
+                                        <th className="px-6 py-4 text-left text-base font-semibold text-white">Transaction Code</th>
+                                        <th className="px-6 py-4 text-left text-base font-semibold text-white">Transaction Status</th>
                                     </tr>
                                 </thead>
                                 <tbody className="">
@@ -130,28 +132,34 @@ function PaymentTable() {
             ) : ( mypayments.map((payment, index) => (
                                     <tr key={index} className="odd:bg-[#OE0D0E] even:bg-[#0E0D0C]">
                                         <td className="px-6 py-4 border-r text-sm text-white">{startIndex + index + 1}</td>
-                                        <td className="px-6 py-4 text-sm text-white border-r">{capitalizeFirst(payment.subscription_type) || 'None'}</td>
+                                        <td className="px-6 py-4 text-sm text-white ">{payment.subscription_type || 'None'}</td>
+                                        <td className="px-6 py-4 text-sm text-white border-r">  {payment.subscription_date
+                                            ? new Date(payment.subscription_start_date).toLocaleDateString('en-GB')
+                                            : 'N/A'}
+
+                                        </td>
                                         <td className="px-6 py-4 text-sm text-white">  {payment.subscription_start_date
                                             ? new Date(payment.subscription_start_date).toLocaleDateString('en-GB')
                                             : 'N/A'}
 
                                         </td>
-                                        <td className="px-6 py-4 border-r text-sm text-white">
+                                        <td className="px-6 py-4 text-sm text-white">
                                             {payment.subscription_end_date
                                                 ? new Date(payment.subscription_end_date).toLocaleDateString('en-GB')
                                                 : 'N/A'}
 
                                         </td>
+                                        <td className="px-6 py-4 border-r text-sm text-white">{payment.subscription_status}</td>
 
-                                        <td className="px-6 py-4 border-r text-sm text-white">MPESA</td>
-                                        <td className="px-6 py-4 text-sm text-white">{payment.amount}</td>
-                                        <td className="px-6 py-4 text-sm text-white">{payment.mpesa_code || 'N/A'}</td>
+                                        <td className="px-6 py-4 border-r text-sm text-white">{payment.transaction_method}</td>
+                                        <td className="px-6 py-4 text-sm text-white">{payment.transaction_amount}</td>
+                                        <td className="px-6 py-4 text-sm text-white">{payment.transaction_code || 'N/A'}</td>
                                         <td className="px-6 py-4 text-sm">
-                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${payment.status.toLowerCase() === 'completed'
+                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${payment.transaction_status.toLowerCase() === 'completed'
                                                 ? ' !text-[#000000] font-bold  bg-[#16f037]'
                                                 : ' !text-[#000000] bg-red-500'
                                                 }`}>
-                                                {payment.status}
+                                                {payment.transaction_status}
                                             </span>
                                         </td>
                                     </tr>
