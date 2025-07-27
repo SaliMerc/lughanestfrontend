@@ -8,6 +8,8 @@ import { generateSlug } from '../utils/slugUtils';
 import { handleLatestChats } from '../utils/chatUtils';
 import { capitalizeFirst } from '../utils/slugUtils';
 
+import {cleanProfilePictureUrl} from '../utils/profilePic';
+
 
 function DashboardChats() {
     const userDetails = JSON.parse(localStorage.getItem('user'));
@@ -28,14 +30,13 @@ function DashboardChats() {
             try {
                 setLoading(true);
                 const response = await handleLatestChats();
-                console.log("API Response:", response);
 
                 if (response) {
                     const chatsWithOtherUser = response.data.map(chat => {
                         const otherUserId = chat.sender === currentUserId ? chat.receiver : chat.sender;
                         return {
                             ...chat,
-                            otherUserId, 
+                            otherUserId,
                             otherUserName: chat.sender === currentUserId ? chat.receiver_display_name : chat.sender_display_name,
                             otherUserProfilePic: chat.sender === currentUserId ? chat.receiver_profile_picture : chat.sender_profile_picture
                         };
@@ -55,6 +56,7 @@ function DashboardChats() {
 
         fetchLatestChats();
     }, []);
+
 
     return (
         <DashboardNavigation>
@@ -81,12 +83,15 @@ function DashboardChats() {
 
                             latestChat.slice(0, 4).map((chat, index) => (
                                 <div key={index} className=' min-h-[100px] !w-[100%] bg-[#0E0D0C]  flex flex-col not-last:rounded-[20px]'>
-                                    <Link to={`/dashboard-chats/chat-interface/${generateSlug(chat.otherUserName)}`}>
+                                    <Link to={`/dashboard-chats/chat-interface/${generateSlug(chat.otherUserName)}`} state={{ 
+                                        partnerId: chat.otherUserId,
+                                        partnerName: chat.otherUserName 
+                                     }}>
                                         <div className='flex flex-row items-center justify-between text-left gap-2 p-3'>
                                             <div className='flex flex-row items-center gap-4'>
                                                 <div>
                                                     <img
-                                                        src={chat.otherUserProfilePic || profileImage}
+                                                        src={cleanProfilePictureUrl(chat.otherUserProfilePic) || profileImage}
                                                         alt="Profile"
                                                         className="rounded-full object-cover w-full h-full"
                                                     />

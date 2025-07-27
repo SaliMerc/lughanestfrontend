@@ -5,6 +5,9 @@ import DashboardNavigation from './DashboardHeader';
 import { handleBlogItemsData } from '../utils/blogUtils';
 import { generateSlug } from '../utils/slugUtils';
 
+import overallHeadingIcon from '../assets/overall-heading-image-item.svg';
+
+
 function DashboardBlogs() {
     const [blogItems, setBlogItems] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -44,7 +47,7 @@ function DashboardBlogs() {
                 <section className=''>
                     <div className='flex flex-col justify-center items-center mb-5'>
                         <h2 className='text-3xl md:text-5xl leading-normal font-bold mb-5'>The LughaNest Journal</h2>
-                        {/* <img src={overallHeadingIcon} alt="about-image" className='h-[30px] md:h-[40px]' /> */}
+                        <img src={overallHeadingIcon} alt="about-image" className='h-[30px] md:h-[40px]' />
                         <p className='mb-5 mt-5 text-center'>YOUR LEARNING HUB — EXPLORE, READ, GROW</p>
                     </div>
 

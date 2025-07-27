@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import DashboardNavigation from './DashboardHeader';
+
+import { handleChats } from '../utils/chatUtils';
+import { handleSendChat } from '../utils/chatUtils';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -22,7 +26,55 @@ function ChatInterface() {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const textareaRef = useRef(null);
 
-    // Auto-scroll to bottom when component mounts or messages update
+    const [chat, setChat] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const location = useLocation();
+    const partnerId = location.state?.partnerId;
+    const partnerName = location.state?.partnerName;
+
+  useEffect(() => {
+    let intervalId;
+    const fetchChats = async (isInitialLoad = false) => {
+        try {
+            if (isInitialLoad) setLoading(true);
+            
+            if (partnerId) {
+                const response = await handleChats(partnerId);
+                
+                if (response?.data) {
+                    setChat(prevChat => {
+                        if (JSON.stringify(prevChat) !== JSON.stringify(response.data)) {
+                            return response.data;
+                        }
+                        return prevChat;
+                    });
+                } else {
+                    setChat([]);
+                }
+            }
+        } catch (err) {
+            if (isInitialLoad) {
+                setError(err.message || 'Failed to fetch chats');
+            }
+            console.error("Fetch error:", err);
+        } finally {
+            if (isInitialLoad) setLoading(false);
+        }
+    };
+
+    fetchChats(true);
+    
+    intervalId = setInterval(() => fetchChats(false), 1000);
+
+    return () => {
+        clearInterval(intervalId);
+    };
+}, [partnerId]);
+
+    console.log(chat)
+
     useEffect(() => {
         scrollToBottom();
     }, []);
@@ -37,12 +89,27 @@ function ChatInterface() {
         textareaRef.current.focus();
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (message.trim()) {
-            // Handle message submission here
-            console.log('Message sent:', message);
-            setMessage('');
+            try {
+                const messageData = {
+                    receiver: partnerId,
+                    message_content: message,
+                    sender: userDetails.id
+                };
+                await handleSendChat(messageData);
+
+                setMessage('');
+
+                const response = await handleChats(partnerId);
+                if (response?.data) {
+                    setChat(response.data);
+                }
+
+            } catch (error) {
+                setError('Failed to send message');
+            }
         }
     };
 
@@ -61,7 +128,7 @@ function ChatInterface() {
                         <p>Jane Doe</p>
                     </div>
 
-                    <div className="relative group">
+                    {/* <div className="relative group">
                         <FontAwesomeIcon icon={faEllipsisV} className="text-white text-lg cursor-pointer" />
                         <div className="absolute right-0 mt-2 w-32 bg-[#0E0D0C] text-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20">
                             <ul className="py-1 text-sm">
@@ -69,37 +136,67 @@ function ChatInterface() {
                                 <li className="px-4 py-2 hover:bg-[#1B1C1D] cursor-pointer">Export Chat</li>
                             </ul>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
-                {/* Scrollable chat body with padding to account for fixed header and input */}
+
                 <div className="flex-1 overflow-y-auto px-4 py-14 space-y-4 mt-14 mb-20">
-                    <p className='text-center text-[#FBEC6C]'>Chat between A and B</p>
-                    {[...Array(30)].map((_, i) => (
-                        <React.Fragment key={i}>
-                            <div className="flex justify-start">
-                                <div className="bg-[#0E0D0C] text-white rounded-tl-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-xs">
-                                    <p>Message thiiiiiiissss {i + 1}</p>
-                                    <p className="text-xs mt-1 text-gray-400">05/05/2025</p>
-                                </div>
-                            </div>
+                    <p className='text-center text-[#FBEC6C]'>Chat between {userDetails.display_name}  and {partnerName || 'Unknown'}</p>
 
-                            {/* Right-aligned reply (outgoing) */}
-                            <div className="flex justify-end">
-                                <div className="bg-[#1B1C1D] text-white rounded-br-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-xs">
-                                    <p>Reply yayyyyyy {i + 1}</p>
-                                    <p className="text-xs mt-1 text-gray-300 font-medium">Yesterday at 8:51 a.m</p>
-                                </div>
-                            </div>
-                        </React.Fragment>
-                    ))}
+                    {loading ? (
+                        <div className="flex justify-center items-center h-full">
+                            <p>Loading messages...</p>
+                        </div>
+                    ) : chat.length === 0 ? (
+                        <div className="flex justify-center items-center h-full">
+                            <p>No messages yet</p>
+                        </div>
+                    ) : (
+                        <>
+                            {chat.map((msg, index) => {
 
-                    {/* Empty div at the bottom for auto-scrolling */}
-                    <div ref={messagesEndRef} />
+                                const isCurrentUserMessage = msg.sender === userDetails.id;
+
+                                return (
+                                    <div key={index}>
+                                        {isCurrentUserMessage ? (
+
+                                            <div className="flex justify-end">
+                                                <div className="bg-[#1B1C1D] text-white rounded-br-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-xs">
+                                                    <p>{msg.message_content}</p>
+                                                    <p className="text-xs mt-1 text-gray-300 font-medium">
+                                                        {new Date(msg.message_sent_at).toLocaleTimeString([], {
+                                                            hour: '2-digit',
+                                                            minute: '2-digit'
+                                                        })}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        ) : (
+
+                                            <div className="flex justify-start">
+                                                <div className="bg-[#0E0D0C] text-white rounded-tl-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-xs">
+                                                    <p>{msg.message_content}</p>
+                                                    <p className="text-xs mt-1 text-gray-400">
+                                                        {new Date(msg.message_sent_at).toLocaleTimeString([], {
+                                                            hour: '2-digit',
+                                                            minute: '2-digit'
+                                                        })}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+
+                            <div ref={messagesEndRef} />
+                        </>
+                    )}
                 </div>
 
-                {/* Fixed message input at the bottom */}
-                <div className="sticky bottom-0 w-full px-4 py-3 bg-black border-t border-gray-800">
+
+                < div className="sticky bottom-0 w-full px-4 py-3 bg-black border-t border-gray-800" >
                     <form className="flex flex-row bg-[#0E0D0C] rounded-xl shadow-md px-3 py-2">
                         <div className='flex flex-row justify-between items-center w-full'>
                             <div>
@@ -126,18 +223,28 @@ function ChatInterface() {
                                 ref={textareaRef}
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' && !e.shiftKey) {
+                                        e.preventDefault();
+                                        handleSubmit(e);
+                                    }
+                                }}
                                 id="emoji-input"
                                 className='flex-1 bg-transparent outline-none placeholder:text-gray-400 text-white resize-none md:min-h-30 md:py-15 min-h-20 py-10'
                             />
-                            <div>
-                                <FontAwesomeIcon icon={faPaperPlane} 
-                                
-                                className="text-white text-lg cursor-pointer ml-10" />
+                            <div
+
+                            >
+                                <FontAwesomeIcon icon={faPaperPlane}
+                                    onSubmit={handleSubmit}
+
+                                    className="text-white text-lg cursor-pointer ml-10" />
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
+
         </DashboardNavigation>
     );
 }

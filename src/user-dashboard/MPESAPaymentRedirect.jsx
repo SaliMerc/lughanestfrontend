@@ -8,6 +8,7 @@ function MPESAPaymentRedirect() {
     const userDetails = JSON.parse(localStorage.getItem('user'));
 
     const [paymentStatus, setPaymentStatus] = useState('pending');
+    const [paymentAmount, setPaymentAmount] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [countdown, setCountdown] = useState(5);
     const navigate = useNavigate();
@@ -31,6 +32,7 @@ function MPESAPaymentRedirect() {
                         localStorage.setItem('user', JSON.stringify(updatedUser));
 
                         setPaymentStatus('success');
+                        setPaymentAmount(response.data.amount)
                         clearInterval(pollInterval);
 
                         setTimeout(function () {
@@ -93,8 +95,9 @@ function MPESAPaymentRedirect() {
                     <div className="text-left">
                         <div className="mb-4">
                         </div>
-                        <p className="mb-3 text-xl font-semibold">Payment Successful!</p>
-                        <p className="mb-5">Thank you for your payment</p>
+                        <p className="mb-3 text-xl font-semibold">✅ Payment Successful</p>
+                        <p className="mb-5">Thank you! <br />Your Payment of ksh. {paymentAmount} was successful.</p>
+                        <p className="mb-5">Full course and chat access unlocked</p>
                     </div>
                 );
             case 'failed':
@@ -102,8 +105,8 @@ function MPESAPaymentRedirect() {
                     <div className="text-left">
                         <div className="text-red-500 mb-4">
                         </div>
-                        <p className="mb-3 text-xl font-semibold">Payment Failed</p>
-                        <p className="mb-4 text-red-600">Sorry, an error was encountered while making the payment.</p>
+                        <p className="mb-3 text-xl font-semibold">❌ Payment Failed</p>
+                        <p className="mb-4 text-red-600">Sorry <br /> An error was encountered while making the payment.</p>
                         <p className="mb-4 text-red-600">Try again later!</p>
                         <div className="space-y-3">
 

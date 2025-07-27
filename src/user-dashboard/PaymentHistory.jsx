@@ -50,7 +50,9 @@ function PaymentTable() {
         : payments.filter(item =>
             item?.transaction_code?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item?.trasaction_status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item?.subscription_type?.toLowerCase().includes(searchTerm.toLowerCase())
+            item?.subscription_type?.toLowerCase().includes(searchTerm.toLowerCase())||
+            item?.subscription_status?.toLowerCase().includes(searchTerm.toLowerCase())||
+            item?.transaction_method?.toLowerCase().includes(searchTerm.toLowerCase())
         );
 
     useEffect(() => {
@@ -134,7 +136,7 @@ function PaymentTable() {
                                         <td className="px-6 py-4 border-r text-sm text-white">{startIndex + index + 1}</td>
                                         <td className="px-6 py-4 text-sm text-white ">{payment.subscription_type || 'None'}</td>
                                         <td className="px-6 py-4 text-sm text-white border-r">  {payment.subscription_date
-                                            ? new Date(payment.subscription_start_date).toLocaleDateString('en-GB')
+                                            ? new Date(payment.subscription_date).toLocaleDateString('en-GB')
                                             : 'N/A'}
 
                                         </td>

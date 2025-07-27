@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-// Import assets
-import logo from '../assets/new-lughanest-logo.svg';
-import open from '../assets/open-menu-items.svg';
+import logo from '../assets/my-logo.svg';
+import open from '../assets/open-btn.svg';
 import profileImage from '../assets/dashboard-images/profile-pic-placeholder.png';
 
-// Import sidebar icons
 import dashboardHome from '../assets/dashboard-images/dashboard-home.svg';
 import dashboardCourses from '../assets/dashboard-images/dashboard-courses.svg';
 import dashboardFindPartners from '../assets/dashboard-images/dashboard-find-partners.svg';
@@ -17,35 +15,12 @@ import dashboardPayment from '../assets/dashboard-images/dashboard-payment.svg';
 import dashboardSetting from '../assets/dashboard-images/dashboard-setting.svg';
 import dashboardLogout from '../assets/dashboard-images/dashboard-logout.svg';
 
+import { cleanProfilePictureUrl } from '../utils/profilePic';
+
 import ThemeToggle from '../components/ThemeToggle';
 
 function DashboardNavigation({ children }) {
     const userDetails = JSON.parse(localStorage.getItem('user'));
-
-    const cleanProfilePictureUrl = (url) => {
-        if (!url) return null;
-
-        if (url.includes('googleusercontent.com') && url.includes('media/https%3A')) {
-            try {
-                const encodedPart = url.split('/media/')[1];
-                const decodedUrl = decodeURIComponent(encodedPart);
-                const finalUrl = decodeURIComponent(decodedUrl);
-
-                return finalUrl;
-            } catch (error) {
-                console.error('Error cleaning profile picture URL:', error);
-                return url;
-            }
-        }
-
-        if (url.startsWith('http://127.0.0.1:8000/media/')) {
-            return url;
-        }
-
-        return url;
-    };
-
-    const profilePicUrl = cleanProfilePictureUrl(userDetails.profile_picture);
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const location = useLocation();
@@ -65,7 +40,7 @@ function DashboardNavigation({ children }) {
         setIsSidebarOpen(!isSidebarOpen);
     }
 
-    // Navigation items
+
     const navItems = [
         { name: 'Home', path: '/dashboard-home', icon: <img src={dashboardHome} alt="Home" className="w-7 h-7" /> },
         { name: 'Courses', path: '/dashboard-courses', icon: <img src={dashboardCourses} alt="Courses" className="w-7 h-7" /> },
@@ -83,7 +58,7 @@ function DashboardNavigation({ children }) {
 
     return (
         <div className="flex min-h-screen bg-black text-gray-200">
-            {/* Mobile overlay */}
+
             {isSidebarOpen && (
                 <div
                     onClick={toggleSidebar}
@@ -92,7 +67,6 @@ function DashboardNavigation({ children }) {
                 ></div>
             )}
 
-            {/* Sidebar - non-scrollable */}
             <aside
                 className={`fixed inset-y-0 left-0 z-40 transform ${isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full md:translate-x-0 md:w-20'
                     } bg-[#0E0D0C] shadow-md transition-all duration-300 flex flex-col overflow-hidden`}
@@ -148,28 +122,28 @@ function DashboardNavigation({ children }) {
                 </div>
             </aside>
 
-            {/* Main content area */}
+
             <div className="flex-1 flex flex-col min-w-0">
-                {/* Fixed top navigation */}
+
                 <header className={`
   bg-transparent z-10 fixed top-0 transition-all duration-300 w-full
   ${isSidebarOpen ? 'md:left-64 md:w-[calc(100%-16rem)]' : 'md:left-20 md:w-[calc(100%-5rem)]'}
 `}>
                     <div className="flex items-center justify-between p-4 bg-black bg-opacity-90">
                         <div className='flex flex-row gap-5'>
-                        <img
-                            src={open}
-                            onClick={toggleSidebar}
-                            alt="Toggle menu"
-                            className="h-[35px] cursor-pointer ml-4"
-                        />
-                        <div className='text-center'><ThemeToggle/></div>
+                            <img
+                                src={open}
+                                onClick={toggleSidebar}
+                                alt="Toggle menu"
+                                className="h-[35px] cursor-pointer ml-4"
+                            />
+                            <div className='text-center'><ThemeToggle /></div>
                         </div>
                         <div className=" flex flex-row w-10 h-10 md:w-15 md:h-15 mr-4">
-                            
+
                             <Link to="/dashboard-profile">
                                 <img
-                                    src={profilePicUrl || profileImage}
+                                    src={cleanProfilePictureUrl(userDetails.profile_picture) || profileImage}
                                     alt="Profile"
                                     className="rounded-full object-cover w-full h-full"
                                 />
@@ -179,12 +153,12 @@ function DashboardNavigation({ children }) {
                 </header>
 
 
-                {/* Scrollable content */}
+
                 <main className={`
   flex-1 overflow-y-auto p-6 bg-black mt-16
   ${isSidebarOpen ? 'md:ml-64 md:w-[calc(100%-16rem)]' : 'md:ml-20 md:w-[calc(100%-5rem)]'}
 `}>
-                    <div className="max-w-full"> {/* Container to prevent content overflow */}
+                    <div className="max-w-full">
                         {children}
                     </div>
                 </main>

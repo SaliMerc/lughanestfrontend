@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../assets/my-logo.svg';
-import open from '../assets/open-menu-items.svg';
-import close from '../assets/close-menu-items.svg';
+import open from '../assets/open-btn.svg';
+import close from '../assets/close-btn.svg';
 import '../index.css';
 
 import ThemeToggle from '../components/ThemeToggle';

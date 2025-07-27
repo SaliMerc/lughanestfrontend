@@ -14,6 +14,8 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 import auth_background from '../assets/login-signup-image.png';
 
+import {cleanProfilePictureUrl} from '../utils/profilePic';
+
 function DashboardProfile() {
     const userDetails = JSON.parse(localStorage.getItem('user'));
 
@@ -22,32 +24,6 @@ function DashboardProfile() {
             ? userDetails.languages_spoken 
             : [{ language: "Not Added Yet" }]
     );
-
-    const cleanProfilePictureUrl = (url) => {
-        if (!url) return null;
-
-        if (url.includes('googleusercontent.com') && url.includes('media/https%3A')) {
-            try {
-                const encodedPart = url.split('/media/')[1];
-                const decodedUrl = decodeURIComponent(encodedPart);
-                const finalUrl = decodeURIComponent(decodedUrl);
-
-                return finalUrl;
-            } catch (error) {
-                console.error('Error cleaning profile picture URL:', error);
-                return url;
-            }
-        }
-
-        if (url.startsWith('http://127.0.0.1:8000/media/')) {
-            return url;
-        }
-
-        return url;
-    };
-
-    const profilePicUrl = cleanProfilePictureUrl(userDetails.profile_picture);
-
 
 
     return (
@@ -70,7 +46,7 @@ function DashboardProfile() {
                     <h1 className='mb-10 text-3xl font-bold text-[#FBEC6C]'>My Profile</h1>
                     <div className='flex flex-row gap-8 md:gap-5 mb-10'>
                         <div className='w-10 h-10 md:w-15 md:h-15 mr-4'>
-                            <img src={profilePicUrl || profileImage} alt="Profile Picture" className='rounded-full object-cover w-full h-full' />
+                            <img src={cleanProfilePictureUrl(userDetails.profile_picture) || profileImage} alt="Profile Picture" className='rounded-full object-cover w-full h-full' />
                         </div>
                         <Link to='/profile-picture-update'>
                             <p><FontAwesomeIcon icon={faPenToSquare} /> Edit Photo</p>

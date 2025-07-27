@@ -8,9 +8,14 @@ import { capitalizeFirst } from '../utils/slugUtils';
 
 import profileImage from '../assets/dashboard-images/profile-pic-placeholder.png';
 
+import { cleanProfilePictureUrl } from '../utils/profilePic';
+
 function DashboardFindPartners() {
     const [partners, setPartners] = useState([]);
-    const [partnerCourses, setPartnerCourses]=useState([])
+    const [partnerCourses, setPartnerCourses] = useState([])
+
+    const userDetails = JSON.parse(localStorage.getItem('user'));
+    const [subscriptionStatus, setsubscriptionStatus] = useState(userDetails.subscription_status.has_active_subscription)
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -69,27 +74,33 @@ function DashboardFindPartners() {
                                             <div className='flex flex-col items-start text-left gap-2 p-3'>
                                                 <div className='flex flex-row items-center gap-3'>
                                                     <div className='w-10 h-10 md:w-15 md:h-15 mr-4'>
-                                                    <img src={partners.profile_picture_url || profileImage} alt="Profile Picture" className='rounded-full object-cover w-full h-full' />
+                                                        <img src={cleanProfilePictureUrl(partners.profile_picture_url) || profileImage} alt="Profile Picture" className='rounded-full object-cover w-full h-full' />
+                                                    </div>
+                                                    <div>
+                                                        <p>{capitalizeFirst(partners.display_name)}</p>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <p>{capitalizeFirst(partners.display_name)}</p>
-                                                </div>
-                                                </div>
-                                                
+
                                                 <p className='text-[1.2rem] md:text-[1.2rem] !text-[#FBEC6C] first-letter:uppercase mt-2'>Learning:</p>
                                                 <hr className='text-white w-[100%]' />
-                                               
-                                                {                               partners.courses.map((course, courseIndex) => (
+
+                                                {partners.courses.map((course, courseIndex) => (
                                                     <p key={courseIndex} className='text-[#FBEC6C] first-letter:uppercase'>
                                                         {course.course_name} ({course.course_level})
                                                     </p>
                                                 ))}
 
-                                                <Link to={`/dashboard-chats/chat-interface/${generateSlug(partners.display_name)}`}>
-                                                    <button className='hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
-                                                        Message
-                                                    </button>
-                                                </Link>
+                                                {subscriptionStatus && (
+                                                    <Link to={`/dashboard-chats/chat-interface/${generateSlug(partners.display_name)}`} state={{
+                                                        partnerId: partners.id,
+                                                        partnerName: partners.display_name
+
+                                                    }}>
+                                                        <button className='hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                                            Message
+                                                        </button>
+                                                    </Link>
+                                                )}
                                             </div>
                                         </div>
 
