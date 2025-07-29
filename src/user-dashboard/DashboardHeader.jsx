@@ -11,8 +11,8 @@ import dashboardFindPartners from '../assets/dashboard-images/dashboard-find-par
 import dashboardChats from '../assets/dashboard-images/dashboard-chats.svg';
 import dashboardBlog from '../assets/dashboard-images/dashboard-blog.svg';
 import dashboardProfile from '../assets/dashboard-images/dashboard-profile.svg';
-import dashboardPayment from '../assets/dashboard-images/dashboard-payment.svg';
-import dashboardSetting from '../assets/dashboard-images/dashboard-setting.svg';
+import dashboardPayment from '../assets/dashboard-images/my-bank.svg';
+import dashboardSetting from '../assets/dashboard-images/my-setting.svg';
 import dashboardLogout from '../assets/dashboard-images/dashboard-logout.svg';
 
 import { cleanProfilePictureUrl } from '../utils/profilePic';
@@ -57,19 +57,19 @@ function DashboardNavigation({ children }) {
     ];
 
     return (
-        <div className="flex min-h-screen bg-black text-gray-200">
+        <div className="flex min-h-screen bg-[var(--dashboard-nav-bg)] text-gray-200">
 
             {isSidebarOpen && (
                 <div
                     onClick={toggleSidebar}
-                    className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+                    className="fixed inset-0 bg-[var(--dashboard-nav-bg)] bg-opacity-50 z-30 md:hidden"
                     aria-hidden="true"
                 ></div>
             )}
 
             <aside
                 className={`fixed inset-y-0 left-0 z-40 transform ${isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full md:translate-x-0 md:w-20'
-                    } bg-[#0E0D0C] shadow-md transition-all duration-300 flex flex-col overflow-hidden`}
+                    } bg-[var(--dashboard-nav)] shadow-md transition-all duration-300 flex flex-col overflow-hidden`}
             >
                 <div className="p-5 flex items-center justify-between">
                     {isSidebarOpen ? (
@@ -89,8 +89,8 @@ function DashboardNavigation({ children }) {
                                     <Link
                                         to={item.path}
                                         className={`flex items-center p-2 rounded-lg text-white ${location.pathname === item.path
-                                            ? 'bg-[#0E0D0C] text-white'
-                                            : 'hover:bg-black'
+                                            ? 'bg-[var(--dashboard-nav-hover-bg)] text-white'
+                                            : 'hover:bg-[var(--dashboard-nav-hover-bg)]'
                                             }`}
                                     >
                                         <span className="text-lg mr-3">{item.icon}</span>
@@ -108,8 +108,8 @@ function DashboardNavigation({ children }) {
                                     <Link
                                         to={item.path}
                                         className={`flex items-center p-2 rounded-lg text-gray-200 ${location.pathname === item.path
-                                            ? 'bg-[#0E0D0C] text-white'
-                                            : 'hover:bg-black'
+                                            ? 'bg-[var(--dashboard-nav-hover-bg)] text-white'
+                                            : 'hover:bg-[var(--dashboard-nav-hover-bg)]'
                                             }`}
                                     >
                                         <span className="text-lg mr-3">{item.icon}</span>
@@ -129,7 +129,7 @@ function DashboardNavigation({ children }) {
   bg-transparent z-10 fixed top-0 transition-all duration-300 w-full
   ${isSidebarOpen ? 'md:left-64 md:w-[calc(100%-16rem)]' : 'md:left-20 md:w-[calc(100%-5rem)]'}
 `}>
-                    <div className="flex items-center justify-between p-4 bg-black bg-opacity-90">
+                    <div className="flex items-center justify-between p-4 bg-[var(--bg)] bg-opacity-90">
                         <div className='flex flex-row gap-5'>
                             <img
                                 src={open}
@@ -155,7 +155,7 @@ function DashboardNavigation({ children }) {
 
 
                 <main className={`
-  flex-1 overflow-y-auto p-6 bg-black mt-16
+  flex-1 overflow-y-auto p-6 bg-[var(--bg)] mt-16
   ${isSidebarOpen ? 'md:ml-64 md:w-[calc(100%-16rem)]' : 'md:ml-20 md:w-[calc(100%-5rem)]'}
 `}>
                     <div className="max-w-full">

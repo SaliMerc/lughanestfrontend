@@ -104,7 +104,7 @@ function DashboardHome() {
             ) : (
 
               ongoingCourses.map((course, index) => (
-                <div key={index} className=' min-h-[250px] w-[10rem] md:w-[18rem]  bg-[#0E0D0C]  flex flex-col gap-10 rounded-[20px]'>
+                <div key={index} className=' min-h-[250px] w-[10rem] md:w-[18rem]  bg-[var(--dashboard-card-bg)]  flex flex-col gap-10 rounded-[20px]'>
                   <div className='flex flex-col items-start text-left gap-2 p-3'>
                     <img src={
                       course.course_level === 'beginner'
@@ -117,6 +117,7 @@ function DashboardHome() {
                     <div className='flex flex-row !justify-between'>
 
                       <div><p className='text-[1.2rem] md:text-[1.5rem] first-letter:uppercase'>{course.course_name.course_name}</p></div>
+                      {/* 
                       <div class="relative w-20 h-20">
                         <svg className="w-full h-full" viewBox="0 0 100 100">
                           <circle
@@ -132,14 +133,14 @@ function DashboardHome() {
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                           <span className="text-[0.7rem] text-white">10%</span>
                         </div>
-                      </div>
+                      </div> */}
 
                     </div>
                     <hr className='text-white w-[100%]' />
                     <p className='text-[#FBEC6C] first-letter:uppercase'>{course.course_level}</p>
                     <p className='text-white text-[12px]'>Enrolled on {new Date(course.enrolment_date).toLocaleDateString()}</p>
                     <Link to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}`} state={{ course }}>
-                      <button className='hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                      <button className='!w-[8.2rem] md:!w-[16rem] !text-[0.8rem] md:!text-[1.2rem]'>
                         Continue Learning
                       </button>
                     </Link>
@@ -157,13 +158,13 @@ function DashboardHome() {
         {/* Charts section starts */}
         <h1 className='text-2xl md:text-4xl font-semibold mb-12'>My Learning Charts</h1>
         <section className='flex flex-col md:flex-row gap-12 md:gap-24'>
-          <div className='bg-[#0E0D0C] w-full h-[300px] md:w-[600px] md:h-[450px] text-center text-white p-5'>
+          <div className='bg-[var(--dashboard-card-bg)] w-full h-[300px] md:w-[600px] md:h-[450px] text-center text-white p-5'>
             <WeeklyLineChart
               weeklyData={weekly_lessons_data}
               weeklyLabels={weekly_labels}
             />
           </div>
-          <div className='bg-[#0E0D0C] w-full h-[300px] md:w-[600px] md:h-[450px] text-center text-white p-5'>
+          <div className='bg-[var(--dashboard-card-bg)] w-full h-[300px] md:w-[600px] md:h-[450px] text-center text-white p-5'>
             <MonthlyBarChart
               yearlyData={lessons_by_month_data}
               yearlyLabels={monthly_common_labels}
@@ -193,7 +194,7 @@ function DashboardHome() {
             ) : (
 
               completedCourses.slice(0, 4).map((course, index) => (
-                <div key={index} className=' min-h-[250px] w-[10rem] md:w-[18rem]  bg-[#0E0D0C]  flex flex-col gap-10 rounded-[20px]'>
+                <div key={index} className=' min-h-[250px] w-[10rem] md:w-[18rem]  bg-[var(--dashboard-card-bg)]  flex flex-col gap-10 rounded-[20px]'>
                   <div className='flex flex-col items-start text-left gap-2 p-3'>
                     <img src={
                       course.course_level === 'beginner'
@@ -209,7 +210,7 @@ function DashboardHome() {
                     <p className='text-white text-[12px]'>Enrolled on {new Date(course.enrolment_date).toLocaleDateString()}</p>
                     <p className='text-white text-[12px]'>Compeleted on {new Date(course.completion_date).toLocaleDateString()}</p>
                     <Link to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}`} state={{ course }}>
-                      <button className='hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                      <button className='!w-[8.2rem] md:!w-[16rem] !text-[0.8rem] md:!text-[1.2rem]'>
                         Review
                       </button>
                     </Link>

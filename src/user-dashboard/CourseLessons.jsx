@@ -27,7 +27,7 @@ function CourseLessons() {
                         ) : (
 
                             module.module_lessons.map((lesson, index) => (
-                                <div key={index} className=' min-h-[100px] w-[100%] bg-[#0E0D0C]  flex flex-col gap-10 rounded-[20px]'>
+                                <div key={index} className=' min-h-[100px] w-[100%] bg-[var(--dashboard-card-bg)]  flex flex-col gap-10 rounded-[20px]'>
 
                                     <div className='flex flex-col md:flex-row gap-6 md:justify-between items-start text-left p-3'>
                                         <div>
@@ -47,7 +47,7 @@ function CourseLessons() {
                                                       currentLessonIndex: index,
                                                       allLessons: module.module_lessons
                                                   }}>
-                                                <button className='w-[10px] min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[13px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                                <button className='w-[10px] min-h-14 px-3 !bg-[var(--main-buttons-bg)] !text-[var(--main-buttons-text)] hover:!bg-[var(--main-buttons-hover-bg)] hover:!text-[var(--main-buttons-hover-text)] shadow-xl !shadow-[#000000] !text-[13px] md:!text-xl  !border-1 !border-[#FBEC6C]  transition-colors !duration-300'>
                                                     {lesson.lesson_type === 'video' && 'Watch'}
                                                     {lesson.lesson_type === 'audio' && 'Listen'}
                                                     {lesson.lesson_type === 'read' && 'Read'}

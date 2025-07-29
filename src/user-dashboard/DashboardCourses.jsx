@@ -77,7 +77,7 @@ useEffect(() => {
                             <h2 className="text-xl md:text-2xl font-bold text-white mb-4">{language}</h2>
                             <div className="flex flex-wrap gap-4">
                                 {courseList.map((course) => (
-                                    <div key={course.id} className='min-h-[250px] w-[45%] md:w-[28%] bg-[#0E0D0C] flex flex-col gap-10 rounded-[20px]'>
+                                    <div key={course.id} className='min-h-[250px] w-[45%] md:w-[28%] bg-[var(--dashboard-card-bg)] flex flex-col gap-10 rounded-[20px]'>
                                         <div className='flex flex-col items-start text-left gap-2 p-3'>
                                             <img
                                                 src={
@@ -99,13 +99,14 @@ useEffect(() => {
 
                                             {course.is_enrolled ? (
                                                 <Link to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}`} state={{ course }}>
-                                                    <button className='!min-w-[100%] min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[13px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                                    <button className='!w-[7rem] md:!w-[22rem]'>
                                                         Go to Course
                                                     </button>
                                                 </Link>
                                             ) : (
                                                 <Link to={`/dashboard-courses/${generateSlug(course.course_name)}`} state={{ course }}>
-                                                    <button className='!min-w-[100%] min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[13px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                
+                                                    <button className='!w-[7rem] md:!w-[22rem] '>
                                                         Enroll
                                                     </button>
                                                 </Link>

@@ -71,7 +71,7 @@ function CourseModules() {
               </div>
             ) : (
               modules.map((module, index) => (
-                <div key={module.id} className='min-h-[100px] w-full bg-[#0E0D0C] flex flex-col gap-3 rounded-[20px] p-6'>
+                <div key={module.id} className='min-h-[100px] w-full bg-[var(--dashboard-card-bg)] flex flex-col gap-3 rounded-[20px] p-6'>
                   <Link
                     to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}/${generateSlug(module.module_title, module.module_description)}`}
                     state={{ module, course }}

@@ -21,11 +21,17 @@
   --payment-bg: #1B1C1D;
   --input-bg: #FAF3E0;
 
-  --form-card: #000000;
+  --form-card-bg: #0E0D0C;
   --form-fieldset-border: #E3E0C0;
   --form-input-bg: #0E0D0C;
 
   --text-weight: 500;
+
+  --dashboard-nav-bg: #0E0D0C;
+  --dashboard-nav-hover-bg: #000000;
+
+  --dashboard-card-bg: #0E0D0C;
+
 
 
 }
@@ -89,6 +95,11 @@
   --form-input-bg: #E9D6B8;
 
   --text-weight: 600;
+
+  --dashboard-nav-bg: #A78F74;
+  --dashboard-nav-hover-bg: #8B7A58;
+
+  --dashboard-card-bg: #E9D6B8;
 }
 
 .form-div {
@@ -111,6 +122,7 @@ fieldset input {
 button {
   background-color: var(--main-buttons-bg) !important;
   color: var(--main-buttons-text) !important;
+
 }
 
 button:hover {

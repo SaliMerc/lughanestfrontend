@@ -81,8 +81,8 @@ function DashboardChats() {
                             </div>
                         ) : (
 
-                            latestChat.slice(0, 4).map((chat, index) => (
-                                <div key={index} className=' min-h-[100px] !w-[100%] bg-[#0E0D0C]  flex flex-col not-last:rounded-[20px]'>
+                            latestChat.map((chat, index) => (
+                                <div key={index} className=' min-h-[100px] !w-[100%] bg-[var(--dashboard-card-bg)]  flex flex-col not-last:rounded-[20px]'>
                                     <Link to={`/dashboard-chats/chat-interface/${generateSlug(chat.otherUserName)}`} state={{ 
                                         partnerId: chat.otherUserId,
                                         partnerName: chat.otherUserName 

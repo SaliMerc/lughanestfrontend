@@ -58,7 +58,6 @@ function ChatInterface() {
             if (isInitialLoad) {
                 setError(err.message || 'Failed to fetch chats');
             }
-            console.error("Fetch error:", err);
         } finally {
             if (isInitialLoad) setLoading(false);
         }
@@ -125,7 +124,7 @@ function ChatInterface() {
 
                     </div>
                     <div className="text-white font-semibold text-lg">
-                        <p>Jane Doe</p>
+                        <p>{partnerName}</p>
                     </div>
 
                     {/* <div className="relative group">

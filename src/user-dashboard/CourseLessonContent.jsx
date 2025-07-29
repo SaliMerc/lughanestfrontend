@@ -111,11 +111,11 @@ function CourseLessonContent() {
                     </h1>
                     <section className='flex flex-col justify-left gap-3 md:gap-12 items-center py-7'>
 
-                        <div className='flex flex-col gap-4 w-full min-h-[65vh] bg-[#1B1C1D] border-l-[5px] rounded-l-[20px] p-6'>
+                        <div className='flex flex-col gap-4 w-full min-h-[65vh] !bg-[var(--card-bg)] border-l-[5px] rounded-l-[20px] p-6'>
 
                             {/* Video Lesson Component */}
                             {lesson.lesson_type === 'video' && (
-                                <div className="border-[#000000]">
+                                <div className="!border-[var(--dashboard-nav-bg)] ">
                                     <div className="flex flex-col gap-6">
                                         <div className="aspect-w-16 aspect-h-9">
                                             <video
@@ -142,7 +142,7 @@ function CourseLessonContent() {
 
                             {/* Audio Lesson Component */}
                             {lesson.lesson_type === 'audio' && (
-                                <div className="border-[#000000]">
+                                <div className="!border-[var(--dashboard-nav-bg)] ">
                                     <div className="flex flex-col gap-6">
                                         <div className="aspect-w-16">
                                             <audio
@@ -169,7 +169,7 @@ function CourseLessonContent() {
 
                             {/* Reading Lesson Component  */}
                             {lesson.lesson_type === 'read' && (
-                                <div className="border-[#000000]">
+                                <div className="!border-[var(--dashboard-nav-bg)] ">
                                     <div className="flex flex-col gap-6">
                                         <div className="text-[#E3E0C0]">
                                             <div className="prose max-w-none text-[#E3E0C0]">
@@ -184,7 +184,7 @@ function CourseLessonContent() {
 
                             {/* Quiz Lesson Component */}
                             {lesson.lesson_type === 'quiz' && (
-                                <div className="border-[#000000]">
+                                <div className="!border-[var(--dashboard-nav-bg)]">
                                     <h1>Quiz</h1>
                                     <div className="flex flex-col gap-6">
                                         <div className="text-[#E3E0C0]">

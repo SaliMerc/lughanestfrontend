@@ -70,7 +70,7 @@ function DashboardFindPartners() {
                                 : (
 
                                     partners.map((partners, index) => (
-                                        <div key={index} className=' min-h-[250px] w-[10rem] md:w-[20%]  bg-[#0E0D0C]  flex flex-col gap-10 rounded-[20px]'>
+                                        <div key={index} className=' min-h-[250px] w-[10rem] md:w-[20%]  bg-[var(--dashboard-card-bg)]  flex flex-col gap-10 rounded-[20px]'>
                                             <div className='flex flex-col items-start text-left gap-2 p-3'>
                                                 <div className='flex flex-row items-center gap-3'>
                                                     <div className='w-10 h-10 md:w-15 md:h-15 mr-4'>
@@ -81,7 +81,7 @@ function DashboardFindPartners() {
                                                     </div>
                                                 </div>
 
-                                                <p className='text-[1.2rem] md:text-[1.2rem] !text-[#FBEC6C] first-letter:uppercase mt-2'>Learning:</p>
+                                                <p className='text-[1.2rem] md:text-[1.2rem] text-[#FBEC6C] first-letter:uppercase mt-2'>Learning:</p>
                                                 <hr className='text-white w-[100%]' />
 
                                                 {partners.courses.map((course, courseIndex) => (
@@ -96,7 +96,7 @@ function DashboardFindPartners() {
                                                         partnerName: partners.display_name
 
                                                     }}>
-                                                        <button className='hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                                        <button className='!w-[8.2rem] md:!w-[16rem] !text-[0.8rem] md:!text-[1.2rem]'>
                                                             Message
                                                         </button>
                                                     </Link>

@@ -34,7 +34,7 @@ function DashboardCompletedCourses() {
                         ) : (
 
                             completedCourses.map((course, index) => (
-                                <div key={index} className=' min-h-[250px] w-[10rem] md:w-[20%]  bg-[#0E0D0C]  flex flex-col gap-10 rounded-[20px]'>
+                                <div key={index} className=' min-h-[250px] w-[10rem] md:w-[20%]  bg-[var(--dashboard-card-bg)]  flex flex-col gap-10 rounded-[20px]'>
                                     <div className='flex flex-col items-start text-left gap-2 p-3'>
                                         <img src={
                                             course.course_level === 'beginner'
@@ -50,7 +50,7 @@ function DashboardCompletedCourses() {
                                         <p className='text-white text-[12px]'>Enrolled on {new Date(course.enrolment_date).toLocaleDateString()}</p>
                                         <p className='text-white text-[12px]'>Compeleted on {new Date(course.completion_date).toLocaleDateString()}</p>
                                         <Link to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}`} state={{ course }}>
-                                            <button className='hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                            <button className='!w-[8.2rem] md:!w-[16rem] !text-[0.8rem] md:!text-[1.2rem]'>
                                                 Review
                                             </button>
                                         </Link>
