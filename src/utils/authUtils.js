@@ -248,7 +248,7 @@ export async function handleCheckDeletionStatus() {
 export async function handleUndoAccountDeletion() {
   try {
     const token = localStorage.getItem('access_token');
-    const response = await axios.post(
+    const response = await axios.patch(
       `${API_URL}/api/v1/users/undo-account-deletion/`,
       {
         headers: {

@@ -16,9 +16,8 @@ function DashboardSetting() {
         <DashboardNavigation>
 
             <section
-                className='form-element'
+                className='form-element login-section'
                 style={{
-                    backgroundImage: `url(${auth_background})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     minHeight: '100vh',
@@ -32,12 +31,12 @@ function DashboardSetting() {
                     <p className='mb-15 text-xl'>Account Settings & Security</p>
                     <div className='flex flex-col gap-8 md:justify-between'>
                         <Link to='/settings-change-password'>
-                            <button className=' w-full md:min-w-[1.2rem] min-h-14 px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-[1.2rem] text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                            <button className='px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
                                 <FontAwesomeIcon icon={faPenToSquare} />Change Account Password
                             </button>
                         </Link>
                         <Link to='/settings-delete-account'>
-                            <button className='md:min-w-[1.2rem] w-full min-h-14 px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-[1.2rem] text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#E11212] hover:!bg-[#E11212] hover:!text-[#E3E0C0] transition-colors !duration-300'>
+                            <button className='!bg-[var(--dashboard-cancel-button-bg)] hover:!bg-[var(--dashboard-cancel-button-hover-bg)] !border-[var(--dashboard-cancel-button-border)] !text-[var(--dashboard-cancel-button-text)]'>
                                 <FontAwesomeIcon icon={faTrash} />
                                 Request Account Deletion
                             </button>

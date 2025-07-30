@@ -70,9 +70,8 @@ function SettingsDeleteAccount() {
     <DashboardNavigation>
 
       <section
-        className='form-element flex flex-col'
+        className='form-element flex flex-col login-section'
         style={{
-          backgroundImage: `url(${auth_background})`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
           minHeight: '100vh',
@@ -93,11 +92,11 @@ function SettingsDeleteAccount() {
               <li>Chat Logs</li>
             </ol>
             <div className='flex flex-col md:flex-row gap-8 md:justify-between'>
-              <button onClick={handleScheduleDeletion} className=' w-full md:w-[1.2rem] min-h-14 px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+              <button onClick={handleScheduleDeletion} className=' w-full px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
                 {buttonLoading ? "Deleting..." : "Yes"}
               </button>
               <Link to='/dashboard-settings'>
-                <button className='md:w-[1.2rem] w-full min-h-14 px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#E11212] hover:!bg-[#E11212] hover:!text-[#E3E0C0] transition-colors !duration-300'>
+                <button className='!bg-[var(--dashboard-cancel-button-bg)] hover:!bg-[var(--dashboard-cancel-button-hover-bg)] !border-[var(--dashboard-cancel-button-border)] !text-[var(--dashboard-cancel-button-text)]'>
                   No
                 </button>
               </Link>
@@ -111,7 +110,7 @@ function SettingsDeleteAccount() {
             <p className='mb-5 text-xl text-[#FBEC6C]'>Deletion Scheduled</p>
             <p>Your account will be deleted on: {deletionDate}</p>
 
-            <button onClick={undoDeletion} className=' w-full  min-h-14 px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+            <button onClick={undoDeletion} className=' w-full px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
               {buttonLoading ? "Cancelling your deletion request..." : "Cancel Account Deletion"}
             </button>
           </div>
