@@ -20,20 +20,13 @@ function CourseModules() {
   useEffect(() => {
     if (!course) return;
 
-    const savedModules = sessionStorage.getItem('modules');
-    if (savedModules) {
-      setModules(JSON.parse(savedModules));
-      setLoading(false);
-      return;
-    }
-
     setLoading(true);
     handleCourseModules(
       course.course_name.id,
       (data) => {
         setModules(data);
-        sessionStorage.setItem('modules', JSON.stringify(data));
         setLoading(false);
+        console.log(data)
       },
       (err) => {
         setError(err.message || 'Failed to load modules');
@@ -71,7 +64,7 @@ function CourseModules() {
               </div>
             ) : (
               modules.map((module, index) => (
-                <div key={module.id} className='min-h-[100px] w-full bg-[var(--dashboard-card-bg)] flex flex-col gap-3 rounded-[20px] p-6'>
+                <div key={index} className='min-h-[100px] w-full bg-[var(--dashboard-card-bg)] flex flex-col gap-3 rounded-[20px] p-6'>
                   <Link
                     to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}/${generateSlug(module.module_title, module.module_description)}`}
                     state={{ module, course }}
@@ -88,11 +81,11 @@ function CourseModules() {
 
                     <div>
 
-                      {/* <div class="relative w-20 h-20">
-                        <svg class="w-full h-full" viewBox="0 0 100 100">
+                      <div className="relative w-20 h-20">
+                        <svg className="w-full h-full" viewBox="0 0 100 100">
                           <circle
-                            class="text-[#FBEC6C]"
-                            stroke-width="3"
+                            className="text-[#FBEC6C]"
+                            strokeWidth="3"
                             stroke="currentColor"
                             fill="transparent"
                             r="40"
@@ -100,10 +93,10 @@ function CourseModules() {
                             cy="50"
                           />
                         </svg>
-                        <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                          <span class="text-[1rem] text-white">{module.modules.module_progress}%</span>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                          <span className="text-[1rem] text-white">{module.modules[0].module_progress}%</span>
                         </div>
-                      </div> */}
+                      </div>
 
                     </div>
                   </Link>

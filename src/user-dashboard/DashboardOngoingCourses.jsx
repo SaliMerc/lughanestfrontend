@@ -40,7 +40,16 @@ function DashboardOngoingCourses() {
                           : advancedLanguage
                     }
                       alt={course.course_level} className='h-25 w-full rounded-t-2xl object-cover' />
-                    <p className='text-[1.2rem] md:text-[1.5rem] first-letter:uppercase'>{course.course_name.course_name}</p>
+                     <div className=''>
+
+                      <div className=''>
+                        <p className='text-[1.2rem] md:text-[1.5rem] first-letter:uppercase'>{course.course_name.course_name}</p>
+
+                        <p className='!text-[var(--chart-lines)] border rounded-lg px-2'>{Math.round(course.course_progress)}% Done</p>
+                      
+                      </div>                      
+
+                    </div>
                     <hr className='text-white w-[100%]' />
                     <p className='text-[#FBEC6C] first-letter:uppercase'>{course.course_level}</p>
                     <p className='text-white text-[12px]'>Enrolled on {new Date(course.enrolment_date).toLocaleDateString()}</p>

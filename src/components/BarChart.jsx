@@ -5,11 +5,10 @@ import { Chart as ChartJS } from 'chart.js/auto';
 const MonthlyBarChart = ({ yearlyData, yearlyLabels }) => {
   const maxYearlyData = Math.max(...yearlyData.filter(value => value !== null)) + 5;
 
-  // Create gradient (needs to be done in the component)
   const getGradient = (ctx) => {
     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, '#E3E0C0');
-    gradient.addColorStop(0.2, '#FBEC6C');
+    gradient.addColorStop(0, '#A78F74');
+    gradient.addColorStop(0.2, '#A78F74');
     gradient.addColorStop(1, '#6D3710');
     return gradient;
   };
@@ -45,7 +44,7 @@ const MonthlyBarChart = ({ yearlyData, yearlyLabels }) => {
         position: "top",
         labels: {
           usePointStyle: true,
-          color: '#E3E0C0'
+          color: '#A78F74'
         }
       },
       title: {
@@ -55,7 +54,7 @@ const MonthlyBarChart = ({ yearlyData, yearlyLabels }) => {
           size: 21,
           weight: 'bold',
         },
-        color: '#E3E0C0',
+        color: '#A78F74',
         text: "This Year",
       }
     },
@@ -64,11 +63,15 @@ const MonthlyBarChart = ({ yearlyData, yearlyLabels }) => {
         beginAtZero: false,
         min: 0,
         ticks: {
-          color: '#E3E0C0'
+          color: '#A78F74',
+             font: {
+          size: 14,
+          weight: 'bold',
+        },
         },
         border: {
           display: true,
-          color: '#E3E0C0',
+          color: '#A78F74',
           width: 1.3
         },
         grid: {
@@ -81,11 +84,15 @@ const MonthlyBarChart = ({ yearlyData, yearlyLabels }) => {
         min: 0,
         max: maxYearlyData,
         ticks: {
-          color: '#E3E0C0'
+          color: '#A78F74',
+             font: {
+          size: 14,
+          weight: 'bold',
+        },
         },
         border: {
           display: true,
-          color: '#E3E0C0',
+          color: '#A78F74',
           width: 1.3
         },
         grid: {

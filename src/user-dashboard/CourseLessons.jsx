@@ -8,7 +8,6 @@ function CourseLessons() {
     const location = useLocation();
     const navigate = useNavigate();
     const { course, module } = location.state || {};
-    const [lessons, setLessons] = useState(module.module_lessons)
 
     return (
         <DashboardNavigation>

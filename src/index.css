@@ -40,6 +40,8 @@
   --dashboard-card-bg: #0E0D0C;
   --chat-dash-interface-bg: #1B1C1D;
 
+  --chart-lines: #FBEC6C;
+
 
 
 }
@@ -117,6 +119,7 @@
   --chat-dash-interface-bg: #A78F74;
 
   --lang-button-text: #000000;
+  --chart-lines: #554f48;
 }
 
 .form-div {

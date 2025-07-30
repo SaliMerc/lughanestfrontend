@@ -11,8 +11,8 @@ const WeeklyLineChart = ({ weeklyData, weeklyLabels }) => {
       {
         label: 'Lessons completed',
         data: weeklyData,
-        backgroundColor: '#E3E0C0',
-        borderColor: '#E3E0C0',
+        backgroundColor: '#8B7A58',
+        borderColor: '#8B7A58',
         borderWidth: 1,
         spanGaps: true,
       }
@@ -27,7 +27,7 @@ const WeeklyLineChart = ({ weeklyData, weeklyLabels }) => {
         position: "top",
         labels: {
           usePointStyle: true,
-          color: '#E3E0C0'
+          color: '#8B7A58'
         }
       },
       title: {
@@ -37,7 +37,7 @@ const WeeklyLineChart = ({ weeklyData, weeklyLabels }) => {
           size: 21,
           weight: 'bold',
         },
-        color: '#E3E0C0',
+        color: '#8B7A58',
         text: "This Week",
       }
     },
@@ -46,15 +46,25 @@ const WeeklyLineChart = ({ weeklyData, weeklyLabels }) => {
         beginAtZero: false,
         min: 0,
         ticks: {
-          color: '#E3E0C0'
+          color: '#A78F74',
+           font: {
+          size: 14,
+          weight: 'bold',
+        },
+          
         },
         border: {
           display: true,
-          color: '#E3E0C0',
-          width: 1.3
+          color: '#8B7A58',
+          width: 1.3,
+          font: {
+          size: 21,
+          weight: 'bold',
+        },
         },
         grid: {
           color: '#a38e8e'
+          
         }
       },
       y: {
@@ -62,16 +72,25 @@ const WeeklyLineChart = ({ weeklyData, weeklyLabels }) => {
         min: 0,
         max: maxWeeklyData,
         ticks: {
-          color: '#E3E0C0'
+          color: '#A78F74',
+          font: {
+          size: 16,
+          weight: 'bold',
+        },
         },
         border: {
           display: true,
-          color: '#E3E0C0',
-          width: 1.3
+          color: '#A78F74',
+          width: 1.3,
+          font: {
+          size: 21,
+          weight: 'bold',
+        },
         },
         grid: {
           display: true,
         },
+      
       }
     }
   };

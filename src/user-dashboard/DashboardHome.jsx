@@ -114,26 +114,14 @@ function DashboardHome() {
                           : advancedLanguage
                     }
                       alt={course.course_level} className='h-25 w-full rounded-t-2xl object-cover' />
-                    <div className='flex flex-row !justify-between'>
+                    <div className=''>
 
-                      <div><p className='text-[1.2rem] md:text-[1.5rem] first-letter:uppercase'>{course.course_name.course_name}</p></div>
-                      {/* 
-                      <div class="relative w-20 h-20">
-                        <svg className="w-full h-full" viewBox="0 0 100 100">
-                          <circle
-                            className="text-[#FBEC6C]"
-                            stroke-width="1"
-                            stroke="currentColor"
-                            fill="transparent"
-                            r="30"
-                            cx="50"
-                            cy="50"
-                          />
-                        </svg>
-                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                          <span className="text-[0.7rem] text-white">10%</span>
-                        </div>
-                      </div> */}
+                      <div className=''>
+                        <p className='text-[1.2rem] md:text-[1.5rem] first-letter:uppercase'>{course.course_name.course_name}</p>
+
+                        <p className='!text-[var(--chart-lines)] border rounded-lg px-2'>{Math.round(course.course_progress)}% Done</p>
+                      
+                      </div>                      
 
                     </div>
                     <hr className='text-white w-[100%]' />
