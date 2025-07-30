@@ -31,6 +31,7 @@
   --dashboard-nav-hover-bg: #000000;
 
   --dashboard-card-bg: #0E0D0C;
+  --chat-dash-interface-bg:#1B1C1D;
 
 
 
@@ -100,6 +101,7 @@
   --dashboard-nav-hover-bg: #8B7A58;
 
   --dashboard-card-bg: #E9D6B8;
+  --chat-dash-interface-bg:#A78F74;
 }
 
 .form-div {

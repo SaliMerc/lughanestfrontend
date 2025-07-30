@@ -114,9 +114,9 @@ function ChatInterface() {
 
     return (
         <DashboardNavigation>
-            <div className="flex flex-col h-screen bg-black text-white">
+            <div className="flex flex-col h-screen !bg-[var(--bg)] text-white">
                 {/* Top fixed chat header - stays fixed while scrolling */}
-                <div className="flex justify-between items-center px-4 py-3 bg-black sticky top-25 z-10 border-b border-gray-800">
+                <div className="flex justify-between items-center px-4 py-3 !bg-[var(--chat-dash-interface-bg)] sticky top-25 z-10 border-b !border-[var(--card-bg)]">
                     <div className="flex items-center space-x-2">
                         <Link to="/dashboard-chats">
                             <FontAwesomeIcon icon={faArrowLeft} className="text-white text-lg cursor-pointer" />
@@ -161,7 +161,7 @@ function ChatInterface() {
                                         {isCurrentUserMessage ? (
 
                                             <div className="flex justify-end">
-                                                <div className="bg-[#1B1C1D] text-white rounded-br-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-xs">
+                                                <div className="!bg-[var(--card-bg)] text-white rounded-br-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-xs">
                                                     <p>{msg.message_content}</p>
                                                     <p className="text-xs mt-1 text-gray-300 font-medium">
                                                         {new Date(msg.message_sent_at).toLocaleTimeString([], {
@@ -174,7 +174,7 @@ function ChatInterface() {
                                         ) : (
 
                                             <div className="flex justify-start">
-                                                <div className="bg-[#0E0D0C] text-white rounded-tl-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-xs">
+                                                <div className="!bg-[var(--chat-dash-interface-bg)] text-white rounded-tl-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-xs">
                                                     <p>{msg.message_content}</p>
                                                     <p className="text-xs mt-1 text-gray-400">
                                                         {new Date(msg.message_sent_at).toLocaleTimeString([], {
@@ -195,8 +195,8 @@ function ChatInterface() {
                 </div>
 
 
-                < div className="sticky bottom-0 w-full px-4 py-3 bg-black border-t border-gray-800" >
-                    <form className="flex flex-row bg-[#0E0D0C] rounded-xl shadow-md px-3 py-2">
+                < div className="sticky bottom-0 w-full px-4 py-3 !bg-[var(--bg)] border-t border-gray-800" >
+                    <form className="flex flex-row !bg-[var(--form-card-bg)] rounded-xl shadow-md px-3 py-2">
                         <div className='flex flex-row justify-between items-center w-full'>
                             <div>
                                 <FontAwesomeIcon icon={faCat}
