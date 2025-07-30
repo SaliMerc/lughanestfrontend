@@ -98,9 +98,8 @@ function ProfilePictureUpdate() {
     return (
         <DashboardNavigation>
             <section
-                className='form-element'
+                className='form-element login-section'
                 style={{
-                    backgroundImage: `url(${auth_background})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     minHeight: '100vh',
@@ -151,7 +150,7 @@ function ProfilePictureUpdate() {
                             <div
                                 type='button'
                                 onClick={triggerFileInput}
-                                className='px-6 py-2 bg-[#FBEC6C] !text-black rounded transition-colors duration-200 cursor-pointer font-semibold'
+                                className='md:!w-[15rem] md:h-10 text-center px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'
                             >
                                 Upload New Picture
                             </div>
@@ -185,25 +184,32 @@ function ProfilePictureUpdate() {
                         <div className='flex flex-col md:flex-row md:justify-between'>
                             <button
                                 disabled={!selectedFile || loading}
-                                type='submit' className='md:!w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                type='submit' className='md:!w-[10rem] px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
                                 {loading ? "Updating..." : "Update"}
                             </button>
 
                             {selectedFile && (
-                                <button
+                                <div>
+                                      <button
                                     type='button'
                                     onClick={resetPicture}
-                                    className='md:!w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'
+                                    className='md:!w-[10rem] px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'
                                 >
                                     Reset
                                 </button>
+                                </div>
+                              
                             )}
 
-                            <Link to='/dashboard-profile'>
-                                <button type='submit' className='md:!w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#E11212] hover:!bg-[#E11212] hover:!text-[#E3E0C0] transition-colors !duration-300'>
+                            <div>
+                                  <Link to='/dashboard-profile'>
+                                <button type='submit' className='md:!w-[10rem] !bg-[var(--dashboard-cancel-button-bg)] hover:!bg-[var(--dashboard-cancel-button-hover-bg)] !border-[var(--dashboard-cancel-button-border)] !text-[var(--dashboard-cancel-button-text)]'>
                                     Cancel
                                 </button>
                             </Link>
+                            </div>
+
+                          
                         </div>
                     </form>
                 </div>

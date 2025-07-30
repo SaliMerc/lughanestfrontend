@@ -79,7 +79,7 @@ function PaymentTable() {
     return (
         <DashboardNavigation>
 
-            <div className="px-6 bg-black min-h-screen">
+            <div className="px-6 !bg-[var(--bg)]  min-h-screen">
 
                 <div className="min-w-6xl mx-auto">
                     <h1 className='text-2xl md:text-4xl font-semibold mb-7'>My Payment History </h1>
@@ -101,10 +101,10 @@ function PaymentTable() {
                         </div>
                     </div>
 
-                    <div className="bg-black border border-[#E3E0C0] rounded-lg shadow-sm overflow-hidden">
+                    <div className="!bg-[var(--bg)] border border-[#E3E0C0] rounded-lg shadow-sm overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="w-full">
-                                <thead className="bg-black border-b border-[#E3E0C0]">
+                                <thead className="!bg-[var(--bg)] border-b border-[#E3E0C0]">
                                     <tr>
                                         <th className="px-6 py-4 text-left border-r text-base font-bold text-white">No.</th>
                                         <th className="px-6 py-4 text-left text-base font-semibold text-white">Subscription Type</th>
@@ -132,7 +132,7 @@ function PaymentTable() {
                 <p>You have not made any transaction.</p>
               </div>
             ) : ( mypayments.map((payment, index) => (
-                                    <tr key={index} className="odd:bg-[#OE0D0E] even:bg-[#0E0D0C]">
+                                    <tr key={index} className="odd:bg-[#OE0D0E] even:!bg-[var(--card-bg)]">
                                         <td className="px-6 py-4 border-r text-sm text-white">{startIndex + index + 1}</td>
                                         <td className="px-6 py-4 text-sm text-white ">{payment.subscription_type || 'None'}</td>
                                         <td className="px-6 py-4 text-sm text-white border-r">  {payment.subscription_date
@@ -171,14 +171,14 @@ function PaymentTable() {
                             </table>
                         </div>
 
-                        <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-[#0E0D0C]">
+                        <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 !bg-[var(--bg)]">
                             <div className="flex items-center space-x-2">
                                 <div
                                     onClick={handlePrevious}
                                     disabled={currentPage === 1}
                                     className={`px-3 min-w-20 py-1 cursor-pointer items-center justify-center text-sm font-medium rounded-md ${currentPage === 1
-                                        ? 'bg-[#0E0D0C] text-white hidden'
-                                        : 'bg-[#0E0D0C] text-white border'
+                                        ? '!bg-[var(--card-bg)] text-white hidden'
+                                        : '!bg-[var(--card-bg)] text-white border'
                                         }`}
                                 >
                                     Previous
@@ -187,8 +187,8 @@ function PaymentTable() {
                                     onClick={handleNext}
                                     disabled={currentPage === totalPages}
                                     className={`px-3 min-w-20 py-1 cursor-pointer text-sm font-medium rounded-md ${currentPage === totalPages
-                                        ? 'bg-[#0E0D0C] text-white hidden'
-                                        : 'bg-[#0E0D0C] text-white border'
+                                        ? '!bg-[var(--card-bg)] text-white hidden'
+                                        : '!bg-[var(--card-bg)] text-white border'
                                         }`}
                                 >
                                     Next

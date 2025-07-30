@@ -91,9 +91,8 @@ function ProfileUpdateDetails() {
     return (
         <DashboardNavigation>
             <section
-                className='form-element'
+                className='form-element login-section'
                 style={{
-                    backgroundImage: `url(${auth_background})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     minHeight: '100vh',
@@ -131,7 +130,7 @@ function ProfileUpdateDetails() {
                                 <div
                                     type='button'
                                     onClick={addLanguage}
-                                    className='ml-2 w-6 h-6 bg-black text-white rounded-full flex items-center justify-center  transition-colors duration-200'
+                                    className='ml-2 w-6 h-6  text-white rounded-full flex items-center justify-center  transition-colors duration-200'
                                 >
                                     <FontAwesomeIcon icon={faPlus} className='text-xs' />
                                 </div>
@@ -154,7 +153,7 @@ function ProfileUpdateDetails() {
                                         <select
                                             value={lang.level}
                                             onChange={(e) => handleLanguageChange(index, 'level', e.target.value)}
-                                            className='w-full text-white bg-[#0E0D0C]'
+                                            className='w-full !text-[var(--nav-text)] !bg-[var(--card-bg)] outline-none '
                                         >
                                             {languageLevels.map(level => (
                                                 <option key={level} value={level}>{level}</option>
@@ -181,14 +180,14 @@ function ProfileUpdateDetails() {
                         <div className='flex flex-col md:flex-row md:justify-between mt-5'>
                             <button
                                 type='submit'
-                                className='md:!w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'
+                                className='md:!w-[10rem] px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'
                             >
                                 {loading ? "Updating..." : "Update"}
                             </button>
                             <Link to='/dashboard-profile'>
                                 <button
                                     type='button'
-                                    className='md:!w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#E11212] hover:!bg-[#E11212] hover:!text-[#E3E0C0] transition-colors !duration-300'
+                                    className='md:!w-[10rem] !bg-[var(--dashboard-cancel-button-bg)] hover:!bg-[var(--dashboard-cancel-button-hover-bg)] !border-[var(--dashboard-cancel-button-border)] !text-[var(--dashboard-cancel-button-text)]'
                                 >
                                     Cancel
                                 </button>

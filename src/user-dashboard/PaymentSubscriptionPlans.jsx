@@ -61,9 +61,8 @@ function PaymentSubscription() {
         <DashboardNavigation>
 
             <section
-                className='form-element'
+                className='form-element login-section'
                 style={{
-                    backgroundImage: `url(${auth_background})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     minHeight: '100vh',
@@ -75,7 +74,7 @@ function PaymentSubscription() {
             >
                 <div className='form-div'>
                     <div className='flex flex-col gap-5 md:flex-row justify-between'>
-                        <div className='h-[400px] md:h-[550px] w-[18rem] md:w-[20rem] bg-[#1B1C1D] flex flex-col justify-center items-center text-center gap-18 rounded-[20px]'>
+                        <div className='h-[400px] md:h-[550px] w-[18rem] md:w-[20rem] bg-[var(--payment-bg)] flex flex-col justify-center items-center text-center gap-18 rounded-[20px] border'>
                             <div className='flex flex-col items-center gap-2'>
                                 <p>PREMIUM</p>
                                 <img src={pricingPremiumMonth} alt="about-image" className='h-[30px] md:h-[40px]' />
@@ -90,14 +89,14 @@ function PaymentSubscription() {
                                         subscription_type: 'monthly',
                                         amount: monthlySubscription
                                     }}
-                                ><button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                ><button className='min-w-36 min-h-14 px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
                                         Subscribe
                                         <FontAwesomeIcon icon={faArrowRight} />
                                     </button>
                                 </Link>
                             </div>
                         </div>
-                        <div className='h-[400px] md:h-[550px] w-[18rem] md:w-[20rem] bg-[#000000] flex flex-col justify-center items-center text-center gap-18 rounded-[20px]'>
+                        <div className='h-[400px] md:h-[550px] w-[18rem] md:w-[20rem] bg-[var(--payment)] flex flex-col justify-center items-center text-center gap-18 rounded-[20px] border'>
                             <div className='flex flex-col items-center gap-2'>
                                 <p>PREMIUM</p>
                                 <img src={pricingPremiumYear} alt="about-image" className='h-[30px] md:h-[40px]' />
@@ -112,7 +111,7 @@ function PaymentSubscription() {
                                         subscription_type: 'yearly',
                                         amount: yearlySubscription
                                     }}
-                                ><button className='min-w-36 min-h-14 px-3 !bg-[#0E0D0C] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                ><button className='min-w-36 min-h-14 px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
                                         Subscribe
                                         <FontAwesomeIcon icon={faArrowRight} />
                                     </button>

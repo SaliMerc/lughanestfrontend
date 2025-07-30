@@ -22,7 +22,7 @@ const SearchBar = ({ value, onChange, placeholder = "Search..." }) => {
           value={value}
           onChange={onChange}
           placeholder={placeholder}
-          className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:ring-2  bg-black text-white placeholder-gray-400"
+          className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:ring-2  !bg-[var(--card-bg)] text-white placeholder-gray-400"
         />
       </div>
     </form>

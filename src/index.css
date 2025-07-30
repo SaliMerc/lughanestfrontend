@@ -12,6 +12,13 @@
   --button-hover-bg: #FBEC6C;
 
   --main-buttons-bg: #FBEC6C;
+  --lang-button-text: #E3E0C0;
+
+  --dashboard-cancel-button-bg: #000000;
+  --dashboard-cancel-button-text: #E3E0C0;
+  --dashboard-cancel-button-hover-bg: #E11212;
+  --dashboard-cancel-button-border: #E11212;
+
   --main-buttons-text: #000000;
   --main-buttons-hover-text: #E3E0C0;
   --main-buttons-hover-bg: #0E0D0C;
@@ -31,7 +38,7 @@
   --dashboard-nav-hover-bg: #000000;
 
   --dashboard-card-bg: #0E0D0C;
-  --chat-dash-interface-bg:#1B1C1D;
+  --chat-dash-interface-bg: #1B1C1D;
 
 
 
@@ -80,6 +87,12 @@
   --nav-hover: #A78F74;
 
   --button-bg: #A78F74;
+
+  --dashboard-cancel-button-bg: #A78F74;
+  --dashboard-cancel-button-text: #000000;
+  --dashboard-cancel-button-hover-bg: #E11212;
+  --dashboard-cancel-button-border: #E11212;
+
   --main-buttons-bg: #A78F74;
   --main-buttons-hover-bg: #F5DEC4;
   --button-hover-bg: #F5DEC4;
@@ -101,7 +114,9 @@
   --dashboard-nav-hover-bg: #8B7A58;
 
   --dashboard-card-bg: #E9D6B8;
-  --chat-dash-interface-bg:#A78F74;
+  --chat-dash-interface-bg: #A78F74;
+
+  --lang-button-text: #000000;
 }
 
 .form-div {

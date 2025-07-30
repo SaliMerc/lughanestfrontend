@@ -20,9 +20,8 @@ function DashboardPayment() {
         <DashboardNavigation>
 
             <section
-                className='form-element flex flex-col'
+                className='form-element login-section flex flex-col'
                 style={{
-                    backgroundImage: `url(${auth_background})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     minHeight: '100vh',
@@ -51,13 +50,13 @@ function DashboardPayment() {
                     </ol>
                     <div className='flex flex-col md:flex-row gap-8 md:justify-between'>
                         <Link to='/dashboard/subscription-plans'>
-                            <button className=' w-full md:min-w-[1.2rem] min-h-14 px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                            <button className='px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
                                 View Subscription Plans
                             </button>
                         </Link>
 
                         <Link to='/payment-history'>
-                            <button className=' w-full md:min-w-[1.2rem] min-h-14 px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                            <button className='px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
                                 My Payment History
                             </button>
                         </Link>
@@ -78,13 +77,13 @@ function DashboardPayment() {
                     </ol>
                     <div className='flex flex-col md:flex-row gap-8 md:justify-between'>
                         <Link to='/dashboard/subscription-plans'>
-                            <button className=' w-full md:min-w-[1.2rem] min-h-14 px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                            <button className='px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
                                 View Subscription Plans
                             </button>
                         </Link>
 
                         <Link to='/payment-history'>
-                            <button className=' w-full md:min-w-[1.2rem] min-h-14 px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                            <button className=' px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
                                 My Payment History
                             </button>
                         </Link>

@@ -30,9 +30,8 @@ function DashboardProfile() {
         <DashboardNavigation>
 
             <section
-                className='form-element flex flex-col'
+                className='form-element login-section flex flex-col'
                 style={{
-                    backgroundImage: `url(${auth_background})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     minHeight: '100vh',
@@ -62,7 +61,7 @@ function DashboardProfile() {
                                 {languages_spoken.map((item, index) => (
                                     <button
                                         key={index}
-                                        className='!bg-[#FBEC6C] !text-black px-3 py-1 rounded-md'
+                                        className='!bg-[var(--button-bg)] !text-[var(--lang-button-text)] px-3 py-1 rounded-md'
                                     >
                                         {capitalizeFirst(item.language)}
                                     </button>
@@ -73,12 +72,12 @@ function DashboardProfile() {
                         <div className='mt-6'>
                             <div className='flex flex-col md:flex-row md:justify-between'>
                                 <Link to='/profile-update-details'>
-                                    <button type='submit' className='md:!min-w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                    <button type='submit' className=''>
                                         Update Profile Details
                                     </button>
                                 </Link>
                                 <Link to='/profile-change-email'>
-                                    <button type='submit' className='md:!min-w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#000000]  hover:!text-[#E3E0C0] transition-colors !duration-300'>
+                                    <button type='submit' className=''>
                                         Update Email
                                     </button>
                                 </Link>

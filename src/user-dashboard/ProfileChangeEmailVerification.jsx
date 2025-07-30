@@ -70,9 +70,8 @@ function ProfileChangeEmailVerification() {
         <DashboardNavigation>
 
             <section
-                className='form-element'
+                className='form-element login-section'
                 style={{
-                    backgroundImage: `url(${auth_background})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     minHeight: '100vh',
@@ -106,7 +105,7 @@ function ProfileChangeEmailVerification() {
                             <h5>{formError}</h5>
                         </div>
                         <div className='flex md:flex-row md:justify-between mt-5'>
-                            <button type='submit' className='md:!min-w-[3rem] px-3 !bg-[rgb(14,13,12)] md:!bg-[#0E0D0C] shadow-xl !shadow-[#000000] !text-[18px] md:!text-xl text-[#E3E0C0] md:!text-[#E3E0C0] !border-1 !border-[#FBEC6C] hover:!bg-[#FBEC6C] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                            <button type='submit' className=''>
                                 {loading ? "Verifying..." : "Verify Email"}
                             </button>
                         </div>

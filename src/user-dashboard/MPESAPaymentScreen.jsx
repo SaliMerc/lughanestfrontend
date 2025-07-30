@@ -82,9 +82,8 @@ function MPESAPayment() {
     return (
         <DashboardNavigation>
             <section
-                className='form-element'
+                className='form-element login-section'
                 style={{
-                    backgroundImage: `url(${auth_background})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     minHeight: '100vh',
