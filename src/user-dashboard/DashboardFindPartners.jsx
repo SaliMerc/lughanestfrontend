@@ -8,6 +8,9 @@ import { capitalizeFirst } from '../utils/slugUtils';
 
 import profileImage from '../assets/dashboard-images/profile-pic-placeholder.png';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+
 import { cleanProfilePictureUrl } from '../utils/profilePic';
 
 function DashboardFindPartners() {
@@ -90,14 +93,19 @@ function DashboardFindPartners() {
                                                     </p>
                                                 ))}
 
-                                                {subscriptionStatus && (
+                                                {subscriptionStatus ? (
                                                     <Link to={`/dashboard-chats/chat-interface/${generateSlug(partners.display_name)}`} state={{
                                                         partnerId: partners.id,
                                                         partnerName: partners.display_name
-
                                                     }}>
                                                         <button className='!w-[8.2rem] md:!w-[16rem] !text-[0.8rem] md:!text-[1.2rem]'>
                                                             Message
+                                                        </button>
+                                                    </Link>
+                                                ) : (
+                                                    <Link to="/dashboard/subscription-plans">
+                                                        <button className='!w-[8.2rem] md:!w-[16rem] !text-[0.5rem] md:!text-[1rem]'>
+                                                            <FontAwesomeIcon icon={faLock} /> Subscribe to Message  
                                                         </button>
                                                     </Link>
                                                 )}

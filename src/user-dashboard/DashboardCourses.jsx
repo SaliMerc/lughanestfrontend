@@ -8,6 +8,9 @@ import advancedLanguage from '../assets/dashboard-images/advanced-level.jpg';
 
 import { handleStructuredCourseItemsData } from '../utils/coursesUtils';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+
 import { generateSlug } from '../utils/slugUtils';
 
 function DashboardCourses() {
@@ -15,43 +18,46 @@ function DashboardCourses() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-useEffect(() => {
-    const fetchCourses = async () => {
-        try {
-            // Check if courses exist in sessionStorage
-            const cachedCourses = sessionStorage.getItem('coursesByLanguage');
-            
-            if (cachedCourses) {
-                // Use cached data if available
-                setCoursesByLanguage(JSON.parse(cachedCourses));
-                return;
-            }
+    const userDetails = JSON.parse(localStorage.getItem('user'));
+    const [subscriptionStatus, setsubscriptionStatus] = useState(userDetails.subscription_status.has_active_subscription)
 
-            setLoading(true);
-            await handleStructuredCourseItemsData(
-                {},
-                (response) => {
-                    if (response.data) {
-                        const coursesData = response.data;
-                 
-                        setCoursesByLanguage(coursesData);
-                    } else {
-                        setCoursesByLanguage({});
-                    }
-                },
-                (error) => {
-                    setError(error.message || 'Failed to fetch courses');
+    useEffect(() => {
+        const fetchCourses = async () => {
+            try {
+                // Check if courses exist in sessionStorage
+                const cachedCourses = sessionStorage.getItem('coursesByLanguage');
+
+                if (cachedCourses) {
+                    // Use cached data if available
+                    setCoursesByLanguage(JSON.parse(cachedCourses));
+                    return;
                 }
-            );
-        } catch (err) {
-            setError(err.message || 'An unexpected error occurred');
-        } finally {
-            setLoading(false);
-        }
-    };
 
-    fetchCourses();
-}, []);
+                setLoading(true);
+                await handleStructuredCourseItemsData(
+                    {},
+                    (response) => {
+                        if (response.data) {
+                            const coursesData = response.data;
+
+                            setCoursesByLanguage(coursesData);
+                        } else {
+                            setCoursesByLanguage({});
+                        }
+                    },
+                    (error) => {
+                        setError(error.message || 'Failed to fetch courses');
+                    }
+                );
+            } catch (err) {
+                setError(err.message || 'An unexpected error occurred');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCourses();
+    }, []);
 
     return (
         <DashboardNavigation>
@@ -105,7 +111,7 @@ useEffect(() => {
                                                 </Link>
                                             ) : (
                                                 <Link to={`/dashboard-courses/${generateSlug(course.course_name)}`} state={{ course }}>
-                                
+
                                                     <button className='!w-[7rem] md:!w-[22rem] '>
                                                         Enroll
                                                     </button>

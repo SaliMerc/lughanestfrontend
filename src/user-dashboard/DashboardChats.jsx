@@ -82,14 +82,14 @@ function DashboardChats() {
                         ) : (
 
                             latestChat.map((chat, index) => (
-                                <div key={index} className=' min-h-[100px] !w-[100%] bg-[var(--dashboard-card-bg)]  flex flex-col not-last:rounded-[20px]'>
+                                <div key={index} className=' min-h-[100px] !w-[100%] bg-[var(--dashboard-card-bg)]  flex flex-col !rounded-[20px]'>
                                     <Link to={`/dashboard-chats/chat-interface/${generateSlug(chat.otherUserName)}`} state={{ 
                                         partnerId: chat.otherUserId,
                                         partnerName: chat.otherUserName 
                                      }}>
                                         <div className='flex flex-row items-center justify-between text-left gap-2 p-3'>
                                             <div className='flex flex-row items-center gap-4'>
-                                                <div>
+                                                <div className='w-10 h-10 md:w-15 md:h-15'>
                                                     <img
                                                         src={cleanProfilePictureUrl(chat.otherUserProfilePic) || profileImage}
                                                         alt="Profile"

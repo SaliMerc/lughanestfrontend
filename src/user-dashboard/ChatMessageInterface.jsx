@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faArrowLeft,
     faEllipsisV,
+    faLock,
     faPaperPlane,
     faCat,
 } from '@fortawesome/free-solid-svg-icons';
@@ -34,43 +35,46 @@ function ChatInterface() {
     const partnerId = location.state?.partnerId;
     const partnerName = location.state?.partnerName;
 
-  useEffect(() => {
-    let intervalId;
-    const fetchChats = async (isInitialLoad = false) => {
-        try {
-            if (isInitialLoad) setLoading(true);
-            
-            if (partnerId) {
-                const response = await handleChats(partnerId);
-                
-                if (response?.data) {
-                    setChat(prevChat => {
-                        if (JSON.stringify(prevChat) !== JSON.stringify(response.data)) {
-                            return response.data;
-                        }
-                        return prevChat;
-                    });
-                } else {
-                    setChat([]);
+    const [subscriptionStatus, setsubscriptionStatus] = useState(userDetails.subscription_status.has_active_subscription)
+
+
+    useEffect(() => {
+        let intervalId;
+        const fetchChats = async (isInitialLoad = false) => {
+            try {
+                if (isInitialLoad) setLoading(true);
+
+                if (partnerId) {
+                    const response = await handleChats(partnerId);
+
+                    if (response?.data) {
+                        setChat(prevChat => {
+                            if (JSON.stringify(prevChat) !== JSON.stringify(response.data)) {
+                                return response.data;
+                            }
+                            return prevChat;
+                        });
+                    } else {
+                        setChat([]);
+                    }
                 }
+            } catch (err) {
+                if (isInitialLoad) {
+                    setError(err.message || 'Failed to fetch chats');
+                }
+            } finally {
+                if (isInitialLoad) setLoading(false);
             }
-        } catch (err) {
-            if (isInitialLoad) {
-                setError(err.message || 'Failed to fetch chats');
-            }
-        } finally {
-            if (isInitialLoad) setLoading(false);
-        }
-    };
+        };
 
-    fetchChats(true);
-    
-    intervalId = setInterval(() => fetchChats(false), 1000);
+        fetchChats(true);
 
-    return () => {
-        clearInterval(intervalId);
-    };
-}, [partnerId]);
+        intervalId = setInterval(() => fetchChats(false), 1000);
+
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, [partnerId]);
 
     console.log(chat)
 
@@ -116,7 +120,7 @@ function ChatInterface() {
         <DashboardNavigation>
             <div className="flex flex-col h-screen !bg-[var(--bg)] text-white">
                 {/* Top fixed chat header - stays fixed while scrolling */}
-                <div className="flex justify-between items-center px-4 py-3 !bg-[var(--chat-dash-interface-bg)] sticky top-25 z-10 border-b !border-[var(--card-bg)]">
+                <div className="flex justify-between items-center px-4 py-3 !bg-[var(--bg)] sticky top-25 z-10 border-b !border-[var(--card-bg)]">
                     <div className="flex items-center space-x-2">
                         <Link to="/dashboard-chats">
                             <FontAwesomeIcon icon={faArrowLeft} className="text-white text-lg cursor-pointer" />
@@ -196,51 +200,62 @@ function ChatInterface() {
 
 
                 < div className="sticky bottom-0 w-full px-4 py-3 !bg-[var(--bg)] border-t border-gray-800" >
-                    <form className="flex flex-row !bg-[var(--form-card-bg)] rounded-xl shadow-md px-3 py-2">
-                        <div className='flex flex-row justify-between items-center w-full'>
-                            <div>
-                                <FontAwesomeIcon icon={faCat}
-                                    onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                                    className="text-white text-lg cursor-pointer mr-10" />
-                            </div>
 
-                            {showEmojiPicker && (
-                                <div className="absolute bottom-30 left-0 z-50">
-                                    <EmojiPicker
-                                        onEmojiClick={handleEmojiClick}
-                                        width={300}
-                                        height={400}
-                                    />
+
+                    {subscriptionStatus ? (
+                        <form className="flex flex-row !bg-[var(--form-card-bg)] rounded-xl shadow-md px-3 py-2">
+                            <div className='flex flex-row justify-between items-center w-full'>
+
+
+                                <div>
+                                    <FontAwesomeIcon icon={faCat}
+                                        onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                                        className="text-white text-lg cursor-pointer mr-10" />
                                 </div>
-                            )}
 
-                            <textarea
-                                name="message-content"
-                                cols="30"
-                                rows="1"
-                                placeholder="Type your message"
-                                ref={textareaRef}
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter' && !e.shiftKey) {
-                                        e.preventDefault();
-                                        handleSubmit(e);
-                                    }
-                                }}
-                                id="emoji-input"
-                                className='flex-1 bg-transparent outline-none placeholder:text-gray-400 text-white resize-none md:min-h-30 md:py-15 min-h-20 py-10'
-                            />
-                            <div
+                                {showEmojiPicker && (
+                                    <div className="absolute bottom-30 left-0 z-50">
+                                        <EmojiPicker
+                                            onEmojiClick={handleEmojiClick}
+                                            width={300}
+                                            height={400}
+                                        />
+                                    </div>
+                                )}
 
-                            >
-                                <FontAwesomeIcon icon={faPaperPlane}
-                                    onSubmit={handleSubmit}
+                                <textarea
+                                    name="message-content"
+                                    cols="30"
+                                    rows="1"
+                                    placeholder="Type your message"
+                                    ref={textareaRef}
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' && !e.shiftKey) {
+                                            e.preventDefault();
+                                            handleSubmit(e);
+                                        }
+                                    }}
+                                    id="emoji-input"
+                                    className='flex-1 bg-transparent outline-none placeholder:text-gray-400 text-white resize-none md:min-h-30 md:py-15 min-h-20 py-10'
+                                />
+                                <div
+                                >
+                                    <FontAwesomeIcon icon={faPaperPlane}
+                                        onSubmit={handleSubmit}
 
-                                    className="text-white text-lg cursor-pointer ml-10" />
+                                        className="text-white text-lg cursor-pointer ml-10" />
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    ) : (
+                        <Link to="/dashboard/subscription-plans">
+                            <button className='!w-full md:!w-full !text-[0.5rem] md:!text-[1rem]'>
+                                <FontAwesomeIcon icon={faLock} /> Subscribe to Send a Message
+                            </button>
+                        </Link>
+                    )}
                 </div>
             </div>
 
