@@ -209,7 +209,7 @@ function Home() {
                 <div className='flex flex-col items-center gap-2'>
                   <p>PREMIUM</p>
                   <img src={pricingPremiumMonth} alt="about-image" className='h-[30px] md:h-[40px]' />
-                  <p className='text-[1.2rem] md:text-[1.5rem]'>{currency} {monthlySubscription}/month</p>
+                  <p className='text-[1.2rem] md:text-[1.5rem]'>{currency || "Kshs."} {monthlySubscription || "700"}/month</p>
                 </div>
                 <div className='flex flex-col items-start text-left gap-2'>
                   <p><FontAwesomeIcon icon={faCheck} />  All Courses</p>
@@ -229,7 +229,7 @@ function Home() {
                 <div className='flex flex-col items-center gap-2'>
                   <p>PREMIUM</p>
                   <img src={pricingPremiumYear} alt="about-image" className='h-[30px] md:h-[40px]' />
-                  <p className='text-[1.2rem] md:text-[1.5rem]'>{currency} {yearlySubscription}/year</p>
+                  <p className='text-[1.2rem] md:text-[1.5rem]'>{currency || "Kshs."} {yearlySubscription || '8000'}/year</p>
                 </div>
                 <div className='flex flex-col items-start text-left gap-2'>
                   <p><FontAwesomeIcon icon={faCheck} />  All Courses</p>
