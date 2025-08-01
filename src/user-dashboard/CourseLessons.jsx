@@ -14,7 +14,7 @@ function CourseLessons() {
             <div>
                 <section>
                     <Link to='/ongoing-courses'>
-                        <h1 className='text-2xl md:text-4xl font-semibold text-[#FBEC6C]'>{course.course_name.course_name}- <span className='text-[#E3E0C0]'>{module.module_title}</span></h1>
+                        <h1 className='text-2xl md:text-4xl font-semibold text-[#FBEC6C]'>{course.course_name}- <span className='text-[#E3E0C0]'>{module.module_title}</span></h1>
                     </Link>
                     <section className='flex flex-col justify-left gap-3 md:gap-12 items-center py-7'>
 

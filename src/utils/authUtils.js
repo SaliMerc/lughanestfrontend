@@ -212,7 +212,7 @@ export async function handlePasswordChangeLoggedIn(userData, onSuccess, onError)
 export async function handleScheduleAccountDeletion() {
   try {
     const token = localStorage.getItem('access_token');
-    const response = await axios.delete(
+    const response = await axios.post(
       `${API_URL}/api/v1/users/delete-account/`,
       {
         headers: {

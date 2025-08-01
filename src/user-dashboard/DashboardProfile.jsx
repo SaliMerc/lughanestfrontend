@@ -43,7 +43,7 @@ function DashboardProfile() {
             >
                 <div className='form-div'>
                     <h1 className='mb-10 text-3xl font-bold text-[#FBEC6C]'>My Profile</h1>
-                    <div className='flex flex-row gap-8 md:gap-5 mb-10'>
+                    <div className='flex flex-row gap-8 md:gap-5 mb-10 items-center'>
                         <div className='w-10 h-10 md:w-15 md:h-15 mr-4'>
                             <img src={cleanProfilePictureUrl(userDetails.profile_picture) || profileImage} alt="Profile Picture" className='rounded-full object-cover w-full h-full' />
                         </div>
@@ -59,12 +59,14 @@ function DashboardProfile() {
                             <p className='mb-2'>Languages I Speak:</p>
                             <div className='flex flex-row flex-wrap gap-2'>
                                 {languages_spoken.map((item, index) => (
+                                    <div>
                                     <button
                                         key={index}
-                                        className='!bg-[var(--button-bg)] !text-[var(--lang-button-text)] px-3 py-1 rounded-md'
+                                        className='!bg-[var(--button-bg)] !text-[var(--lang-button-text)] px-1 py-1 rounded-md'
                                     >
                                         {capitalizeFirst(item.language)}
                                     </button>
+                                    </div>
                                 ))}
                             </div>
 
