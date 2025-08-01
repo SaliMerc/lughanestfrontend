@@ -53,7 +53,7 @@ function DashboardOngoingCourses() {
                     <hr className='text-white w-[100%]' />
                     <p className='text-[#FBEC6C] first-letter:uppercase'>{course.course_level}</p>
                     <p className='text-white text-[12px]'>Enrolled on {new Date(course.enrolment_date).toLocaleDateString()}</p>
-                    <Link to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}`} state={{ course }}>
+                    <Link to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}`} state={{ course:course.course_name, course_id:course.course_name.id  }}>
                       <button className='!w-[8.2rem] md:!w-[16rem] !text-[0.8rem] md:!text-[1.2rem]'>
                         Continue Learning
                       </button>

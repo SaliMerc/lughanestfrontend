@@ -11,7 +11,8 @@ import { generateSlug } from '../utils/slugUtils';
 function CourseModules() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { course } = location.state || {};
+  const { course, course_id } = location.state || {};
+  console.log(course)
 
   const [modules, setModules] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,7 +23,7 @@ function CourseModules() {
 
     setLoading(true);
     handleCourseModules(
-      course.course_name.id,
+      course_id,
       (data) => {
         setModules(data);
         setLoading(false);
@@ -41,7 +42,7 @@ function CourseModules() {
       <div>
         <section>
           <h1 className='text-2xl md:text-4xl font-semibold text-[#FBEC6C]'>
-            {course.course_name.course_name} -
+            {course.course_name} -
             <span className='text-[#E3E0C0]'> {capitalizeFirst(course.course_level)}</span>
           </h1>
 

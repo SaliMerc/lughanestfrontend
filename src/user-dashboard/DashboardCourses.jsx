@@ -18,20 +18,14 @@ function DashboardCourses() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const [enrolledCourses, setEnrolledCourses] = useState([]);
+
     const userDetails = JSON.parse(localStorage.getItem('user'));
     const [subscriptionStatus, setsubscriptionStatus] = useState(userDetails.subscription_status.has_active_subscription)
 
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                // Check if courses exist in sessionStorage
-                const cachedCourses = sessionStorage.getItem('coursesByLanguage');
-
-                if (cachedCourses) {
-                    // Use cached data if available
-                    setCoursesByLanguage(JSON.parse(cachedCourses));
-                    return;
-                }
 
                 setLoading(true);
                 await handleStructuredCourseItemsData(
@@ -41,6 +35,10 @@ function DashboardCourses() {
                             const coursesData = response.data;
 
                             setCoursesByLanguage(coursesData);
+
+                            const allCourses = Object.values(coursesData).flat();
+                            const userEnrolledCourses = allCourses.filter(course => course.is_enrolled);
+                            setEnrolledCourses(userEnrolledCourses);
                         } else {
                             setCoursesByLanguage({});
                         }
@@ -104,18 +102,28 @@ function DashboardCourses() {
                                             <p className='text-white text-[12px]'>Instructor: {course.instructor_name}</p>
 
                                             {course.is_enrolled ? (
-                                                <Link to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}`} state={{ course }}>
+                                                <Link to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}`} state={{course, course_id:course.id  }}>
                                                     <button className='!w-[7rem] md:!w-[22rem]'>
                                                         Go to Course
                                                     </button>
                                                 </Link>
                                             ) : (
-                                                <Link to={`/dashboard-courses/${generateSlug(course.course_name)}`} state={{ course }}>
 
-                                                    <button className='!w-[7rem] md:!w-[22rem] '>
-                                                        Enroll
-                                                    </button>
-                                                </Link>
+                                                (subscriptionStatus || enrolledCourses.length === 0) ? (
+
+                                                    <Link to={`/dashboard-courses/${generateSlug(course.course_name)}`} state={{ course, course_id:course.id  }}>
+                                                        <button className='!w-[7rem] md:!w-[22rem]'>
+                                                            Enroll
+                                                        </button>
+                                                    </Link>
+                                                ) : (
+
+                                                    <Link to="/dashboard/subscription-plans">
+                                                        <button className='!w-[7rem] md:!w-[22rem] opacity-70 cursor-not-allowed'>
+                                                            <FontAwesomeIcon icon={faLock} /> Subscribe to Enroll
+                                                        </button>
+                                                    </Link>
+                                                )
                                             )}
 
                                         </div>
@@ -126,7 +134,7 @@ function DashboardCourses() {
                     ))
                 )}
             </div>
-        </DashboardNavigation>
+        </DashboardNavigation >
     );
 }
 

@@ -92,11 +92,11 @@ function SettingsDeleteAccount() {
               <li>Chat Logs</li>
             </ol>
             <div className='flex flex-col md:flex-row gap-8 md:justify-between'>
-              <button onClick={handleScheduleDeletion} className=' w-full px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
+              <button onClick={handleScheduleDeletion} className=' w-full md:!w-[10rem] px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
                 {buttonLoading ? "Deleting..." : "Yes"}
               </button>
               <Link to='/dashboard-settings'>
-                <button className='!bg-[var(--dashboard-cancel-button-bg)] hover:!bg-[var(--dashboard-cancel-button-hover-bg)] !border-[var(--dashboard-cancel-button-border)] !text-[var(--dashboard-cancel-button-text)]'>
+                <button className='md:!w-[10rem] !bg-[var(--dashboard-cancel-button-bg)] hover:!bg-[var(--dashboard-cancel-button-hover-bg)] !border-[var(--dashboard-cancel-button-border)] !text-[var(--dashboard-cancel-button-text)]'>
                   No
                 </button>
               </Link>
