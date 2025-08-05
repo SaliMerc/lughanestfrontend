@@ -36,6 +36,8 @@ function ChatInterface() {
     const [subscriptionStatus, setSubscriptionStatus] = useState(userDetails.subscription_status?.has_active_subscription);
 
     const [isTyping, setIsTyping] = useState(false);
+    const [isWsReady, setIsWsReady] = useState(false);
+    const typingTimeoutRef = useRef(null);
 
     useEffect(() => {
         if (!partnerId) return;
@@ -47,6 +49,7 @@ function ChatInterface() {
         ws.current = new WebSocket(wsUrl);
 
         ws.current.onopen = async () => {
+            setIsWsReady(true);
             try {
                 const response = await handleChats(partnerId);
                 if (response?.data) {
@@ -59,16 +62,29 @@ function ChatInterface() {
             }
         };
 
-        // Update your onmessage handler:
         ws.current.onmessage = (e) => {
             try {
                 const data = JSON.parse(e.data);
                 console.log("WebSocket message received:", data);
 
                 if (data.type === 'typing') {
-                    setIsTyping(data.is_typing);
+                    if (data.sender !== data.receiver) {
+                        setIsTyping(data.is_typing);
+                        if (data.is_typing) {
+                            if (typingTimeoutRef.current) {
+                                clearTimeout(typingTimeoutRef.current);
+                            }
+                            typingTimeoutRef.current = setTimeout(() => {
+                                setIsTyping(false);
+                            }, 2000);
+                        }
+                    }
                 }
                 else if (data.type === 'chat_message') {
+                    setIsTyping(false);
+                    if (typingTimeoutRef.current) {
+                        clearTimeout(typingTimeoutRef.current);
+                    }
                     setChat(prevChat => {
                         const withoutTemps = prevChat.filter(msg =>
                             !(msg.is_temp &&
@@ -121,39 +137,53 @@ function ChatInterface() {
     };
 
     const sendTypingIndicator = (typing) => {
-        if (ws.current?.readyState === WebSocket.OPEN) {
-            ws.current.send(JSON.stringify({
-                type: 'typing',
-                sender: userDetails.id
-            }));
+        if (ws.current?.readyState === WebSocket.OPEN && isWsReady) {
+                ws.current.send(JSON.stringify({
+                    type: 'typing',
+                    is_typing: typing,
+                    sender: userDetails.id,
+                    sender_name: userDetails.display_name,
+                    receiver: partnerId
+                }));
+            
         }
     };
-
 
     const handleInputChange = (e) => {
-        setMessage(e.target.value);
+        const newValue = e.target.value;
+        setMessage(newValue);
 
-        if (!isTyping) {
-            setIsTyping(true);
-            sendTypingIndicator(true);
+        if (newValue.trim().length > 0) {
+            if (!isTyping) {
+                setIsTyping(true);
+                sendTypingIndicator(true);
+            }
+
+            if (typingTimeoutRef.current) {
+                clearTimeout(typingTimeoutRef.current);
+            }
+
+            typingTimeoutRef.current = setTimeout(() => {
+                setIsTyping(false);
+                sendTypingIndicator(false);
+            }, 1500);
+        } else {
+            if (isTyping) {
+                setIsTyping(false);
+                sendTypingIndicator(false);
+            }
+            if (typingTimeoutRef.current) {
+                clearTimeout(typingTimeoutRef.current);
+            }
         }
-
-        if (typingTimeoutRef.current) {
-            clearTimeout(typingTimeoutRef.current);
-        }
-
-        typingTimeoutRef.current = setTimeout(() => {
-            setIsTyping(false);
-            sendTypingIndicator(false);
-        }, 1000);
     };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!message.trim() || !subscriptionStatus) return;
 
         try {
-            // Create a unique temp ID that won't conflict with backend IDs
             const tempId = `temp-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
             const messageData = {
@@ -165,13 +195,12 @@ function ChatInterface() {
 
             const tempMessage = {
                 ...messageData,
-                id: tempId,  
+                id: tempId,
                 message_sent_at: new Date().toISOString(),
                 is_read: false,
-                is_temp: true  
+                is_temp: true
             };
 
-            // Add to local state immediately
             setChat(prev => [...prev, tempMessage]);
             setMessage('');
             scrollToBottom();
@@ -181,7 +210,6 @@ function ChatInterface() {
             }
         } catch (error) {
             setError('Failed to send message');
-            // Remove the temp message if sending fails
             setChat(prev => prev.filter(msg => msg.id !== tempId));
         }
     };
@@ -215,6 +243,7 @@ function ChatInterface() {
                 <div className="flex-1 overflow-y-auto px-4 py-14 space-y-4 mt-14 mb-20">
                     <p className='text-center text-[#FBEC6C]'>Chat between {userDetails.display_name}  and {partnerName || 'Unknown'}</p>
 
+
                     {loading ? (
                         <div className="flex justify-center items-center h-full">
                             <p>Loading messages...</p>
@@ -245,18 +274,33 @@ function ChatInterface() {
                                                 </div>
                                             </div>
                                         ) : (
+                                            <>
 
-                                            <div className="flex justify-start">
-                                                <div className="!bg-[var(--chat-dash-interface-bg)] text-white rounded-tl-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-[45%]">
-                                                    <p>{msg.message_content}</p>
-                                                    <p className="text-xs mt-1 text-gray-400">
-                                                        {new Date(msg.message_sent_at).toLocaleTimeString([], {
-                                                            hour: '2-digit',
-                                                            minute: '2-digit'
-                                                        })}
-                                                    </p>
+                                                <div className="flex justify-start">
+                                                    <div className="!bg-[var(--chat-dash-interface-bg)] text-white rounded-tl-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-[45%]">
+                                                        <p>{msg.message_content}</p>
+                                                        <p className="text-xs mt-1 text-gray-400">
+                                                            {new Date(msg.message_sent_at).toLocaleTimeString([], {
+                                                                hour: '2-digit',
+                                                                minute: '2-digit'
+                                                            })}
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                {!isCurrentUserMessage && index === chat.length - 1 && isTyping && (
+                                                    <div className="flex justify-start mt-6">
+                                                        <div className="flex items-center space-x-2 p-2 bg-[var(--chat-dash-interface-bg)] rounded-tl-[1rem] rounded-tr-[1rem] rounded-bl-[1rem]">
+                                                            <div className="flex space-x-1">
+
+                                                                <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"></div>
+                                                                <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                                                                <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </>
+
                                         )}
                                     </div>
                                 );
@@ -272,7 +316,7 @@ function ChatInterface() {
 
 
                     {subscriptionStatus ? (
-                        <form className="flex flex-row !bg-[var(--form-card-bg)] rounded-xl shadow-md px-3 py-2">
+                        <form onSubmit={handleSubmit} className="flex flex-row !bg-[var(--form-card-bg)] rounded-xl shadow-md px-3 py-2">
                             <div className='flex flex-row justify-between items-center w-full'>
 
 
@@ -299,8 +343,7 @@ function ChatInterface() {
                                     placeholder="Type your message"
                                     ref={textareaRef}
                                     value={message}
-                                    // onChange={handleInputChange}
-                                    onChange={(e) => setMessage(e.target.value)}
+                                    onChange={handleInputChange}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' && !e.shiftKey) {
                                             e.preventDefault();
@@ -311,10 +354,10 @@ function ChatInterface() {
                                     className='flex-1 bg-transparent outline-none placeholder:text-gray-400 text-white resize-none md:min-h-30 md:py-15 min-h-20 py-10'
                                 />
                                 <div
+                                onClick={handleSubmit}
                                 >
                                     <FontAwesomeIcon icon={faPaperPlane}
-                                        onSubmit={handleSubmit}
-
+                                        
                                         className="text-white text-lg cursor-pointer ml-10" />
                                 </div>
                             </div>
