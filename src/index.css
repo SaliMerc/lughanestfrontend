@@ -217,6 +217,21 @@ h6 {
 }
 
 
+.typing-indicator-simple {
+    padding: 8px 12px;
+    margin: 4px 0;
+    color: #666;
+    font-style: italic;
+    font-size: 14px;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+
 @media screen and (max-width: 768px) {
   .nav-items {
     display: none;

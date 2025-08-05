@@ -21,12 +21,11 @@ import EmojiPicker from 'emoji-picker-react';
 function ChatInterface() {
     const userDetails = JSON.parse(localStorage.getItem('user')) || {};
     const messagesEndRef = useRef(null);
-
+    const ws = useRef(null);
 
     const [message, setMessage] = useState('');
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const textareaRef = useRef(null);
-
     const [chat, setChat] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -34,53 +33,82 @@ function ChatInterface() {
     const location = useLocation();
     const partnerId = location.state?.partnerId;
     const partnerName = location.state?.partnerName;
+    const [subscriptionStatus, setSubscriptionStatus] = useState(userDetails.subscription_status?.has_active_subscription);
 
-    const [subscriptionStatus, setsubscriptionStatus] = useState(userDetails.subscription_status.has_active_subscription)
-
+    const [isTyping, setIsTyping] = useState(false);
 
     useEffect(() => {
-        let intervalId;
-        const fetchChats = async (isInitialLoad = false) => {
+        if (!partnerId) return;
+
+        const token = localStorage.getItem('access_token');
+        const roomName = [userDetails.id, partnerId].sort().join('_');
+        const wsUrl = `ws://localhost:8000/ws/chat/${roomName}/?token=${token}`;
+
+        ws.current = new WebSocket(wsUrl);
+
+        ws.current.onopen = async () => {
             try {
-                if (isInitialLoad) setLoading(true);
-
-                if (partnerId) {
-                    const response = await handleChats(partnerId);
-
-                    if (response?.data) {
-                        setChat(prevChat => {
-                            if (JSON.stringify(prevChat) !== JSON.stringify(response.data)) {
-                                return response.data;
-                            }
-                            return prevChat;
-                        });
-                    } else {
-                        setChat([]);
-                    }
+                const response = await handleChats(partnerId);
+                if (response?.data) {
+                    setChat(response.data);
                 }
+                setLoading(false);
             } catch (err) {
-                if (isInitialLoad) {
-                    setError(err.message || 'Failed to fetch chats');
-                }
-            } finally {
-                if (isInitialLoad) setLoading(false);
+                setError(err.message || 'Failed to load messages');
+                setLoading(false);
             }
         };
 
-        fetchChats(true);
+        // Update your onmessage handler:
+        ws.current.onmessage = (e) => {
+            try {
+                const data = JSON.parse(e.data);
+                console.log("WebSocket message received:", data);
 
-        intervalId = setInterval(() => fetchChats(false), 1000);
+                if (data.type === 'typing') {
+                    setIsTyping(data.is_typing);
+                }
+                else if (data.type === 'chat_message') {
+                    setChat(prevChat => {
+                        const withoutTemps = prevChat.filter(msg =>
+                            !(msg.is_temp &&
+                                msg.message_content === data.message_content &&
+                                msg.sender === data.sender)
+                        );
+
+                        if (!withoutTemps.some(msg => msg.id === data.id)) {
+                            return [...withoutTemps, {
+                                id: data.id,
+                                message_content: data.message_content,
+                                sender: data.sender,
+                                receiver: data.receiver,
+                                message_sent_at: data.message_sent_at,
+                                is_read: data.is_read
+                            }];
+                        }
+                        return withoutTemps;
+                    });
+                    scrollToBottom();
+                }
+            } catch (err) {
+                console.error("Error processing WebSocket message:", err);
+            }
+        };
+
+        ws.current.onclose = () => {
+            console.log('WebSocket disconnected');
+        };
 
         return () => {
-            clearInterval(intervalId);
+            if (ws.current?.readyState === WebSocket.OPEN) {
+                ws.current.close();
+            }
         };
     }, [partnerId]);
 
-    console.log(chat)
-
     useEffect(() => {
         scrollToBottom();
-    }, []);
+    }, [chat]);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -92,34 +120,75 @@ function ChatInterface() {
         textareaRef.current.focus();
     };
 
+    const sendTypingIndicator = (typing) => {
+        if (ws.current?.readyState === WebSocket.OPEN) {
+            ws.current.send(JSON.stringify({
+                type: 'typing',
+                sender: userDetails.id
+            }));
+        }
+    };
+
+
+    const handleInputChange = (e) => {
+        setMessage(e.target.value);
+
+        if (!isTyping) {
+            setIsTyping(true);
+            sendTypingIndicator(true);
+        }
+
+        if (typingTimeoutRef.current) {
+            clearTimeout(typingTimeoutRef.current);
+        }
+
+        typingTimeoutRef.current = setTimeout(() => {
+            setIsTyping(false);
+            sendTypingIndicator(false);
+        }, 1000);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (message.trim()) {
-            try {
-                const messageData = {
-                    receiver: partnerId,
-                    message_content: message,
-                    sender: userDetails.id
-                };
-                await handleSendChat(messageData);
+        if (!message.trim() || !subscriptionStatus) return;
 
-                setMessage('');
+        try {
+            // Create a unique temp ID that won't conflict with backend IDs
+            const tempId = `temp-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
-                const response = await handleChats(partnerId);
-                if (response?.data) {
-                    setChat(response.data);
-                }
+            const messageData = {
+                type: "chat_message",
+                receiver: partnerId,
+                message_content: message,
+                sender: userDetails.id
+            };
 
-            } catch (error) {
-                setError('Failed to send message');
+            const tempMessage = {
+                ...messageData,
+                id: tempId,  
+                message_sent_at: new Date().toISOString(),
+                is_read: false,
+                is_temp: true  
+            };
+
+            // Add to local state immediately
+            setChat(prev => [...prev, tempMessage]);
+            setMessage('');
+            scrollToBottom();
+
+            if (ws.current?.readyState === WebSocket.OPEN) {
+                ws.current.send(JSON.stringify(messageData));
             }
+        } catch (error) {
+            setError('Failed to send message');
+            // Remove the temp message if sending fails
+            setChat(prev => prev.filter(msg => msg.id !== tempId));
         }
     };
 
     return (
         <DashboardNavigation>
             <div className="flex flex-col h-screen !bg-[var(--bg)] text-white">
-                {/* Top fixed chat header - stays fixed while scrolling */}
                 <div className="flex justify-between items-center px-4 py-3 !bg-[var(--bg)] sticky top-25 z-10 border-b !border-[var(--card-bg)]">
                     <div className="flex items-center space-x-2">
                         <Link to="/dashboard-chats">
@@ -165,7 +234,7 @@ function ChatInterface() {
                                         {isCurrentUserMessage ? (
 
                                             <div className="flex justify-end">
-                                                <div className="!bg-[var(--card-bg)] text-white rounded-br-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-xs">
+                                                <div className="!bg-[var(--card-bg)] text-white rounded-br-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-[45%]">
                                                     <p>{msg.message_content}</p>
                                                     <p className="text-xs mt-1 text-gray-300 font-medium">
                                                         {new Date(msg.message_sent_at).toLocaleTimeString([], {
@@ -178,7 +247,7 @@ function ChatInterface() {
                                         ) : (
 
                                             <div className="flex justify-start">
-                                                <div className="!bg-[var(--chat-dash-interface-bg)] text-white rounded-tl-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-xs">
+                                                <div className="!bg-[var(--chat-dash-interface-bg)] text-white rounded-tl-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-[45%]">
                                                     <p>{msg.message_content}</p>
                                                     <p className="text-xs mt-1 text-gray-400">
                                                         {new Date(msg.message_sent_at).toLocaleTimeString([], {
@@ -230,6 +299,7 @@ function ChatInterface() {
                                     placeholder="Type your message"
                                     ref={textareaRef}
                                     value={message}
+                                    // onChange={handleInputChange}
                                     onChange={(e) => setMessage(e.target.value)}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' && !e.shiftKey) {
