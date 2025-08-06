@@ -50,24 +50,18 @@ function ChatInterface() {
 
         ws.current.onopen = async () => {
             setIsWsReady(true);
-            try {
-                const response = await handleChats(partnerId);
-                if (response?.data) {
-                    setChat(response.data);
-                }
-                setLoading(false);
-            } catch (err) {
-                setError(err.message || 'Failed to load messages');
-                setLoading(false);
-            }
+            setLoading(false);
         };
 
         ws.current.onmessage = (e) => {
             try {
                 const data = JSON.parse(e.data);
                 console.log("WebSocket message received:", data);
-
-                if (data.type === 'typing') {
+                if (data.type === 'message_history') {
+                    setChat(data.messages); 
+                    setLoading(false);
+                }
+                else if (data.type === 'typing') {
                     if (data.sender !== data.receiver) {
                         setIsTyping(data.is_typing);
                         if (data.is_typing) {
@@ -81,7 +75,7 @@ function ChatInterface() {
                     }
                 }
                 else if (data.type === 'chat_message') {
-                    setIsTyping(false);
+                    setIsTyping(data.is_typing);
                     if (typingTimeoutRef.current) {
                         clearTimeout(typingTimeoutRef.current);
                     }
@@ -138,14 +132,14 @@ function ChatInterface() {
 
     const sendTypingIndicator = (typing) => {
         if (ws.current?.readyState === WebSocket.OPEN && isWsReady) {
-                ws.current.send(JSON.stringify({
-                    type: 'typing',
-                    is_typing: typing,
-                    sender: userDetails.id,
-                    sender_name: userDetails.display_name,
-                    receiver: partnerId
-                }));
-            
+            ws.current.send(JSON.stringify({
+                type: 'typing',
+                is_typing: typing,
+                sender: userDetails.id,
+                sender_name: userDetails.display_name,
+                receiver: partnerId
+            }));
+
         }
     };
 
@@ -190,7 +184,8 @@ function ChatInterface() {
                 type: "chat_message",
                 receiver: partnerId,
                 message_content: message,
-                sender: userDetails.id
+                sender: userDetails.id,
+                is_typing: false
             };
 
             const tempMessage = {
@@ -198,7 +193,8 @@ function ChatInterface() {
                 id: tempId,
                 message_sent_at: new Date().toISOString(),
                 is_read: false,
-                is_temp: true
+                is_temp: true,
+                is_typing: false
             };
 
             setChat(prev => [...prev, tempMessage]);
@@ -354,10 +350,10 @@ function ChatInterface() {
                                     className='flex-1 bg-transparent outline-none placeholder:text-gray-400 text-white resize-none md:min-h-30 md:py-15 min-h-20 py-10'
                                 />
                                 <div
-                                onClick={handleSubmit}
+                                    onClick={handleSubmit}
                                 >
                                     <FontAwesomeIcon icon={faPaperPlane}
-                                        
+
                                         className="text-white text-lg cursor-pointer ml-10" />
                                 </div>
                             </div>

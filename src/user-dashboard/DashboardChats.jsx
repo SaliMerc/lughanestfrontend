@@ -32,6 +32,7 @@ function DashboardChats() {
                 const response = await handleLatestChats();
 
                 if (response) {
+                    console.log(response.data)
                     const chatsWithOtherUser = response.data.map(chat => {
                         const otherUserId = chat.sender === currentUserId ? chat.receiver : chat.sender;
                         return {

@@ -50,9 +50,10 @@ function PaymentTable() {
         : payments.filter(item =>
             item?.transaction_code?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item?.trasaction_status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item?.subscription_type?.toLowerCase().includes(searchTerm.toLowerCase())||
-            item?.subscription_status?.toLowerCase().includes(searchTerm.toLowerCase())||
-            item?.transaction_method?.toLowerCase().includes(searchTerm.toLowerCase())
+            item?.subscription_type?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item?.subscription_status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item?.transaction_method?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item?.subscription_date?.toLowerCase().includes(searchTerm)
         );
 
     useEffect(() => {
@@ -120,51 +121,51 @@ function PaymentTable() {
                                     </tr>
                                 </thead>
                                 <tbody className="">
-                                     {loading ? (
+                                    {loading ? (
 
-              <div className="w-full text-center py-10">
-                <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-[#FBEC6C] mx-auto"></div>
-              </div>
+                                        <div className="w-full text-center py-10">
+                                            <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-[#FBEC6C] mx-auto"></div>
+                                        </div>
 
-            ) : mypayments.length === 0 ? (
+                                    ) : mypayments.length === 0 ? (
 
-              <div className="w-full text-center py-10">
-                <p>You have not made any transaction.</p>
-              </div>
-            ) : ( mypayments.map((payment, index) => (
-                                    <tr key={index} className="odd:bg-[#OE0D0E] even:!bg-[var(--card-bg)]">
-                                        <td className="px-6 py-4 border-r text-sm text-white">{startIndex + index + 1}</td>
-                                        <td className="px-6 py-4 text-sm text-white ">{payment.subscription_type || 'None'}</td>
-                                        <td className="px-6 py-4 text-sm text-white border-r">  {payment.subscription_date
-                                            ? new Date(payment.subscription_date).toLocaleDateString('en-GB')
-                                            : 'N/A'}
-
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-white">  {payment.subscription_start_date
-                                            ? new Date(payment.subscription_start_date).toLocaleDateString('en-GB')
-                                            : 'N/A'}
-
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-white">
-                                            {payment.subscription_end_date
-                                                ? new Date(payment.subscription_end_date).toLocaleDateString('en-GB')
+                                        <div className="w-full text-center py-10">
+                                            <p>You have not made any transaction.</p>
+                                        </div>
+                                    ) : (mypayments.map((payment, index) => (
+                                        <tr key={index} className="odd:bg-[#OE0D0E] even:!bg-[var(--card-bg)]">
+                                            <td className="px-6 py-4 border-r text-sm text-white">{startIndex + index + 1}</td>
+                                            <td className="px-6 py-4 text-sm text-white ">{payment.subscription_type || 'None'}</td>
+                                            <td className="px-6 py-4 text-sm text-white border-r">  {payment.subscription_date
+                                                ? new Date(payment.subscription_date).toLocaleDateString('en-GB')
                                                 : 'N/A'}
 
-                                        </td>
-                                        <td className="px-6 py-4 border-r text-sm text-white">{payment.subscription_status}</td>
+                                            </td>
+                                            <td className="px-6 py-4 text-sm text-white">  {payment.subscription_start_date
+                                                ? new Date(payment.subscription_start_date).toLocaleDateString('en-GB')
+                                                : 'N/A'}
 
-                                        <td className="px-6 py-4 border-r text-sm text-white">{payment.transaction_method}</td>
-                                        <td className="px-6 py-4 text-sm text-white">{payment.transaction_amount}</td>
-                                        <td className="px-6 py-4 text-sm text-white">{payment.transaction_code || 'N/A'}</td>
-                                        <td className="px-6 py-4 text-sm">
-                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${payment.transaction_status.toLowerCase() === 'completed'
-                                                ? ' !text-[#000000] font-bold  bg-[#16f037]'
-                                                : ' !text-[#000000] bg-red-500'
-                                                }`}>
-                                                {payment.transaction_status}
-                                            </span>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            <td className="px-6 py-4 text-sm text-white">
+                                                {payment.subscription_end_date
+                                                    ? new Date(payment.subscription_end_date).toLocaleDateString('en-GB')
+                                                    : 'N/A'}
+
+                                            </td>
+                                            <td className="px-6 py-4 border-r text-sm text-white">{payment.subscription_status}</td>
+
+                                            <td className="px-6 py-4 border-r text-sm text-white">{payment.transaction_method}</td>
+                                            <td className="px-6 py-4 text-sm text-white">{payment.transaction_amount}</td>
+                                            <td className="px-6 py-4 text-sm text-white">{payment.transaction_code || 'N/A'}</td>
+                                            <td className="px-6 py-4 text-sm">
+                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${payment.transaction_status.toLowerCase() === 'completed'
+                                                    ? ' !text-[#000000] font-bold  bg-[#16f037]'
+                                                    : ' !text-[#000000] bg-red-500'
+                                                    }`}>
+                                                    {payment.transaction_status}
+                                                </span>
+                                            </td>
+                                        </tr>
                                     ))
                                     )}
                                 </tbody>
