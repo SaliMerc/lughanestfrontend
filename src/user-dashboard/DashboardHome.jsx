@@ -103,7 +103,7 @@ function DashboardHome() {
               </div>
             ) : (
 
-              ongoingCourses.map((course, index) => (
+              ongoingCourses.slice(0,4).map((course, index) => (
                 <div key={index} className=' min-h-[250px] w-[10rem] md:w-[18rem]  bg-[var(--dashboard-card-bg)]  flex flex-col gap-10 rounded-[20px]'>
                   <div className='flex flex-col items-start text-left gap-2 p-3'>
                     <img src={

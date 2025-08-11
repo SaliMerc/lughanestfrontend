@@ -81,7 +81,7 @@ function DashboardCourses() {
                     <SearchBar
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        placeholder="Search by language, level, or course name..."
+                        placeholder="Search by course level or course name..."
                     />
                 </div>
 

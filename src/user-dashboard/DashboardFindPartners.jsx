@@ -5,6 +5,7 @@ import DashboardNavigation from './DashboardHeader';
 import { generateSlug } from '../utils/slugUtils';
 import { handleFindPartners } from '../utils/chatUtils';
 import { capitalizeFirst } from '../utils/slugUtils';
+import SearchBar from '../components/SearchBar';
 
 import profileImage from '../assets/dashboard-images/profile-pic-placeholder.png';
 
@@ -14,27 +15,55 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { cleanProfilePictureUrl } from '../utils/profilePic';
 
 function DashboardFindPartners() {
-    const [partners, setPartners] = useState([]);
-    const [partnerCourses, setPartnerCourses] = useState([])
+    const [allPartners, setAllPartners] = useState([]); // Store all partners for caching
+    const [filteredPartners, setFilteredPartners] = useState([]); // Partners after filtering
+    const [searchTerm, setSearchTerm] = useState('');
 
     const userDetails = JSON.parse(localStorage.getItem('user'));
-    const [subscriptionStatus, setsubscriptionStatus] = useState(userDetails.subscription_status.has_active_subscription)
+    const [subscriptionStatus, setSubscriptionStatus] = useState(userDetails?.subscription_status?.has_active_subscription || false);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // Cache key for localStorage
+    const CACHE_KEY = 'partnersCache';
+    const CACHE_EXPIRY = 30 * 60 * 1000; // 30 minutes cache
 
     useEffect(() => {
         const fetchPartners = async () => {
             try {
                 setLoading(true);
+
+                // Check cache first
+                const cachedData = localStorage.getItem(CACHE_KEY);
+                const now = new Date().getTime();
+
+                if (cachedData) {
+                    const { data, timestamp } = JSON.parse(cachedData);
+                    if (now - timestamp < CACHE_EXPIRY) {
+                        setAllPartners(data);
+                        setFilteredPartners(data);
+                        setLoading(false);
+                        return;
+                    }
+                }
+
+                // If no cache or cache expired, fetch fresh data
                 const response = await handleFindPartners();
                 console.log("API Response:", response);
 
-                if (response) {
-                    setPartners(response.data);
-                    setPartnerCourses(response.data.courses)
+                if (response?.data) {
+                    setAllPartners(response.data);
+                    setFilteredPartners(response.data);
+
+                    // Save to cache
+                    localStorage.setItem(CACHE_KEY, JSON.stringify({
+                        data: response.data,
+                        timestamp: now
+                    }));
                 } else {
-                    setPartners([]);
+                    setAllPartners([]);
+                    setFilteredPartners([]);
                 }
             } catch (err) {
                 setError(err.message || 'Failed to fetch partners');
@@ -47,76 +76,113 @@ function DashboardFindPartners() {
         fetchPartners();
     }, []);
 
+    // Filter partners based on search term
+    useEffect(() => {
+        if (searchTerm.trim() === '') {
+            setFilteredPartners(allPartners);
+            return;
+        }
+
+        const filtered = allPartners.filter(partner => {
+            const searchLower = searchTerm.toLowerCase();
+
+            // Check display name
+            if (partner.display_name.toLowerCase().includes(searchLower)) {
+                return true;
+            }
+
+            // Check courses they're learning
+            return partner.courses.some(course =>
+                course.course_name.toLowerCase().includes(searchLower) ||
+                course.course_level.toLowerCase().includes(searchLower)
+            );
+        });
+
+        setFilteredPartners(filtered);
+    }, [searchTerm, allPartners]);
+
     return (
         <DashboardNavigation>
-            <div>
+            <div className="p-4">
                 <section>
+                    <h1 className='text-2xl md:text-4xl font-semibold mb-6'>Find Partners</h1>
 
-                    <h1 className='text-2xl md:text-4xl font-semibold'>Find Partners </h1>
-                    <section className='flex flex-row flex-wrap justify-left gap-3 md:gap-12 items-center py-7'>
+                    <div className="flex-grow mb-6">
+                        <SearchBar
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            placeholder="Search by name or language..."
+                        />
+                    </div>
 
+                    <section className='flex flex-row flex-wrap justify-left gap-3 md:gap-12 items-start py-7'>
                         {loading ? (
-
                             <div className="w-full text-center py-10">
                                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FBEC6C] mx-auto"></div>
                                 <p className="mt-4">Loading partners...</p>
                             </div>
-
-                        ) :
-
-                            partners.length === 0 ? (
-
-                                <div className="w-full text-center py-10">
-                                    <p>No partners to show</p>
-                                </div>
-                            )
-                                : (
-
-                                    partners.map((partners, index) => (
-                                        <div key={index} className=' min-h-[250px] w-[10rem] md:w-[20%]  bg-[var(--dashboard-card-bg)]  flex flex-col gap-10 rounded-[20px]'>
-                                            <div className='flex flex-col items-start text-left gap-2 p-3'>
-                                                <div className='flex flex-row items-center gap-3'>
-                                                    <div className='w-10 h-10 md:w-15 md:h-15 mr-4'>
-                                                        <img src={cleanProfilePictureUrl(partners.profile_picture_url) || profileImage} alt="Profile Picture" className='rounded-full object-cover w-full h-full' />
-                                                    </div>
-                                                    <div>
-                                                        <p>{capitalizeFirst(partners.display_name)}</p>
-                                                    </div>
-                                                </div>
-
-                                                <p className='text-[1.2rem] md:text-[1.2rem] text-[#FBEC6C] first-letter:uppercase mt-2'>Learning:</p>
-                                                <hr className='text-white w-[100%]' />
-
-                                                {partners.courses.map((course, courseIndex) => (
-                                                    <p key={courseIndex} className='text-[#FBEC6C] first-letter:uppercase'>
-                                                        {course.course_name} ({course.course_level})
-                                                    </p>
-                                                ))}
-
-                                                {subscriptionStatus ? (
-                                                    <Link to={`/dashboard-chats/chat-interface/${generateSlug(partners.display_name)}`} state={{
-                                                        partnerId: partners.id,
-                                                        partnerName: partners.display_name
-                                                    }}>
-                                                        <button className='!w-[8.2rem] md:!w-[16rem] !text-[0.8rem] md:!text-[1.2rem]'>
-                                                            Message
-                                                        </button>
-                                                    </Link>
-                                                ) : (
-                                                    <Link to="/dashboard/subscription-plans">
-                                                        <button className='!w-[8.2rem] md:!w-[16rem] !text-[0.5rem] md:!text-[1rem]'>
-                                                            <FontAwesomeIcon icon={faLock} /> Subscribe to Message  
-                                                        </button>
-                                                    </Link>
-                                                )}
+                        ) : error ? (
+                            <div className="w-full text-center py-10 text-red-500">
+                                <p>{error}</p>
+                            </div>
+                        ) : filteredPartners.length === 0 ? (
+                            <div className="w-full text-center py-10">
+                                <p>{searchTerm ? 'No partners match your search' : 'No partners to show'}</p>
+                            </div>
+                        ) : (
+                            filteredPartners.map((partner, index) => (
+                                <div key={index} className='h-[350px] w-[10rem] md:w-[20%] bg-[var(--dashboard-card-bg)] flex flex-col rounded-[20px] relative'>
+                                    <div className='flex flex-col items-start text-left gap-2 p-3 h-full'>
+                                        <div className='flex flex-row items-center gap-3'>
+                                            <div className='w-10 h-10 md:w-15 md:h-15 mr-4'>
+                                                <img
+                                                    src={cleanProfilePictureUrl(partner.profile_picture_url) || profileImage}
+                                                    alt="Profile"
+                                                    className='rounded-full object-cover w-full h-full'
+                                                />
+                                            </div>
+                                            <div>
+                                                <p className='font-medium'>{capitalizeFirst(partner.display_name)}</p>
                                             </div>
                                         </div>
 
+                                        <p className='text-[1.2rem] md:text-[1.2rem] text-[#FBEC6C] first-letter:uppercase mt-2'>Learning:</p>
+                                        <hr className='text-white w-full' />
 
+                                        <div className='flex-grow overflow-y-auto'>
+                                            {partner.courses.map((course, courseIndex) => (
+                                                <p key={courseIndex} className='text-[#FBEC6C] first-letter:uppercase mb-2'>
+                                                    {course.course_name} ({course.course_level})
+                                                </p>
+                                            ))}
+                                        </div>
 
-
-                                    ))
-                                )}
+                                        <div className="w-full mt-auto pt-3">
+                                            {subscriptionStatus ? (
+                                                <Link
+                                                    to={`/dashboard-chats/chat-interface/${generateSlug(partner.display_name)}`}
+                                                    state={{
+                                                        partnerId: partner.id,
+                                                        partnerName: partner.display_name
+                                                    }}
+                                                >
+                                                    <button className='w-full py-2 bg-[#FBEC6C] text-black rounded-md hover:bg-[#e8d95f] transition-colors'>
+                                                        Message
+                                                    </button>
+                                                </Link>
+                                            ) : (
+                                                <Link to="/dashboard/subscription-plans">
+                                                    <button className='w-full py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors flex items-center justify-center gap-2'>
+                                                        <FontAwesomeIcon icon={faLock} />
+                                                        <span>Subscribe to Message</span>
+                                                    </button>
+                                                </Link>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        )}
                     </section>
                 </section>
             </div>
