@@ -13,27 +13,42 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 import { generateSlug } from '../utils/slugUtils';
 
+import SearchBar from '../components/SearchBar';
+
 function DashboardCourses() {
     const [coursesByLanguage, setCoursesByLanguage] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const [enrolledCourses, setEnrolledCourses] = useState([]);
 
     const userDetails = JSON.parse(localStorage.getItem('user'));
-    const [subscriptionStatus, setsubscriptionStatus] = useState(userDetails.subscription_status.has_active_subscription)
+    const [subscriptionStatus, setsubscriptionStatus] = useState(userDetails?.subscription_status?.has_active_subscription || false);
+
+    const filteredCourses = Object.entries(coursesByLanguage).reduce((acc, [language, courseList]) => {
+        const filtered = courseList.filter(course => 
+            language.toLowerCase().includes(searchTerm.toLowerCase()) || 
+            course.course_level.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            course.course_name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        
+        if (filtered.length > 0) {
+            acc[language] = filtered;
+        }
+        
+        return acc;
+    }, {});
 
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-
                 setLoading(true);
                 await handleStructuredCourseItemsData(
                     {},
                     (response) => {
                         if (response.data) {
                             const coursesData = response.data;
-
                             setCoursesByLanguage(coursesData);
 
                             const allCourses = Object.values(coursesData).flat();
@@ -62,6 +77,14 @@ function DashboardCourses() {
             <div className="p-4">
                 <h1 className="text-2xl md:text-4xl font-semibold text-[#FBEC6C] mb-6">All Courses</h1>
 
+                <div className="flex-grow">
+                    <SearchBar
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder="Search by language, level, or course name..."
+                    />
+                </div>
+
                 {loading ? (
                     <div className="w-full text-center py-10">
                         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FBEC6C] mx-auto"></div>
@@ -71,12 +94,12 @@ function DashboardCourses() {
                     <div className="w-full text-center py-10 text-red-500">
                         <p>{error}</p>
                     </div>
-                ) : Object.keys(coursesByLanguage).length === 0 ? (
+                ) : Object.keys(filteredCourses).length === 0 ? (
                     <div className="w-full text-center py-10">
-                        <p>No courses available at the moment.</p>
+                        <p>{searchTerm ? 'No courses match your search.' : 'No courses available at the moment.'}</p>
                     </div>
                 ) : (
-                    Object.entries(coursesByLanguage).map(([language, courseList]) => (
+                    Object.entries(filteredCourses).map(([language, courseList]) => (
                         <div key={language} className="mb-10">
                             <h2 className="text-xl md:text-2xl font-bold text-white mb-4">{language}</h2>
                             <div className="flex flex-wrap gap-4">
@@ -102,22 +125,19 @@ function DashboardCourses() {
                                             <p className='text-white text-[12px]'>Instructor: {course.instructor_name}</p>
 
                                             {course.is_enrolled ? (
-                                                <Link to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}`} state={{course, course_id:course.id  }}>
+                                                <Link to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}`} state={{ course, course_id: course.id }}>
                                                     <button className='!w-[7rem] md:!w-[22rem]'>
                                                         Go to Course
                                                     </button>
                                                 </Link>
                                             ) : (
-
                                                 (subscriptionStatus || enrolledCourses.length === 0) ? (
-
-                                                    <Link to={`/dashboard-courses/${generateSlug(course.course_name)}`} state={{ course, course_id:course.id  }}>
+                                                    <Link to={`/dashboard-courses/${generateSlug(course.course_name)}`} state={{ course, course_id: course.id }}>
                                                         <button className='!w-[7rem] md:!w-[22rem]'>
                                                             Enroll
                                                         </button>
                                                     </Link>
                                                 ) : (
-
                                                     <Link to="/dashboard/subscription-plans">
                                                         <button className='!w-[7rem] md:!w-[22rem] opacity-70 cursor-not-allowed'>
                                                             <FontAwesomeIcon icon={faLock} /> Subscribe to Enroll
@@ -125,7 +145,6 @@ function DashboardCourses() {
                                                     </Link>
                                                 )
                                             )}
-
                                         </div>
                                     </div>
                                 ))}
@@ -134,7 +153,7 @@ function DashboardCourses() {
                     ))
                 )}
             </div>
-        </DashboardNavigation >
+        </DashboardNavigation>
     );
 }
 
