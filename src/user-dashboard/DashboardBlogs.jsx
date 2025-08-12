@@ -12,33 +12,58 @@ function DashboardBlogs() {
     const [blogItems, setBlogItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+useEffect(() => {
+    const fetchBlogs = async () => {
+        try {
+            setLoading(true);
+            
+            const BLOGS_CACHE_KEY = 'blogsCache';
+            const CACHE_EXPIRY = 30 * 60 * 1000; 
+            const now = new Date().getTime();
+            
 
-    useEffect(() => {
-        const fetchBlogs = async () => {
-            try {
-                setLoading(true);
-                await handleBlogItemsData(
-                    {},
-                    (response) => {
-                        if (response.data) {
-                            setBlogItems(response.data);
-                        } else {
-                            setBlogItems([]);
-                        }
-                    },
-                    (error) => {
-                        setError(error.message || 'Failed to fetch blogs');
-                    }
-                );
-            } catch (err) {
-                setError(err.message || 'An unexpected error occurred');
-            } finally {
-                setLoading(false);
+            const cachedData = localStorage.getItem(BLOGS_CACHE_KEY);
+            
+            if (cachedData) {
+                const { data, timestamp } = JSON.parse(cachedData);
+             
+                if (now - timestamp < CACHE_EXPIRY) {
+                    setBlogItems(data);
+                    setLoading(false);
+                    return;
+                }
             }
-        };
 
-        fetchBlogs();
-    }, []);
+            await handleBlogItemsData(
+                {},
+                (response) => {
+                    if (response.data) {
+                        setBlogItems(response.data);
+                       
+                        localStorage.setItem(
+                            BLOGS_CACHE_KEY,
+                            JSON.stringify({
+                                data: response.data,
+                                timestamp: now
+                            })
+                        );
+                    } else {
+                        setBlogItems([]);
+                    }
+                },
+                (error) => {
+                    setError(error.message || 'Failed to fetch blogs');
+                }
+            );
+        } catch (err) {
+            setError(err.message || 'An unexpected error occurred');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    fetchBlogs();
+}, []);
 
     return (
         <DashboardNavigation>

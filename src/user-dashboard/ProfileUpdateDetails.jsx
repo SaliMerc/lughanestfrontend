@@ -66,8 +66,12 @@ function ProfileUpdateDetails() {
         try {
             const response = await handleProfileUpdate({
                 display_name: formData.display_name,
-                languages_spoken: formData.languages.filter(lang => lang.language.trim() !== '')
+                languages_spoken: JSON.stringify(
+                    formData.languages.filter(lang => lang.language.trim() !== '')
+                )
             });
+
+            console.log("Data being sent to backend:", JSON.stringify(response, null, 2));
 
             const updatedUser = { ...userDetails, display_name: formData.display_name, languages_spoken: formData.languages };
             localStorage.setItem('user', JSON.stringify(updatedUser));

@@ -12,7 +12,6 @@ function CourseModules() {
   const location = useLocation();
   const navigate = useNavigate();
   const { course, course_id } = location.state || {};
-  console.log(course)
 
   const [modules, setModules] = useState([]);
   const [loading, setLoading] = useState(true);

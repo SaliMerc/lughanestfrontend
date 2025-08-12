@@ -25,16 +25,14 @@ function DashboardFindPartners() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Cache key for localStorage
     const CACHE_KEY = 'partnersCache';
-    const CACHE_EXPIRY = 30 * 60 * 1000; // 30 minutes cache
+    const CACHE_EXPIRY = 30 * 60 * 1000; 
 
     useEffect(() => {
         const fetchPartners = async () => {
             try {
                 setLoading(true);
 
-                // Check cache first
                 const cachedData = localStorage.getItem(CACHE_KEY);
                 const now = new Date().getTime();
 
@@ -48,15 +46,12 @@ function DashboardFindPartners() {
                     }
                 }
 
-                // If no cache or cache expired, fetch fresh data
                 const response = await handleFindPartners();
-                console.log("API Response:", response);
 
                 if (response?.data) {
                     setAllPartners(response.data);
                     setFilteredPartners(response.data);
 
-                    // Save to cache
                     localStorage.setItem(CACHE_KEY, JSON.stringify({
                         data: response.data,
                         timestamp: now

@@ -27,33 +27,62 @@ function DashboardCourses() {
     const [subscriptionStatus, setsubscriptionStatus] = useState(userDetails?.subscription_status?.has_active_subscription || false);
 
     const filteredCourses = Object.entries(coursesByLanguage).reduce((acc, [language, courseList]) => {
-        const filtered = courseList.filter(course => 
-            language.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        const filtered = courseList.filter(course =>
+            language.toLowerCase().includes(searchTerm.toLowerCase()) ||
             course.course_level.toLowerCase().includes(searchTerm.toLowerCase()) ||
             course.course_name.toLowerCase().includes(searchTerm.toLowerCase())
         );
-        
+
         if (filtered.length > 0) {
             acc[language] = filtered;
         }
-        
+
         return acc;
     }, {});
+
+    const COURSES_CACHE_KEY = 'coursesCache';
+    const CACHE_EXPIRY = 10 * 60 * 1000;
 
     useEffect(() => {
         const fetchCourses = async () => {
             try {
                 setLoading(true);
+
+                const cachedData = localStorage.getItem(COURSES_CACHE_KEY);
+                const now = new Date().getTime();
+
+                if (cachedData) {
+                    const { data, timestamp } = JSON.parse(cachedData);
+
+                    if (now - timestamp < CACHE_EXPIRY) {
+                        setCoursesByLanguage(data.coursesByLanguage);
+                        setEnrolledCourses(data.enrolledCourses);
+                        setLoading(false);
+                        return; 
+                    }
+                }
+
                 await handleStructuredCourseItemsData(
                     {},
                     (response) => {
                         if (response.data) {
                             const coursesData = response.data;
-                            setCoursesByLanguage(coursesData);
-
                             const allCourses = Object.values(coursesData).flat();
                             const userEnrolledCourses = allCourses.filter(course => course.is_enrolled);
+
+                            setCoursesByLanguage(coursesData);
                             setEnrolledCourses(userEnrolledCourses);
+
+                            localStorage.setItem(
+                                COURSES_CACHE_KEY,
+                                JSON.stringify({
+                                    data: {
+                                        coursesByLanguage: coursesData,
+                                        enrolledCourses: userEnrolledCourses,
+                                    },
+                                    timestamp: now,
+                                })
+                            );
                         } else {
                             setCoursesByLanguage({});
                         }
@@ -126,20 +155,20 @@ function DashboardCourses() {
 
                                             {course.is_enrolled ? (
                                                 <Link to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}`} state={{ course, course_id: course.id }}>
-                                                    <button className='!w-[7rem] md:!w-[22rem]'>
+                                                    <button className='!w-[7rem] md:!w-[22rem] shadow-xl !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[#0E0D0C] transition-colors !duration-300'>
                                                         Go to Course
                                                     </button>
                                                 </Link>
                                             ) : (
                                                 (subscriptionStatus || enrolledCourses.length === 0) ? (
                                                     <Link to={`/dashboard-courses/${generateSlug(course.course_name)}`} state={{ course, course_id: course.id }}>
-                                                        <button className='!w-[7rem] md:!w-[22rem]'>
+                                                        <button className='!w-[7rem] md:!w-[22rem] shadow-xl !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[#0E0D0C] transition-colors !duration-300'>
                                                             Enroll
                                                         </button>
                                                     </Link>
                                                 ) : (
                                                     <Link to="/dashboard/subscription-plans">
-                                                        <button className='!w-[7rem] md:!w-[22rem] opacity-70 cursor-not-allowed'>
+                                                        <button className='!w-[7rem] md:!w-[22rem] opacity-70 cursor-not-allowed shadow-xl !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[#0E0D0C] transition-colors !duration-300'>
                                                             <FontAwesomeIcon icon={faLock} /> Subscribe to Enroll
                                                         </button>
                                                     </Link>
