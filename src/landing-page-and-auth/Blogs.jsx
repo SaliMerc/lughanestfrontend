@@ -21,11 +21,37 @@ function Blogs() {
     const fetchBlogs = async () => {
       try {
         setLoading(true);
+
+        const BLOGS_CACHE_KEY = 'blogsCache';
+        const CACHE_EXPIRY = 30 * 60 * 1000;
+        const now = new Date().getTime();
+
+
+        const cachedData = localStorage.getItem(BLOGS_CACHE_KEY);
+
+        if (cachedData) {
+          const { data, timestamp } = JSON.parse(cachedData);
+
+          if (now - timestamp < CACHE_EXPIRY) {
+            setBlogItems(data);
+            setLoading(false);
+            return;
+          }
+        }
+
         await handleBlogItemsData(
           {},
           (response) => {
             if (response.data) {
               setBlogItems(response.data);
+
+              localStorage.setItem(
+                BLOGS_CACHE_KEY,
+                JSON.stringify({
+                  data: response.data,
+                  timestamp: now
+                })
+              );
             } else {
               setBlogItems([]);
             }
@@ -54,7 +80,7 @@ function Blogs() {
             <img src={overallHeadingIcon} alt="about-image" className='h-[30px] md:h-[40px]' />
             <p className='mb-5 mt-5 text-center'>YOUR LEARNING HUB — EXPLORE, READ, GROW</p>
           </div>
-          
+
           <div className='flex md:flex-wrap flex-col md:flex-row justify-center gap-8 items-center py-5'>
             {loading ? (
 
@@ -64,11 +90,11 @@ function Blogs() {
               </div>
 
             ) : error ? (
-           
+
               <div className="w-full text-center py-10 text-red-500">
                 <p>Error: {error}</p>
-                <button 
-                  onClick={() => window.location.reload()} 
+                <button
+                  onClick={() => window.location.reload()}
                   className="mt-4 px-4 py-2 bg-[#FBEC6C] text-[#0E0D0C] rounded hover:bg-[#E3E0C0] transition-colors flex justify-center items-center"
                 >
                   Retry
@@ -81,11 +107,11 @@ function Blogs() {
                 <p>No blog posts available at the moment.</p>
               </div>
             ) : (
-              
+
               blogItems.map((blog, index) => (
                 <div key={index} className='min-h-[250px] w-full sm:w-[45%] md:w-[30%] bg-[var(--card-bg)] flex flex-col justify-center items-center text-center gap-10 rounded-[20px] p-4 md:p-6'>
                   <div className='flex flex-col items-start text-left gap-2'>
-                    <img src={blog.blog_image_url|| require('../assets/blog-image-placeholder.jpg')} alt="Blog" className='w-full h-auto mt-5 md:mt-0 rounded-2xl object-cover' loading='lazy' />
+                    <img src={blog.blog_image_url || require('../assets/blog-image-placeholder.jpg')} alt="Blog" className='w-full h-auto mt-5 md:mt-0 rounded-2xl object-cover' loading='lazy' />
                     <p className='text-[1.2rem] md:text-[1.5rem]'>{blog.blog_title}</p>
                     <p className='text-[#FBEC6C] text-[13px]'>By {blog.blog_author} on {new Date(blog.created_at).toLocaleDateString()}</p>
                     <hr className='text-white w-[100%] my-5' />

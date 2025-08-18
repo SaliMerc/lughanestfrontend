@@ -19,32 +19,62 @@ function Courses() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        setLoading(true);
-        await handleCourseItemsData(
-          {},
-          (response) => {
-            if (response.data) {
-              setCourseItems(response.data);
-            } else {
-              setCourseItems([]);
-            }
-          },
-          (error) => {
-            setError(error.message || 'Failed to fetch blogs');
-          }
-        );
-      } catch (err) {
-        setError(err.message || 'An unexpected error occurred');
-      } finally {
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  const fetchCourses = async () => {
+    try {
+      setLoading(true);
 
-    fetchCourses();
-  }, []);
+      const COURSES_CACHE_KEY = 'coursesCache';
+      const CACHE_EXPIRY = 30 * 60 * 1000; 
+      const now = new Date().getTime();
+
+      const cachedData = localStorage.getItem(COURSES_CACHE_KEY);
+
+      if (cachedData) {
+        try {
+          const { data, timestamp } = JSON.parse(cachedData);
+          
+
+          if (now - timestamp < CACHE_EXPIRY && Array.isArray(data)) {
+            setCourseItems(data);
+            setLoading(false);
+            return;
+          }
+        } catch (e) {
+          console.error('Failed to parse cached courses', e);
+        }
+      }
+      await handleCourseItemsData(
+        {},
+        (response) => {
+          const coursesData = Array.isArray(response?.data) ? response.data : [];
+          setCourseItems(coursesData);
+          
+          if (Array.isArray(coursesData)) {
+            localStorage.setItem(
+              COURSES_CACHE_KEY,
+              JSON.stringify({
+                data: coursesData,
+                timestamp: now
+              })
+            );
+          }
+        },
+        (error) => {
+          setError(error.message || 'Failed to fetch courses');
+          setCourseItems([]); 
+        }
+      );
+    } catch (err) {
+      setError(err.message || 'An unexpected error occurred');
+      setCourseItems([]); 
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchCourses();
+}, []);
 
   return (
     <>

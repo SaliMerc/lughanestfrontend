@@ -133,7 +133,7 @@ function DashboardCourses() {
                             <h2 className="text-xl md:text-2xl font-bold text-white mb-4">{language}</h2>
                             <div className="flex flex-wrap gap-4">
                                 {courseList.map((course) => (
-                                    <div key={course.id} className='min-h-[250px] w-[45%] md:w-[28%] bg-[var(--dashboard-card-bg)] flex flex-col gap-10 rounded-[20px]'>
+                                    <div key={course.id} className='min-h-[250px] w-[45%] md:w-[28%] bg-[var(--dashboard-card-bg)] flex flex-col gap-10 rounded-[20px] items-center'>
                                         <div className='flex flex-col items-start text-left gap-2 p-3'>
                                             <img
                                                 src={
@@ -155,20 +155,20 @@ function DashboardCourses() {
 
                                             {course.is_enrolled ? (
                                                 <Link to={`/dashboard-home/${generateSlug(course.course_name.course_name, course.course_level)}`} state={{ course, course_id: course.id }}>
-                                                    <button className='!w-[7rem] md:!w-[22rem] shadow-xl !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                                    <button className='!w-[7rem] md:!w-[18.5rem] !text-[0.8rem] md:!text-[1.2rem] shadow-xl !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[#0E0D0C] transition-colors !duration-300 !mx-auto !block'>
                                                         Go to Course
                                                     </button>
                                                 </Link>
                                             ) : (
                                                 (subscriptionStatus || enrolledCourses.length === 0) ? (
                                                     <Link to={`/dashboard-courses/${generateSlug(course.course_name)}`} state={{ course, course_id: course.id }}>
-                                                        <button className='!w-[7rem] md:!w-[22rem] shadow-xl !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                                        <button className='!w-[7rem] md:!w-[18.5rem] !text-[0.8rem] md:!text-[1.2rem] shadow-xl !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[#0E0D0C] transition-colors !duration-300 !mx-auto !block'>
                                                             Enroll
                                                         </button>
                                                     </Link>
                                                 ) : (
                                                     <Link to="/dashboard/subscription-plans">
-                                                        <button className='!w-[7rem] md:!w-[22rem] opacity-70 cursor-not-allowed shadow-xl !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                                        <button className='!w-[7rem] md:!w-[18.5rem] !text-[0.8rem] md:!text-[1.2rem] shadow-xl !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[#0E0D0C] transition-colors !duration-300 !mx-auto !block'>
                                                             <FontAwesomeIcon icon={faLock} /> Subscribe to Enroll
                                                         </button>
                                                     </Link>

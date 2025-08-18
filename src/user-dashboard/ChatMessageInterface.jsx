@@ -6,6 +6,8 @@ import DashboardNavigation from './DashboardHeader';
 import { handleChats } from '../utils/chatUtils';
 import { handleSendChat } from '../utils/chatUtils';
 
+const WEBSOCKET_URL = import.meta.env.VITE_WEBSOCKET_URL
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faArrowLeft,
@@ -44,7 +46,7 @@ function ChatInterface() {
 
         const token = localStorage.getItem('access_token');
         const roomName = [userDetails.id, partnerId].sort().join('_');
-        const wsUrl = `ws://localhost:8000/ws/chat/${roomName}/?token=${token}`;
+        const wsUrl = `ws://${API_URL}/ws/chat/${roomName}/?token=${token}`;
 
         ws.current = new WebSocket(wsUrl);
 

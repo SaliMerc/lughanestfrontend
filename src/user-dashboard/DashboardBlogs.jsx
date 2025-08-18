@@ -12,58 +12,58 @@ function DashboardBlogs() {
     const [blogItems, setBlogItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-useEffect(() => {
-    const fetchBlogs = async () => {
-        try {
-            setLoading(true);
-            
-            const BLOGS_CACHE_KEY = 'blogsCache';
-            const CACHE_EXPIRY = 30 * 60 * 1000; 
-            const now = new Date().getTime();
-            
+    useEffect(() => {
+        const fetchBlogs = async () => {
+            try {
+                setLoading(true);
 
-            const cachedData = localStorage.getItem(BLOGS_CACHE_KEY);
-            
-            if (cachedData) {
-                const { data, timestamp } = JSON.parse(cachedData);
-             
-                if (now - timestamp < CACHE_EXPIRY) {
-                    setBlogItems(data);
-                    setLoading(false);
-                    return;
-                }
-            }
+                const BLOGS_CACHE_KEY = 'blogsCache';
+                const CACHE_EXPIRY = 30 * 60 * 1000;
+                const now = new Date().getTime();
 
-            await handleBlogItemsData(
-                {},
-                (response) => {
-                    if (response.data) {
-                        setBlogItems(response.data);
-                       
-                        localStorage.setItem(
-                            BLOGS_CACHE_KEY,
-                            JSON.stringify({
-                                data: response.data,
-                                timestamp: now
-                            })
-                        );
-                    } else {
-                        setBlogItems([]);
+
+                const cachedData = localStorage.getItem(BLOGS_CACHE_KEY);
+
+                if (cachedData) {
+                    const { data, timestamp } = JSON.parse(cachedData);
+
+                    if (now - timestamp < CACHE_EXPIRY) {
+                        setBlogItems(data);
+                        setLoading(false);
+                        return;
                     }
-                },
-                (error) => {
-                    setError(error.message || 'Failed to fetch blogs');
                 }
-            );
-        } catch (err) {
-            setError(err.message || 'An unexpected error occurred');
-        } finally {
-            setLoading(false);
-        }
-    };
 
-    fetchBlogs();
-}, []);
+                await handleBlogItemsData(
+                    {},
+                    (response) => {
+                        if (response.data) {
+                            setBlogItems(response.data);
+
+                            localStorage.setItem(
+                                BLOGS_CACHE_KEY,
+                                JSON.stringify({
+                                    data: response.data,
+                                    timestamp: now
+                                })
+                            );
+                        } else {
+                            setBlogItems([]);
+                        }
+                    },
+                    (error) => {
+                        setError(error.message || 'Failed to fetch blogs');
+                    }
+                );
+            } catch (err) {
+                setError(err.message || 'An unexpected error occurred');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchBlogs();
+    }, []);
 
     return (
         <DashboardNavigation>
@@ -116,7 +116,7 @@ useEffect(() => {
                                                 : blog.blog_content}
                                         </p>
                                         <Link to={`/dashboard-blog/${generateSlug(blog.blog_title)}`} state={{ blog }}>
-                                            <button className='!w-[100%] min-h-14 px-3  shadow-xl text-xl !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                            <button className='!w-[100%] min-h-14 px-3  shadow-xl text-xl !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[#0E0D0C] transition-colors !duration-300 !mx-auto'>
                                                 Read More...
                                             </button>
                                         </Link>
