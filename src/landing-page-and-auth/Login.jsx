@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Header from './Header.jsx';
 
+import { Link} from 'react-router-dom';
+
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false)
@@ -161,9 +163,9 @@ function Login() {
             <h5>{formError}</h5>
           </div>
           <div className='forgotten-pass-container'>
-            <a href='/password-reset' className='underlined-item forgotten-pass'>
+            <Link to='/password-reset' className='underlined-item forgotten-pass'>
               Forgotten Password?
-            </a>
+            </Link>
           </div>
 
           <button type='submit'>
@@ -172,9 +174,9 @@ function Login() {
           <p>
             Don't have an account?{' '}
             <span>
-              <a href='/signup' className='underlined-item'>
+              <Link to='/signup' className='underlined-item'>
                 SignUp
-              </a>
+              </Link>
             </span>
           </p>
         </form>

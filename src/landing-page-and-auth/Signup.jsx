@@ -263,7 +263,7 @@ function Signup() {
               <h5>{formSuccess}</h5>
             </div>
             <button type='submit'>{loading ? "Signing up..." : "Signup"} <FontAwesomeIcon icon={faArrowRight} /></button>
-            <p>Already have an account? <span><a href="/login" className='underlined-item'> Login</a></span></p>
+            <p>Already have an account? <span><Link to="/login" className='underlined-item'> Login</Link></span></p>
           </form>
         </div>
       </section>
