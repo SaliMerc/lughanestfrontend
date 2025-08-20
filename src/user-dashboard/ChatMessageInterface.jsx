@@ -46,7 +46,7 @@ function ChatInterface() {
 
         const token = localStorage.getItem('access_token');
         const roomName = [userDetails.id, partnerId].sort().join('_');
-        const wsUrl = `ws://${WEBSOCKET_URL}/ws/chat/${roomName}/?token=${token}`;
+        const wsUrl = `${WEBSOCKET_URL}/ws/chat/${roomName}/?token=${token}`;
 
         ws.current = new WebSocket(wsUrl);
 
