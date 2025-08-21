@@ -15,7 +15,7 @@
             }
         }
 
-        if (url.startsWith('http://127.0.0.1:8000/media/')) {
+        if (url.startsWith('http://127.0.0.1:8000/media/') || ('https://lughanest-backend-apis.onrender.com/')) {
             return url;
         }
 

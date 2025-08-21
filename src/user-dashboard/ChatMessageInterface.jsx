@@ -58,7 +58,6 @@ function ChatInterface() {
         ws.current.onmessage = (e) => {
             try {
                 const data = JSON.parse(e.data);
-                console.log("WebSocket message received:", data);
                 if (data.type === 'message_history') {
                     setChat(data.messages); 
                     setLoading(false);
@@ -108,7 +107,7 @@ function ChatInterface() {
         };
 
         ws.current.onclose = () => {
-            console.log('WebSocket disconnected');
+            console.log('Disconnected');
         };
 
         return () => {
