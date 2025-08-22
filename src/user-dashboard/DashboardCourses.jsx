@@ -40,27 +40,27 @@ function DashboardCourses() {
         return acc;
     }, {});
 
-    const COURSES_CACHE_KEY = 'coursesCache';
-    const CACHE_EXPIRY = 10 * 60 * 1000;
+    // const COURSES_CACHE_KEY = 'coursesCache';
+    // const CACHE_EXPIRY = 10 * 60 * 1000;
 
     useEffect(() => {
         const fetchCourses = async () => {
             try {
                 setLoading(true);
 
-                const cachedData = localStorage.getItem(COURSES_CACHE_KEY);
-                const now = new Date().getTime();
+                // const cachedData = localStorage.getItem(COURSES_CACHE_KEY);
+                // const now = new Date().getTime();
 
-                if (cachedData) {
-                    const { data, timestamp } = JSON.parse(cachedData);
+                // if (cachedData) {
+                //     const { data, timestamp } = JSON.parse(cachedData);
 
-                    if (now - timestamp < CACHE_EXPIRY) {
-                        setCoursesByLanguage(data.coursesByLanguage);
-                        setEnrolledCourses(data.enrolledCourses);
-                        setLoading(false);
-                        return; 
-                    }
-                }
+                //     if (now - timestamp < CACHE_EXPIRY) {
+                //         setCoursesByLanguage(data.coursesByLanguage);
+                //         setEnrolledCourses(data.enrolledCourses);
+                //         setLoading(false);
+                //         return; 
+                //     }
+                // }
 
                 await handleStructuredCourseItemsData(
                     {},
@@ -73,16 +73,16 @@ function DashboardCourses() {
                             setCoursesByLanguage(coursesData);
                             setEnrolledCourses(userEnrolledCourses);
 
-                            localStorage.setItem(
-                                COURSES_CACHE_KEY,
-                                JSON.stringify({
-                                    data: {
-                                        coursesByLanguage: coursesData,
-                                        enrolledCourses: userEnrolledCourses,
-                                    },
-                                    timestamp: now,
-                                })
-                            );
+                            // localStorage.setItem(
+                            //     COURSES_CACHE_KEY,
+                            //     JSON.stringify({
+                            //         data: {
+                            //             coursesByLanguage: coursesData,
+                            //             enrolledCourses: userEnrolledCourses,
+                            //         },
+                            //         timestamp: now,
+                            //     })
+                            // );
                         } else {
                             setCoursesByLanguage({});
                         }

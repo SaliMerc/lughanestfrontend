@@ -94,7 +94,7 @@ function CourseModules() {
                           />
                         </svg>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                          <span className="text-[1rem] text-white">{Math.round(module.modules[0].module_progress)}%</span>
+                          <span className="text-[1rem] text-white">{`${Math.round(module.modules?.[0]?.module_progress || 0)}%`}</span>
                         </div>
                       </div>
 

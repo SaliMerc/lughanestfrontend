@@ -11,7 +11,7 @@ const SearchBar = ({ value, onChange, placeholder = "Search..." }) => {
 
   return (
     <form onSubmit={handleSubmit} className="mb-4 flex justify-start">
-      <div className="relative w-[60%]">
+      <div className="relative w-[100%] md:w-[60%]">
         <div
           className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400 "
         >

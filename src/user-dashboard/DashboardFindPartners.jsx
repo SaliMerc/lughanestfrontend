@@ -26,7 +26,7 @@ function DashboardFindPartners() {
     const [error, setError] = useState(null);
 
     const CACHE_KEY = 'partnersCache';
-    const CACHE_EXPIRY = 30 * 60 * 1000; 
+    const CACHE_EXPIRY = 5 * 60 * 1000; 
 
     useEffect(() => {
         const fetchPartners = async () => {
@@ -126,7 +126,7 @@ function DashboardFindPartners() {
                             </div>
                         ) : (
                             filteredPartners.map((partner, index) => (
-                                <div key={index} className='h-[350px] w-[10rem] md:w-[20%] bg-[var(--dashboard-card-bg)] flex flex-col rounded-[20px] relative'>
+                                <div key={index} className='h-[350px] w-[10rem] md:w-[20%]  bg-[var(--dashboard-card-bg)] flex flex-col rounded-[20px] relative'>
                                     <div className='flex flex-col items-start text-left gap-2 p-3 h-full'>
                                         <div className='flex flex-row items-center gap-3'>
                                             <div className='w-10 h-10 md:w-15 md:h-15 mr-4'>
@@ -161,13 +161,13 @@ function DashboardFindPartners() {
                                                         partnerName: partner.display_name
                                                     }}
                                                 >
-                                                    <button className='w-full py-2 bg-[#FBEC6C] text-black rounded-md hover:bg-[#e8d95f] transition-colors'>
+                                                    <button className='w-full py-2   !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] !hover:!text-[#0E0D0C] transition-colors'>
                                                         Message
                                                     </button>
                                                 </Link>
                                             ) : (
                                                 <Link to="/dashboard/subscription-plans">
-                                                    <button className='w-full py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors flex items-center justify-center gap-2'>
+                                                    <button className='w-full py-2 !text-[0.8rem] md:!text-[1rem] !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] !hover:!text-[#0E0D0C]  transition-colors flex items-center justify-center gap-1'>
                                                         <FontAwesomeIcon icon={faLock} />
                                                         <span>Subscribe to Message</span>
                                                     </button>
