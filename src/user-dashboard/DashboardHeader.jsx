@@ -143,7 +143,7 @@ function DashboardNavigation({ children }) {
 
                             <Link to="/dashboard-profile">
                                 <img
-                                    src={cleanProfilePictureUrl(userDetails.profile_picture) || profileImage}
+                                    src={userDetails.profile_picture || profileImage}
                                     alt="Profile"
                                     className="rounded-full object-cover w-full h-full"
                                 />

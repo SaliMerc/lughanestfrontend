@@ -15,8 +15,8 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { cleanProfilePictureUrl } from '../utils/profilePic';
 
 function DashboardFindPartners() {
-    const [allPartners, setAllPartners] = useState([]); // Store all partners for caching
-    const [filteredPartners, setFilteredPartners] = useState([]); // Partners after filtering
+    const [allPartners, setAllPartners] = useState([]); 
+    const [filteredPartners, setFilteredPartners] = useState([]); 
     const [searchTerm, setSearchTerm] = useState('');
 
     const userDetails = JSON.parse(localStorage.getItem('user'));
@@ -131,7 +131,7 @@ function DashboardFindPartners() {
                                         <div className='flex flex-row items-center gap-3'>
                                             <div className='w-10 h-10 md:w-15 md:h-15 mr-4'>
                                                 <img
-                                                    src={cleanProfilePictureUrl(partner.profile_picture_url) || profileImage}
+                                                    src={partner.profile_picture_url || profileImage}
                                                     alt="Profile"
                                                     className='rounded-full object-cover w-full h-full'
                                                 />

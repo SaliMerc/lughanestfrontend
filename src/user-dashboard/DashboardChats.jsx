@@ -92,7 +92,7 @@ function DashboardChats() {
                                             <div className='flex flex-row items-center gap-4'>
                                                 <div className='w-10 h-10 md:w-15 md:h-15'>
                                                     <img
-                                                        src={cleanProfilePictureUrl(chat.otherUserProfilePic) || profileImage}
+                                                        src={chat.otherUserProfilePic || profileImage}
                                                         alt="Profile"
                                                         className="rounded-full object-cover w-full h-full"
                                                     />
