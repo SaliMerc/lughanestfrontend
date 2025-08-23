@@ -67,7 +67,7 @@ function ProfilePictureUpdate() {
 
              const updatedUser = {
             ...JSON.parse(localStorage.getItem('user')), 
-            profile_picture: response.user.profile_picture 
+            profile_picture_url: response.user.profile_picture 
         };
 
             localStorage.setItem('user', JSON.stringify(updatedUser));
