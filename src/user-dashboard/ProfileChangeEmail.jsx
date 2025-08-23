@@ -35,6 +35,12 @@ function ProfileChangeEmail() {
         setFormError('');
         setLoading(true);
 
+        if (formData.email === userDetails.email) {
+            setFormError("New email cannot be the same as current email");
+            setLoading(false);
+            return;
+        }
+
         try {
             const response = await handleProfileUpdate({
                 email: formData.email
@@ -96,7 +102,7 @@ function ProfileChangeEmail() {
 
                             <input
                                 type='email'
-                                placeholder='Enter your new password'
+                                placeholder='Enter your new email'
                                 required
                                 name='email'
                                 value={formData.email}
@@ -112,18 +118,18 @@ function ProfileChangeEmail() {
                         </div>
                         <div className='flex flex-col md:flex-row md:justify-between mt-5'>
                             <div>
-                                 <button type='submit' className='md:!w-[10rem] px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
-                                {loading ? "Updating..." : "Update"}
-                            </button>
-                            </div>
-                           <div>
-                            <Link to='/dashboard-profile'>
-                                <button type='button' className='md:!w-[10rem] !bg-[var(--dashboard-cancel-button-bg)] hover:!bg-[var(--dashboard-cancel-button-hover-bg)] !border-[var(--dashboard-cancel-button-border)] !text-[var(--dashboard-cancel-button-text)]'>
-                                    Cancel
+                                <button type='submit' className='md:!w-[10rem] px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
+                                    {loading ? "Updating..." : "Update"}
                                 </button>
-                            </Link>
-                           </div>
-                            
+                            </div>
+                            <div>
+                                <Link to='/dashboard-profile'>
+                                    <button type='button' className='md:!w-[10rem] !bg-[var(--dashboard-cancel-button-bg)] hover:!bg-[var(--dashboard-cancel-button-hover-bg)] !border-[var(--dashboard-cancel-button-border)] !text-[var(--dashboard-cancel-button-text)]'>
+                                        Cancel
+                                    </button>
+                                </Link>
+                            </div>
+
                         </div>
 
                     </form>
