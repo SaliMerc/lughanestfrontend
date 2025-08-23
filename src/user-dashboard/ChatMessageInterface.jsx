@@ -38,6 +38,7 @@ function ChatInterface() {
     const [subscriptionStatus, setSubscriptionStatus] = useState(userDetails.subscription_status?.has_active_subscription);
 
     const [isTyping, setIsTyping] = useState(false);
+    const [hasSender, setHasSender] = useState(false);
     const [isWsReady, setIsWsReady] = useState(false);
     const typingTimeoutRef = useRef(null);
 
@@ -59,12 +60,14 @@ function ChatInterface() {
             try {
                 const data = JSON.parse(e.data);
                 if (data.type === 'message_history') {
-                    setChat(data.messages); 
+                    setChat(data.messages);
+                    setHasSender(false);
                     setLoading(false);
                 }
                 else if (data.type === 'typing') {
                     if (data.sender !== data.receiver) {
                         setIsTyping(data.is_typing);
+                        setHasSender(true);
                         if (data.is_typing) {
                             if (typingTimeoutRef.current) {
                                 clearTimeout(typingTimeoutRef.current);
@@ -76,7 +79,7 @@ function ChatInterface() {
                     }
                 }
                 else if (data.type === 'chat_message') {
-                    setIsTyping(data.is_typing);
+                    // setIsTyping(data.is_typing);
                     if (typingTimeoutRef.current) {
                         clearTimeout(typingTimeoutRef.current);
                     }
@@ -285,7 +288,7 @@ function ChatInterface() {
                                                         </p>
                                                     </div>
                                                 </div>
-                                                {!isCurrentUserMessage && index === chat.length - 1 && isTyping && (
+                                                {!isCurrentUserMessage && index === chat.length - 1 && isTyping && hasSender && (
                                                     <div className="flex justify-start mt-6">
                                                         <div className="flex items-center space-x-2 p-2 bg-[var(--chat-dash-interface-bg)] rounded-tl-[1rem] rounded-tr-[1rem] rounded-bl-[1rem]">
                                                             <div className="flex space-x-1">
