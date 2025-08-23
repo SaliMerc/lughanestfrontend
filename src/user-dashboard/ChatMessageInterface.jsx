@@ -247,7 +247,8 @@ function ChatInterface() {
                         </div>
                     ) : chat.length === 0 ? (
                         <div className="flex justify-center items-center h-full">
-                            <p>Start a conversation😁</p>
+                            {/* <p>Start a conversation😁</p> */}
+                            <p>....</p>
                         </div>
                     ) : (
                         <>
