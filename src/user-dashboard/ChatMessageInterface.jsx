@@ -38,7 +38,7 @@ function ChatInterface() {
     const [subscriptionStatus, setSubscriptionStatus] = useState(userDetails.subscription_status?.has_active_subscription);
 
     const [isTyping, setIsTyping] = useState(false); 
-    const [amTyping, setAmTyping] = useState(false); // <-- me typing
+    const [amTyping, setAmTyping] = useState(false); 
 
     const [isWsReady, setIsWsReady] = useState(false);
     const typingTimeoutRef = useRef(null);
@@ -60,6 +60,7 @@ function ChatInterface() {
         ws.current.onmessage = (e) => {
             try {
                 const data = JSON.parse(e.data);
+                console.log(data)
                 if (data.type === 'message_history') {
                     setChat(data.messages);
                     setLoading(false);
