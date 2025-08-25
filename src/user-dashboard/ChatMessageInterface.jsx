@@ -37,8 +37,8 @@ function ChatInterface() {
     const partnerName = location.state?.partnerName;
     const [subscriptionStatus, setSubscriptionStatus] = useState(userDetails.subscription_status?.has_active_subscription);
 
-    const [isTyping, setIsTyping] = useState(false); // <-- partner typing
-    const [amTyping, setAmTyping] = useState(false); // <-- me typing
+    const [isTyping, setIsTyping] = useState(false);
+    const [amTyping, setAmTyping] = useState(false);
 
     const [isWsReady, setIsWsReady] = useState(false);
     const typingTimeoutRef = useRef(null);
@@ -79,7 +79,6 @@ function ChatInterface() {
                     }
                 }
                 else if (data.type === 'chat_message') {
-                    setIsTyping(data.is_typing);
                     if (typingTimeoutRef.current) {
                         clearTimeout(typingTimeoutRef.current);
                     }
@@ -104,6 +103,7 @@ function ChatInterface() {
                     });
                     scrollToBottom();
                 }
+
             } catch (err) {
                 console.error("Error processing WebSocket message:", err);
             }
