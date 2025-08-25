@@ -255,6 +255,7 @@ function ChatInterface() {
                             {chat.map((msg, index) => {
 
                                 const isCurrentUserMessage = msg.sender === userDetails.id;
+                                const isUserMessage = msg.sender !== userDetails.id;
 
                                 return (
                                     <div key={index}>
@@ -285,7 +286,7 @@ function ChatInterface() {
                                                         </p>
                                                     </div>
                                                 </div>
-                                                {!isCurrentUserMessage && index === chat.length - 1 && isTyping && (
+                                                {isUserMessage && index === chat.length - 1 && isTyping && (
                                                     <div className="flex justify-start mt-6">
                                                         <div className="flex items-center space-x-2 p-2 bg-[var(--chat-dash-interface-bg)] rounded-tl-[1rem] rounded-tr-[1rem] rounded-bl-[1rem]">
                                                             <div className="flex space-x-1">
