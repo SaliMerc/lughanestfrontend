@@ -187,8 +187,7 @@ function ChatInterface() {
                 type: "chat_message",
                 receiver: partnerId,
                 message_content: message,
-                sender: userDetails.id,
-                is_typing: false
+                sender: userDetails.id
             };
 
             const tempMessage = {
@@ -197,7 +196,6 @@ function ChatInterface() {
                 message_sent_at: new Date().toISOString(),
                 is_read: false,
                 is_temp: true,
-                is_typing: false
             };
 
             setChat(prev => [...prev, tempMessage]);
