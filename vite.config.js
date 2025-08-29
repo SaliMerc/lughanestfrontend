@@ -16,10 +16,10 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [
-    tailwindcss(),
+    tailwindcss(), // This should work if you have the correct package
     react()
   ],
-  base: process.env.VITE_BASE_PATH || "/", 
+  base: process.env.VITE_BASE_PATH || "/",
   build: {
     outDir: '../dist', 
     assetsDir: 'assets',
