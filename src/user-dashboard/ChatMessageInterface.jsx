@@ -262,7 +262,7 @@ function ChatInterface() {
                                         {isCurrentUserMessage ? (
 
                                             <div className="flex justify-end">
-                                                <div className="!bg-[var(--card-bg)] text-white rounded-br-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-[45%]">
+                                                <div className="!bg-[var(--card-bg)] text-white rounded-br-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-[45%] break-words">
                                                     <p>{msg.message_content}</p>
                                                     <p className="text-xs mt-1 text-gray-300 font-medium">
                                                         {new Date(msg.message_sent_at).toLocaleTimeString([], {
@@ -276,7 +276,7 @@ function ChatInterface() {
                                             <>
 
                                                 <div className="flex justify-start">
-                                                    <div className="!bg-[var(--chat-dash-interface-bg)] text-white rounded-tl-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-[45%]">
+                                                    <div className="!bg-[var(--chat-dash-interface-bg)] text-white rounded-tl-[1rem] rounded-tr-[1rem] rounded-bl-[1rem] px-4 py-2 shadow-md w-fit max-w-[45%] break-words">
                                                         <p>{msg.message_content}</p>
                                                         <p className="text-xs mt-1 text-gray-400">
                                                             {new Date(msg.message_sent_at).toLocaleTimeString([], {

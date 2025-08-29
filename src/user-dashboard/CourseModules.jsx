@@ -26,11 +26,9 @@ function CourseModules() {
       (data) => {
         setModules(data);
         setLoading(false);
-        console.log(data)
       },
       (err) => {
         setError(err.message || 'Failed to load modules');
-        setLoading(false);
       }
     );
   }, [course]);
