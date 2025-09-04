@@ -167,7 +167,7 @@ function DashboardFindPartners() {
                                                 </Link>
                                             ) : (
                                                 <Link to="/dashboard/subscription-plans">
-                                                    <button className='w-full py-2 !text-[0.8rem] md:!text-[1rem] !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] !hover:!text-[#0E0D0C]  transition-colors flex items-center justify-center gap-1'>
+                                                    <button className='w-full py-2 !text-[0.8rem] md:!text-[1rem] !border-1 !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)]  hover:!text-[var(--text-buttons-hover)]  transition-colors flex items-center justify-center gap-1'>
                                                         <FontAwesomeIcon icon={faLock} />
                                                         <span>Subscribe to Message</span>
                                                     </button>
