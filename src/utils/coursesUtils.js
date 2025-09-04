@@ -57,8 +57,10 @@ export async function handleEnrolledCourses(data, onSuccess, onError) {
       }
     );
     if (onSuccess) onSuccess(response);
+    return response
   } catch (error) {
     if (onError) onError(error);
+    throw error
   }
 }
 

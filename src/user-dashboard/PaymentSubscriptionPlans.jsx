@@ -17,9 +17,12 @@ import pricingPremiumYear from '../assets/pricing-premium-year.svg';
 
 
 function PaymentSubscription() {
-    const [monthlySubscription, setMonthlySubscription] = useState('');
-    const [yearlySubscription, setYearlySubscription] = useState('');
-    const [currency, setCurrency] = useState('');
+    const userDetails = JSON.parse(localStorage.getItem('user'));
+    const [subscriptionStatus, setsubscriptionStatus] = useState(userDetails.subscription_status.has_active_subscription)
+
+    const [monthlySubscription, setMonthlySubscription] = useState(userDetails.subscription_items.monthly_plan);
+    const [yearlySubscription, setYearlySubscription] = useState(userDetails.subscription_items.yearly_plan);
+    const [currency, setCurrency] = useState(userDetails.subscription_items.currency);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

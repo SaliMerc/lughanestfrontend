@@ -11,7 +11,6 @@ import { faLock, faUnlock, faCheck, faXmark } from '@fortawesome/free-solid-svg-
 
 function DashboardPayment() {
     const userDetails = JSON.parse(localStorage.getItem('user'));
-    console.log(userDetails)
     const [subscriptionStatus, setsubscriptionStatus] = useState(userDetails.subscription_status.has_active_subscription)
 
     const [subscriptionType, setsubscriptionType] = useState(userDetails.subscription_status.active_plan.subscription_type)
