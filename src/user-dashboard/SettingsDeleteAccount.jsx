@@ -4,35 +4,28 @@ import { Link } from 'react-router-dom';
 import DashboardNavigation from './DashboardHeader';
 
 import auth_background from '../assets/login-signup-image.png';
-import { handleCheckDeletionStatus, handleScheduleAccountDeletion,handleUndoAccountDeletion } from '../utils/authUtils';
+import { handleScheduleAccountDeletion, handleUndoAccountDeletion } from '../utils/authUtils';
 
 function SettingsDeleteAccount() {
-  const [accountDeletion, setAccountDeletion] = useState(null)
-  const [deletionDate, setDeletionDate] = useState('')
-  const [isLoading, setIsLoading] = useState(true);
+  const userDetails = JSON.parse(localStorage.getItem('user'));
+  console.log(userDetails)
+
+  const [accountDeletion, setAccountDeletion] = useState(userDetails.deletion_data.is_scheduled_for_deletion)
+  const [deletionDate, setDeletionDate] = useState(userDetails.deletion_data.scheduled_date)
   const [buttonLoading, setButtonLoading] = useState(false);
-
-  useEffect(() => {
-    const checkDeletionStatus = async () => {
-      try {
-        setIsLoading(true);
-        const data = await handleCheckDeletionStatus();
-        setAccountDeletion(data.is_scheduled_for_deletion);
-        setDeletionDate(data.scheduled_date)
-      } catch (err) {
-        console.error('Error checking deletion status:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    checkDeletionStatus();
-  }, []);
 
   const handleScheduleDeletion = async () => {
     try {
       setButtonLoading(true);
       const data = await handleScheduleAccountDeletion();
+      const updatedUserDetails = {
+        ...userDetails,
+        deletion_data: {
+          is_scheduled_for_deletion: data.is_scheduled_for_deletion,
+          scheduled_date: data.scheduled_date
+        }
+      };
+      localStorage.setItem('user', JSON.stringify(updatedUserDetails));
       setAccountDeletion(data.is_scheduled_for_deletion);
       setDeletionDate(data.scheduled_date);
       setButtonLoading(false)
@@ -43,10 +36,19 @@ function SettingsDeleteAccount() {
     }
   };
 
-    const undoDeletion = async () => {
+  const undoDeletion = async () => {
     try {
       setButtonLoading(true);
       const data = await handleUndoAccountDeletion();
+      console.log(data)
+
+      const updatedUserDetails = {
+        ...userDetails,
+        deletion_data: {
+          is_scheduled_for_deletion: data.is_scheduled_for_deletion,
+        }
+      };
+      localStorage.setItem('user', JSON.stringify(updatedUserDetails));
       setAccountDeletion(data.is_scheduled_for_deletion);
       setButtonLoading(false)
 
@@ -55,16 +57,6 @@ function SettingsDeleteAccount() {
       setButtonLoading(false);
     }
   };
-
-  if (isLoading) {
-    return (
-      <DashboardNavigation>
-        <div className="w-full text-center py-10">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FBEC6C] mx-auto"></div>
-        </div>
-      </DashboardNavigation>
-    );
-  }
 
   return (
     <DashboardNavigation>

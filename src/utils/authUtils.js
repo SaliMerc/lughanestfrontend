@@ -214,24 +214,7 @@ export async function handleScheduleAccountDeletion() {
     const token = localStorage.getItem('access_token');
     const response = await axios.post(
       `${API_URL}/api/v1/users/delete-account/`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-}
-
-// To check if account deletion have been scheduled
-export async function handleCheckDeletionStatus() {
-  try {
-    const token = localStorage.getItem('access_token');
-    const response = await axios.get(
-      `${API_URL}/api/v1/users/delete-account/`,
+      {}, 
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -250,6 +233,7 @@ export async function handleUndoAccountDeletion() {
     const token = localStorage.getItem('access_token');
     const response = await axios.patch(
       `${API_URL}/api/v1/users/undo-account-deletion/`,
+      {}, 
       {
         headers: {
           Authorization: `Bearer ${token}`,

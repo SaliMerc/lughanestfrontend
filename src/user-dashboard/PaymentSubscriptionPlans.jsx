@@ -18,7 +18,6 @@ import pricingPremiumYear from '../assets/pricing-premium-year.svg';
 
 function PaymentSubscription() {
     const userDetails = JSON.parse(localStorage.getItem('user'));
-    const [subscriptionStatus, setsubscriptionStatus] = useState(userDetails.subscription_status.has_active_subscription)
 
     const [monthlySubscription, setMonthlySubscription] = useState(userDetails.subscription_items.monthly_plan);
     const [yearlySubscription, setYearlySubscription] = useState(userDetails.subscription_items.yearly_plan);
@@ -26,38 +25,6 @@ function PaymentSubscription() {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    // fetching the subscription plans
-    useEffect(() => {
-        const fetchSubscriptions = async () => {
-            try {
-                setLoading(true);
-                await handleSubscriptiontemsData(
-                    {},
-                    (response) => {
-                        if (response.data) {
-                            setMonthlySubscription(response.data.monthly_plan);
-                            setYearlySubscription(response.data.yearly_plan);
-                            setCurrency(response.data.currency);
-                        } else {
-                            setMonthlySubscription('700');
-                            setYearlySubscription('8000');
-                            setMonthlyCurrency('Ksh.');
-                        }
-                    },
-                    (error) => {
-                        setError(error.message || 'Failed to fetch plans');
-                    }
-                );
-            } catch (err) {
-                setError(err.message || 'An unexpected error occurred');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchSubscriptions();
-    }, []);
 
 
     return (
