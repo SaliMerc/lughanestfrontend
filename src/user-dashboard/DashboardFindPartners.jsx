@@ -161,7 +161,7 @@ function DashboardFindPartners() {
                                                         partnerName: partner.display_name
                                                     }}
                                                 >
-                                                    <button className='w-full py-2   !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] !hover:!text-[#0E0D0C] transition-colors'>
+                                                    <button className='w-full py-2   !border-[#FBEC6C] !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] hover:!text-[var(--text-buttons-hover)]  transition-colors'>
                                                         Message
                                                     </button>
                                                 </Link>

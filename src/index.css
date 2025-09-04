@@ -5,6 +5,7 @@
   --payment-main-bg: #0E0D0C;
   --text: #ffffff;
   --text-buttons: #E3E0C0;
+  --text-buttons-hover: #0E0D0C;
   --nav-bg: #0E0D0C;
   --nav-text: #E3E0C0;
   --nav-hover: #FBEC6C;
@@ -84,6 +85,7 @@
   --payment-main-bg: #FAF3E0;
   --text: #000000;
   --text-buttons: #000000;
+  --text-buttons-hover: #0E0D0C;
   --nav-bg: #E9D6B8;
   --nav-text: #000000;
   --nav-hover: #A78F74;
