@@ -236,7 +236,7 @@ function Home() {
                   <p><FontAwesomeIcon icon={faCheck} />  Full Dashboard</p>
                   <p><FontAwesomeIcon icon={faCheck} />  Live chats</p>
                   <Link to="/signup"><button className='min-w-36 min-h-14 px-3 !bg-[var(--button-bg)] !text-[var(--text-buttons)] hover:!bg-[var(--button-hover-bg)] shadow-xl !shadow-[#000000] text-xl  !border-1 !border-[#FBEC6C]  hover:!text-[#0E0D0C] transition-colors !duration-300'>
-                    Save 37.5%
+                    Save 17%
                     <FontAwesomeIcon icon={faArrowRight} />
                   </button>
                   </Link>
