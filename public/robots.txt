@@ -1,2 +1,7 @@
 User-agent: *
 Allow: /
+
+Disallow: /login
+Disallow: /signup
+
+Sitemap: https://lughanest.vercel.app/sitemap.xml
