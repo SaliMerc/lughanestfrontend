@@ -1,29 +1,33 @@
 import axios from 'axios';
+import { setAuthState } from './auth'; 
 
-const API_URL = import.meta.env.VITE_DEVELOPMENT_API_URL
+const API_URL = import.meta.env.VITE_DEVELOPMENT_API_URL;
+
+const authAxios = axios.create({
+  baseURL: API_URL,
+  withCredentials: true,
+});
 
 export async function handleGoogleLogin(credential, onSuccess, onError) {
   try {
-
-    const response = await axios.post(`${API_URL}/api/v1/auth/google/`, {
-      token: credential,
-    });
-
-    const { data } = response;
-
-    if (data.access_token && data.refresh) {
-      localStorage.setItem('access_token', data.access_token);
-      localStorage.setItem('refresh_token', data.refresh);
-
-      if (data.user) {
-        localStorage.setItem('user', JSON.stringify(data.user));
-      }
-
-      axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`;
-    }
-
+    const response = await authAxios.post(`${API_URL}/api/v1/auth/google/`, { token: credential });
+    const { access_token, user } = response.data;
+    setAuthState(access_token, user);   
     if (onSuccess) onSuccess(response);
   } catch (error) {
+    setAuthState(null, null);
+    if (onError) onError(error);
+  }
+}
+
+export async function handleEmailLogin(userData, onSuccess, onError) {
+  try {
+    const response = await authAxios.post(`${API_URL}/api/v1/users/login/`, userData);
+    const { access_token, user } = response.data;
+    setAuthState(access_token, user);   
+    if (onSuccess) onSuccess(response);
+  } catch (error) {
+    setAuthState(null, null);
     if (onError) onError(error);
   }
 }
@@ -140,35 +144,6 @@ export async function handleSubmitNewPassword(
           { "Content-Type": "application/json" }
       }
     );
-    if (onSuccess) onSuccess(response);
-  } catch (error) {
-    if (onError) onError(error);
-  }
-}
-
-export async function handleEmailLogin(userData, onSuccess, onError) {
-  try {
-    const response = await axios.post(
-      `${API_URL}/api/v1/users/login/`,
-      userData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    const { data } = response;
-
-    if (data.access && data.refresh) {
-  
-      if (data.user) {
-        localStorage.setItem('user', JSON.stringify(data.user));
-      }
-
-      axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`;
-    }
-
     if (onSuccess) onSuccess(response);
   } catch (error) {
     if (onError) onError(error);

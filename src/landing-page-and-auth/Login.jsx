@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import GoogleLoginButton from '../components/GoogleLogin';
@@ -7,12 +7,13 @@ import GoogleLoginButton from '../components/GoogleLogin';
 import { handleGoogleLogin, handleEmailLogin } from '../utils/authUtils';
 
 
-import auth_background from '../assets/login-signup-image.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Header from './Header.jsx';
 
 import { Link} from 'react-router-dom';
+
+import { setAuthState } from '../utils/auth';
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -56,9 +57,9 @@ function Login() {
       (response) => {
         setLoading(false);
         if (response.data.message.includes("Logged in successfully")) {
-          localStorage.setItem('access_token', response.data.access_token);
-          localStorage.setItem('user', JSON.stringify(response.data.user));
           navigate('/dashboard-home');
+          console.log("Login successful", response.data);
+          setAuthState(response.data.access_token, response.data.user);
         }
         else {
           setFormError(response.data.message)
