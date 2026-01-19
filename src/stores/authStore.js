@@ -2,13 +2,13 @@ import create from 'zustand';
 import axios from 'axios';
 
 // --- Utilities ---
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 function parseJwtExpMs(token) {
   try {
-    const payload = jwt_decode(token);
+    const payload = jwtDecode(token);
     if (!payload || typeof payload.exp !== 'number') return null;
     return payload.exp * 1000; // convert to ms
-  } catch (e) {
+  } catch {
     return null;
   }
 }
