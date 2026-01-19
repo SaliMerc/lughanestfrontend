@@ -2,11 +2,10 @@ import create from 'zustand';
 import axios from 'axios';
 
 // --- Utilities ---
+import jwt_decode from 'jwt-decode';
 function parseJwtExpMs(token) {
   try {
-    const parts = token.split('.');
-    if (parts.length < 2) return null;
-    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+    const payload = jwt_decode(token);
     if (!payload || typeof payload.exp !== 'number') return null;
     return payload.exp * 1000; // convert to ms
   } catch (e) {
@@ -38,8 +37,6 @@ const useAuthStore = create((set, get) => ({
       const refreshToken = data.refreshToken || null;
       set({ accessTokenValue: accessToken, refreshTokenValue: refreshToken, isAuthenticated: !!accessToken });
       if (accessToken) scheduleRefresh(accessToken);
-    } catch (err) {
-      throw err;
     } finally {
       set({ isLoading: false });
     }
@@ -79,9 +76,6 @@ const useAuthStore = create((set, get) => ({
         set({ accessTokenValue: newAccess, refreshTokenValue: newRefresh || null, isAuthenticated: true });
         scheduleRefresh(newAccess);
         return true;
-      } catch (e) {
-        get().logout();
-        return false;
       } finally {
         set({ isLoading: false });
         const internalRef = get().__internal;

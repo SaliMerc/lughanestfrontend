@@ -9,16 +9,12 @@ const axiosPrivate = axios.create({
 
 // Request interceptor: attach access token from memory
 axiosPrivate.interceptors.request.use((config) => {
-  try {
-    const token = useAuthStore.getState().getAccessToken();
-    if (token) {
-      config.headers = config.headers || {};
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  } catch (e) {
-    return config;
+  const token = useAuthStore.getState().getAccessToken();
+  if (token) {
+    config.headers = config.headers || {};
+    config.headers.Authorization = `Bearer ${token}`;
   }
+  return config;
 });
 
 // Response interceptor: on 401, try refresh once, then logout
@@ -40,7 +36,9 @@ axiosPrivate.interceptors.response.use(
           }
           return axiosPrivate(originalRequest);
         }
-      } catch (e) {}
+      } catch {
+        // ignore refresh errors, will logout below
+      }
       useAuthStore.getState().logout();
     }
     return Promise.reject(error);
